@@ -1,1 +1,329 @@
-VProgs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaspa vProgs | Native L1 Verifiable Programs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">vProgs</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#syncompo">Syncompo</a></li>
+                <li><a href="#dagknight">DagKnight</a></li>
+                <li><a href="#applications">Applications</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="vProgs">vProgs</h1>
+                <p class="hero-subtitle">Native Layer 1 Verifiable Programs</p>
+                <p class="hero-description">
+                    The architectural solution to blockchain's smart contract trilemma
+                </p>
+                <div class="hero-features">
+                    <div class="feature-badge">Zero-Knowledge Proofs</div>
+                    <div class="feature-badge">Synchronous Composability</div>
+                    <div class="feature-badge">30,000+ TPS</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </section>
+
+    <div class="main-layout">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="section">
+                <h2 class="section-title">Breaking the Trilemma</h2>
+                <div class="content-block">
+                    <div class="problem-solution">
+                        <div class="problem">
+                            <h3>The Problem</h3>
+                            <ul class="issue-list">
+                                <li><span class="issue-label">L1 Bloat:</span> Monolithic VMs cause congestion, high fees, centralization</li>
+                                <li><span class="issue-label">L2 Fragmentation:</span> Rollups create isolated liquidity, bridge risks, async delays</li>
+                            </ul>
+                        </div>
+                        <div class="solution">
+                            <h3>The Solution</h3>
+                            <p class="highlight-text">
+                                vProgs: Lightweight, deterministic logic modules native to L1
+                            </p>
+                            <p>Off-chain execution + on-chain ZK verification = infinite scalability without fragmentation</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="section">
+                <h2 class="section-title">Architecture</h2>
+                <div class="content-block">
+                    <div class="architecture-grid">
+                        <div class="arch-card">
+                            <div class="arch-icon">🔐</div>
+                            <h3>Sovereign State</h3>
+                            <p>Each vProg owns exclusive accounts. Mutually trustless. Complete sovereignty over resource management.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-icon">⚡</div>
+                            <h3>Off-Chain Compute</h3>
+                            <p>Complex execution happens off-chain. L1 only validates ZK proofs. Scales horizontally with prover market.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-icon">🔗</div>
+                            <h3>L1 Sequencing</h3>
+                            <p>BlockDAG consensus provides immutable sequencing. Pure PoW security. Instant finality via DagKnight.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-icon">✓</div>
+                            <h3>ZK Verification</h3>
+                            <p>Cryptographic proofs submitted to L1. State commitments via Merkle roots. Concise witnesses for composability.</p>
+                        </div>
+                    </div>
+
+                    <div class="comparison-table">
+                        <h3>Architectural Comparison</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>EVM L1</th>
+                                    <th>L2 Rollups</th>
+                                    <th>vProgs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Execution</td>
+                                    <td>On-chain (heavy)</td>
+                                    <td>Off-chain (isolated)</td>
+                                    <td class="highlight">Off-chain (unified)</td>
+                                </tr>
+                                <tr>
+                                    <td>Composability</td>
+                                    <td>Synchronous</td>
+                                    <td>Asynchronous</td>
+                                    <td class="highlight">Synchronous</td>
+                                </tr>
+                                <tr>
+                                    <td>Liquidity</td>
+                                    <td>Unified</td>
+                                    <td>Fragmented</td>
+                                    <td class="highlight">Unified</td>
+                                </tr>
+                                <tr>
+                                    <td>L1 Load</td>
+                                    <td>High</td>
+                                    <td>Minimal</td>
+                                    <td class="highlight">Minimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Scalability</td>
+                                    <td>Limited</td>
+                                    <td>Bridge latency</td>
+                                    <td class="highlight">Prover market</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Syncompo Section -->
+            <section id="syncompo" class="section">
+                <h2 class="section-title">Synchronous Composability</h2>
+                <div class="content-block">
+                    <p class="lead-text">
+                        Multiple dApps interact in a single, atomic transaction. No bridges. No delays. No fragmentation.
+                    </p>
+
+                    <div class="syncompo-features">
+                        <div class="sync-feature">
+                            <h3>Cross-vProg Atomicity</h3>
+                            <p>Trustless read/write interactions. State dependencies resolved in one transaction. Mathematical cryptographic proof.</p>
+                        </div>
+                        <div class="sync-feature">
+                            <h3>Unified Liquidity</h3>
+                            <p>All applications share L1 settlement state. No parasitic rollup monopolies. True decentralization.</p>
+                        </div>
+                        <div class="sync-feature">
+                            <h3>MEV Resistance</h3>
+                            <p>Deterministic, synchronous execution. No latency-based front-running. Bundled operations protected.</p>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <h4>Example: Complex DeFi Flow</h4>
+                        <p>Borrow stablecoins → Swap immediately → Stake in one atomic L1 transaction</p>
+                        <p class="use-case-detail">Compute off-chain → Generate combined proof → Submit to L1 → Instant finality</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DagKnight Section -->
+            <section id="dagknight" class="section">
+                <h2 class="section-title">DagKnight + vProgs</h2>
+                <div class="content-block">
+                    <p class="lead-text">
+                        DagKnight consensus upgrade enables precise sequencing essential for programmable applications.
+                    </p>
+
+                    <div class="dagknight-grid">
+                        <div class="dk-card">
+                            <h3>Precise Ordering</h3>
+                            <p>Parameterless adaptive consensus. Faster convergence. No sequencing jitter.</p>
+                        </div>
+                        <div class="dk-card">
+                            <h3>30,000+ TPS</h3>
+                            <p>Parallel BlockDAG sequencing + ZK computational offloading = exponential scalability.</p>
+                        </div>
+                        <div class="dk-card">
+                            <h3>Instant Finality</h3>
+                            <p>Near-instant finality at scale. Reliable state verification. Enterprise-grade settlement.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Applications Section -->
+            <section id="applications" class="section">
+                <h2 class="section-title">Enabled Applications</h2>
+                <div class="content-block">
+                    <div class="app-grid">
+                        <div class="app-card">
+                            <h3>DeFi Primitives</h3>
+                            <p>DEXs, auctions, vaults, lending protocols</p>
+                        </div>
+                        <div class="app-card">
+                            <h3>DAOs & Governance</h3>
+                            <p>Programmable multi-sig, autonomous organizations</p>
+                        </div>
+                        <div class="app-card">
+                            <h3>Privacy & Identity</h3>
+                            <p>ZK-based privacy, identity verification, escrow</p>
+                        </div>
+                        <div class="app-card">
+                            <h3>Enterprise Finance</h3>
+                            <p>Automated compliance, audit trails, institutional settlement</p>
+                        </div>
+                    </div>
+
+                    <div class="institutional">
+                        <h3>Enterprise-Grade Infrastructure</h3>
+                        <p>Automated compliance logic on-chain. ZK-based monitoring and reporting. Real-time settlement without trusted third parties.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategic Position Section -->
+            <section id="strategic" class="section">
+                <h2 class="section-title">Strategic Position</h2>
+                <div class="content-block">
+                    <div class="position-statement">
+                        <p class="highlight-text large">
+                            Kaspa vProgs occupy a new category: programmable, scalable, PoW-secured settlement layer with instant DAG finality.
+                        </p>
+                    </div>
+
+                    <div class="advantages">
+                        <div class="advantage">
+                            <span class="adv-icon">✓</span>
+                            <p>Pure PoW security</p>
+                        </div>
+                        <div class="advantage">
+                            <span class="adv-icon">✓</span>
+                            <p>BlockDAG speed</p>
+                        </div>
+                        <div class="advantage">
+                            <span class="adv-icon">✓</span>
+                            <p>Native programmability</p>
+                        </div>
+                        <div class="advantage">
+                            <span class="adv-icon">✓</span>
+                            <p>Unified L1 liquidity</p>
+                        </div>
+                        <div class="advantage">
+                            <span class="adv-icon">✓</span>
+                            <p>Synchronous composability</p>
+                        </div>
+                        <div class="advantage">
+                            <span class="adv-icon">✓</span>
+                            <p>No fragmentation</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-sticky">
+                <h3>Key Resources</h3>
+                <div class="reference-links">
+                    <a href="https://kaspa.org/features/" target="_blank" class="ref-link">
+                        <span class="ref-title">Kaspa Features</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://research.kas.pa/t/concrete-proposal-for-a-synchronously-composable-verifiable-programs-architecture/387" target="_blank" class="ref-link">
+                        <span class="ref-title">vProgs Research</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://research.kas.pa/t/zoom-in-a-formal-backbone-model-for-the-vprog-computation-dag/407" target="_blank" class="ref-link">
+                        <span class="ref-title">Formal Model</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://medium.com/@jcroger/a-quick-introduction-to-vprogs-b3a93395e6ed" target="_blank" class="ref-link">
+                        <span class="ref-title">vProgs Intro</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://www.reddit.com/r/kaspa/comments/1oyevzm/kaspas_yellow_paper_explained_for_crypto_dummies/" target="_blank" class="ref-link">
+                        <span class="ref-title">Yellow Paper Guide</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://kaspa.org/kaspa-development-milestones-revealed-2025/" target="_blank" class="ref-link">
+                        <span class="ref-title">2025-2026 Roadmap</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://kaspa.org/the-global-payment-problem-and-how-kaspa-can-fix-this/" target="_blank" class="ref-link">
+                        <span class="ref-title">Global Payments</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://kaspa-kii.org/" target="_blank" class="ref-link">
+                        <span class="ref-title">Kaspa KII Foundation</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                    <a href="https://www.reddit.com/r/CryptoTechnology/comments/1ox1mek/vprogs_and_kaspa/" target="_blank" class="ref-link">
+                        <span class="ref-title">Tech Discussion</span>
+                        <span class="ref-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>vProgs: Native L1 Verifiable Programs for Kaspa BlockDAG</p>
+        <p class="footer-tagline">Breaking the smart contract trilemma</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
