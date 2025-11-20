@@ -6,34 +6,4 @@
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
-    <url>
-        <loc>https://vprogs.xyz/#overview</loc>
-        <lastmod>2025-11-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://vprogs.xyz/#architecture</loc>
-        <lastmod>2025-11-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://vprogs.xyz/#syncompo</loc>
-        <lastmod>2025-11-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://vprogs.xyz/#dagknight</loc>
-        <lastmod>2025-11-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://vprogs.xyz/#applications</loc>
-        <lastmod>2025-11-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
 </urlset>
