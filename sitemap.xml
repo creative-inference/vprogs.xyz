@@ -2,8 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://vprogs.xyz/</loc>
-        <lastmod>2025-11-20</lastmod>
+        <lastmod>2026-03-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
+    <!-- Learn -->
+    <url><loc>https://vprogs.xyz/learn/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://vprogs.xyz/learn/what-are-vprogs/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/learn/why-vprogs/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/learn/how-it-works/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/learn/compared/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/learn/glossary/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/learn/faq/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <!-- Architecture -->
+    <url><loc>https://vprogs.xyz/architecture/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/overview/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/account-model/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/execution-model/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/zk-verification/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/sequencing/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/sequencing-mapping/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/composability/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/dagknight/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/covenants/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/architecture/silverscript/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <!-- Build -->
+    <url><loc>https://vprogs.xyz/build/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://vprogs.xyz/build/quickstart/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/build/dev-environment/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/build/tutorials/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/build/tutorials/first-vprog/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/build/tutorials/native-asset/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/build/tutorials/zk-covenant/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/build/tutorials/silverscript-vault/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/build/tutorials/cross-vprog/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/build/api-reference/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/build/silverscript-reference/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/build/testnet/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/build/tools/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vprogs.xyz/build/examples/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <!-- Research -->
+    <url><loc>https://vprogs.xyz/research/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://vprogs.xyz/research/formal-model/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/research/composability-proposal/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/research/gas-economics/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/research/proving-systems/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/research/security-model/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/research/open-questions/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+    <!-- Ecosystem -->
+    <url><loc>https://vprogs.xyz/ecosystem/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://vprogs.xyz/ecosystem/roadmap/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/ecosystem/applications/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/ecosystem/kii/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/ecosystem/partners/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vprogs.xyz/ecosystem/community/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <!-- Changelog -->
+    <url><loc>https://vprogs.xyz/changelog/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/changelog/rnd-insights/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/changelog/testnet-updates/</loc><lastmod>2026-03-13</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+    <!-- References -->
+    <url><loc>https://vprogs.xyz/references/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vprogs.xyz/references/sources/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/references/kips/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://vprogs.xyz/references/repos/</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
