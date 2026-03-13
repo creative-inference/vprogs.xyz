@@ -134,8 +134,9 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Apply fade-in to content blocks
+// Apply fade-in to content blocks (home page only — inner pages use .markdown-content)
 document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
     const elements = document.querySelectorAll('.content-block, .arch-card, .sync-feature, .dk-card, .app-card');
 
     elements.forEach(el => {
