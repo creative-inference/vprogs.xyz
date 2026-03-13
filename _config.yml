@@ -10,6 +10,10 @@ kramdown:
   syntax_highlighter_opts:
     css_class: highlight
 permalink: pretty
+exclude:
+  - sitemap.xml
+  - robots.txt
+  - CNAME
 defaults:
   - scope:
       path: ""
