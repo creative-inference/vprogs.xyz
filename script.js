@@ -42,15 +42,19 @@ function createMatrixEffect() {
     const drops = Array(Math.floor(columns)).fill(1);
 
     function draw() {
-        ctx.fillStyle = 'rgba(5, 7, 7, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = '#00ff41';
-        ctx.font = fontSize + 'px monospace';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (let i = 0; i < drops.length; i++) {
-            const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            // Draw a short trail of fading characters
+            for (let t = 0; t < 12; t++) {
+                const y = drops[i] - t;
+                if (y < 0) continue;
+                const alpha = (1 - t / 12) * 0.6;
+                ctx.fillStyle = 'rgba(74, 196, 110, ' + alpha + ')';
+                ctx.font = fontSize + 'px monospace';
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, y * fontSize);
+            }
 
             if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                 drops[i] = 0;
@@ -59,7 +63,7 @@ function createMatrixEffect() {
         }
     }
 
-    setInterval(draw, 50);
+    setInterval(draw, 60);
 }
 
 // Initialize matrix effect
