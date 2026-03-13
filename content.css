@@ -9,6 +9,8 @@
     max-width: 960px;
     margin: 0 auto;
     padding-top: 6rem;
+    position: relative;
+    z-index: 1;
 }
 
 .page-layout.has-sidebar {
