@@ -547,15 +547,6 @@ layout: false
     }
     .hero-title { animation: flicker 4s infinite; }
 
-    .fade-in {
-        opacity: 0;
-        transform: translateY(15px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
     </style>
 </head>
 <body>
@@ -629,7 +620,7 @@ layout: false
 
         <div class="grid">
             <!-- Learn -->
-            <a href="/learn/" class="cell fade-in">
+            <a href="/learn/" class="cell">
                 <span class="cell-index">01 // Learn</span>
                 <h3>Understand vProgs</h3>
                 <p>What they are, why they matter, how they work. Comparisons with Ethereum L2s, Solana, and Sui. Glossary and FAQ.</p>
@@ -642,7 +633,7 @@ layout: false
             </a>
 
             <!-- Architecture -->
-            <a href="/architecture/" class="cell fade-in">
+            <a href="/architecture/" class="cell">
                 <span class="cell-index">02 // Architecture</span>
                 <h3>Deep Technical Design</h3>
                 <p>Four-pillar architecture. Account model, execution model, ZK verification, KIP-21 sequencing, DagKnight consensus, synchronous composability.</p>
@@ -655,7 +646,7 @@ layout: false
             </a>
 
             <!-- Build -->
-            <a href="/build/" class="cell fade-in">
+            <a href="/build/" class="cell">
                 <span class="cell-index">03 // Build</span>
                 <h3>Developer Guides</h3>
                 <p>Quickstart, tutorials, API reference, Silverscript language spec. From first covenant to cross-vProg atomic transactions.</p>
@@ -668,7 +659,7 @@ layout: false
             </a>
 
             <!-- Research -->
-            <a href="/research/" class="cell fade-in">
+            <a href="/research/" class="cell">
                 <span class="cell-index">04 // Research</span>
                 <h3>Formal Analysis</h3>
                 <p>Computation DAG formalism, Erdos-Renyi scalability bounds, gas economics, proving system tradeoffs, security model, open questions.</p>
@@ -680,7 +671,7 @@ layout: false
             </a>
 
             <!-- Ecosystem -->
-            <a href="/ecosystem/" class="cell fade-in">
+            <a href="/ecosystem/" class="cell">
                 <span class="cell-index">05 // Ecosystem</span>
                 <h3>Roadmap & Community</h3>
                 <p>Development timeline from Crescendo through Covenants++ to full vProgs. Applications, KII Foundation, partners, community.</p>
@@ -692,7 +683,7 @@ layout: false
             </a>
 
             <!-- Changelog + References -->
-            <a href="/changelog/" class="cell fade-in">
+            <a href="/changelog/" class="cell">
                 <span class="cell-index">06 // Changelog</span>
                 <h3>Latest Developments</h3>
                 <p>R&D channel insights, testnet updates, development timeline. Track progress from TN12 through Covenants++ hard fork.</p>
@@ -704,7 +695,7 @@ layout: false
             </a>
 
             <!-- Featured content row -->
-            <div class="cell featured fade-in">
+            <div class="cell featured">
                 <div class="feat-col">
                     <h4>Start Here</h4>
                     <a href="/learn/what-are-vprogs/"><span>//</span> What Are vProgs</a>
@@ -731,7 +722,7 @@ layout: false
     </section>
 
     <!-- COMPARISON -->
-    <section class="compare fade-in">
+    <section class="compare">
         <div class="compare-inner">
             <h2>Architectural Comparison</h2>
             <table>
@@ -786,7 +777,7 @@ layout: false
     </section>
 
     <!-- RESOURCES -->
-    <div class="resources fade-in">
+    <div class="resources">
         <div class="res-col">
             <h3>Key Resources</h3>
             <a href="https://research.kas.pa/t/concrete-proposal-for-a-synchronously-composable-verifiable-programs-architecture/387" target="_blank" class="res-link">
@@ -842,18 +833,5 @@ layout: false
 
     <script src="script.js"></script>
 
-    <script>
-    // Intersection observer for fade-in
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const fadeObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                fadeObs.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-    fadeEls.forEach(el => fadeObs.observe(el));
-    </script>
 </body>
 </html>

@@ -12,7 +12,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Matrix rain effect (lightweight version)
+// Matrix rain effect (home page only)
 function createMatrixEffect() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -45,7 +45,6 @@ function createMatrixEffect() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (let i = 0; i < drops.length; i++) {
-            // Draw a short trail of fading characters
             for (let t = 0; t < 12; t++) {
                 const y = drops[i] - t;
                 if (y < 0) continue;
@@ -66,151 +65,9 @@ function createMatrixEffect() {
     setInterval(draw, 60);
 }
 
-// Only run matrix rain on the home page
 if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
     createMatrixEffect();
 }
-
-// Glitch effect for hero title
-function glitchEffect() {
-    const glitchElement = document.querySelector('.glitch');
-    if (!glitchElement) return;
-
-    const text = glitchElement.textContent;
-
-    setInterval(() => {
-        if (Math.random() > 0.95) {
-            glitchElement.textContent = text
-                .split('')
-                .map(char => Math.random() > 0.5 ? char : String.fromCharCode(33 + Math.floor(Math.random() * 94)))
-                .join('');
-
-            setTimeout(() => {
-                glitchElement.textContent = text;
-            }, 50);
-        }
-    }, 200);
-}
-
-glitchEffect();
-
-// Add active state to navigation links based on scroll position
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    let current = '';
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.style.color = '';
-        link.style.textShadow = '';
-        if (link.getAttribute('href') === `#${current}`) {
-            link.style.color = 'var(--primary)';
-            link.style.textShadow = '0 0 8px var(--primary)';
-        }
-    });
-});
-
-// Fade in elements on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Apply fade-in to content blocks (home page only — inner pages use .markdown-content)
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
-    const elements = document.querySelectorAll('.content-block, .arch-card, .sync-feature, .dk-card, .app-card');
-
-    elements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-});
-
-// Cyber typing effect for hero subtitle (optional enhancement)
-function typeWriter(element, text, speed = 50) {
-    let i = 0;
-    element.textContent = '';
-
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-
-    type();
-}
-
-// Add hover sound effect simulation (visual feedback)
-document.querySelectorAll('.ref-link, .feature-badge, .arch-card').forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        element.style.transition = 'all 0.1s';
-    });
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero-content');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        hero.style.opacity = 1 - (scrolled / 800);
-    }
-});
-
-// Performance: Reduce animations on low-end devices
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('*').forEach(el => {
-        el.style.animation = 'none';
-        el.style.transition = 'none';
-    });
-}
-
-// Add terminal-style cursor effect to code blocks
-function addTerminalCursor() {
-    const codeElements = document.querySelectorAll('.use-case-detail');
-    codeElements.forEach(el => {
-        const cursor = document.createElement('span');
-        cursor.textContent = '▋';
-        cursor.style.color = 'var(--primary)';
-        cursor.style.animation = 'blink 1s infinite';
-        el.appendChild(cursor);
-    });
-}
-
-// Add blink animation
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes blink {
-        0%, 49% { opacity: 1; }
-        50%, 100% { opacity: 0; }
-    }
-`;
-document.head.appendChild(style);
-
-addTerminalCursor();
 
 // Console easter egg
 console.log('%c vProgs | Breaking the Smart Contract Trilemma ', 'background: #00ff41; color: #0a0e0f; font-size: 20px; font-weight: bold; padding: 10px;');
