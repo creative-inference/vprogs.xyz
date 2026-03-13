@@ -1,0 +1,17 @@
+{% assign crumbs = page.url | split: '/' %}
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    {% assign path = '' %}
+    {% for crumb in crumbs %}
+      {% if crumb != '' %}
+        {% assign path = path | append: '/' | append: crumb %}
+        {% if forloop.last %}
+          <li class="breadcrumb-item breadcrumb-current" aria-current="page">{{ page.title | default: crumb | replace: '-', ' ' | capitalize }}</li>
+        {% else %}
+          <li class="breadcrumb-item"><a href="{{ path }}/">{{ crumb | replace: '-', ' ' | capitalize }}</a></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ol>
+</nav>

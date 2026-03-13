@@ -1,0 +1,11 @@
+<h3>{{ page.sidebar_title | default: "In This Section" }}</h3>
+{% if page.sidebar_links %}
+<div class="reference-links">
+  {% for link in page.sidebar_links %}
+  <a href="{{ link.url }}" class="ref-link"{% if link.external %} target="_blank"{% endif %}>
+    <span class="ref-title">{{ link.title }}</span>
+    <span class="ref-arrow">&rarr;</span>
+  </a>
+  {% endfor %}
+</div>
+{% endif %}

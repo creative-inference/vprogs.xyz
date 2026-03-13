@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<div class="main-layout page-layout">
+  <main class="main-content">
+    {% include breadcrumb.html %}
+    <div class="content-block markdown-content">
+      {{ content }}
+    </div>
+  </main>
+  {% if page.sidebar %}
+  <aside class="sidebar">
+    <div class="sidebar-sticky">
+      {% include sidebar.html %}
+    </div>
+  </aside>
+  {% endif %}
+</div>

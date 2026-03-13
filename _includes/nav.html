@@ -1,0 +1,14 @@
+<nav class="nav">
+  <div class="nav-container">
+    <a href="/" class="logo">vProgs</a>
+    <ul class="nav-links">
+      <li><a href="/learn/"{% if page.section == "learn" %} class="active"{% endif %}>Learn</a></li>
+      <li><a href="/architecture/"{% if page.section == "architecture" %} class="active"{% endif %}>Architecture</a></li>
+      <li><a href="/build/"{% if page.section == "build" %} class="active"{% endif %}>Build</a></li>
+      <li><a href="/research/"{% if page.section == "research" %} class="active"{% endif %}>Research</a></li>
+      <li><a href="/ecosystem/"{% if page.section == "ecosystem" %} class="active"{% endif %}>Ecosystem</a></li>
+      <li><a href="/changelog/"{% if page.section == "changelog" %} class="active"{% endif %}>Changelog</a></li>
+      <li><a href="/references/"{% if page.section == "references" %} class="active"{% endif %}>References</a></li>
+    </ul>
+  </div>
+</nav>

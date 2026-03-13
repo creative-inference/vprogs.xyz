@@ -1,0 +1,515 @@
+/* ==========================================================================
+   content.css — Markdown content styling for Jekyll pages
+   Cypherpunk theme: green-on-black, JetBrains Mono + Space Grotesk
+   ========================================================================== */
+
+/* ---------- Page Layout Override ---------- */
+.page-layout {
+    grid-template-columns: 1fr;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-top: 6rem;
+}
+
+.page-layout.has-sidebar {
+    max-width: 1600px;
+    grid-template-columns: 1fr 320px;
+}
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumb {
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+.breadcrumb-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+    margin-right: 0.25rem;
+    color: var(--text-dim);
+}
+
+.breadcrumb-item a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--secondary);
+    text-shadow: 0 0 6px var(--primary);
+}
+
+.breadcrumb-current {
+    color: var(--text-dim);
+}
+
+/* ---------- Section Hero ---------- */
+.section-hero {
+    position: relative;
+    padding: 8rem 2rem 4rem;
+    text-align: center;
+    background:
+        linear-gradient(rgba(10, 14, 15, 0.9), rgba(10, 14, 15, 0.85)),
+        radial-gradient(ellipse at center, rgba(0, 255, 65, 0.08) 0%, transparent 70%),
+        var(--darker);
+    border-bottom: 2px solid var(--primary);
+    z-index: 1;
+}
+
+.section-hero .container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.section-hero-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-shadow:
+        0 0 15px var(--primary),
+        0 0 30px var(--primary);
+    margin-bottom: 1rem;
+}
+
+.section-hero-description {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--secondary);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ---------- Markdown Content ---------- */
+.markdown-content {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text);
+}
+
+/* Headings */
+.markdown-content h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--primary);
+    margin: 3rem 0 1.5rem;
+    padding-left: 1.25rem;
+    border-left: 4px solid var(--primary);
+    text-shadow: 0 0 10px var(--primary);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+}
+
+.markdown-content h1:first-child {
+    margin-top: 0;
+}
+
+.markdown-content h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--secondary);
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(13, 255, 138, 0.3);
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+}
+
+.markdown-content h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    font-weight: 700;
+    color: var(--accent);
+    margin: 2rem 0 1rem;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+}
+
+.markdown-content h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 1.75rem 0 0.75rem;
+}
+
+.markdown-content h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.markdown-content h6 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    margin: 1.25rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Paragraphs */
+.markdown-content p {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    line-height: 1.8;
+}
+
+/* Links */
+.markdown-content a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    transition: all 0.3s;
+}
+
+.markdown-content a:hover {
+    color: var(--secondary);
+    border-bottom-color: var(--secondary);
+    text-shadow: 0 0 8px var(--primary);
+}
+
+/* Lists */
+.markdown-content ul,
+.markdown-content ol {
+    margin: 0 0 1.5rem 1.5rem;
+    padding: 0;
+}
+
+.markdown-content ul {
+    list-style: none;
+}
+
+.markdown-content ul li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content ul li::before {
+    content: "\25b8";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-size: 0.9em;
+}
+
+.markdown-content ol {
+    list-style: none;
+    counter-reset: ol-counter;
+}
+
+.markdown-content ol li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.5rem;
+    counter-increment: ol-counter;
+}
+
+.markdown-content ol li::before {
+    content: counter(ol-counter) ".";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+.markdown-content li > ul,
+.markdown-content li > ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Inline code */
+.markdown-content code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    background: rgba(0, 255, 65, 0.08);
+    border: 1px solid rgba(0, 255, 65, 0.25);
+    padding: 0.15em 0.4em;
+    border-radius: 2px;
+    color: var(--primary);
+}
+
+/* Code blocks */
+.markdown-content pre {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: rgba(5, 7, 7, 0.9);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-left: 3px solid var(--primary);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.markdown-content pre code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--primary);
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Syntax highlighting (Rouge) */
+.highlight {
+    background: rgba(5, 7, 7, 0.9);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-left: 3px solid var(--primary);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+}
+
+.highlight pre {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs { color: #5c6370; font-style: italic; }  /* comments */
+.highlight .k,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt { color: var(--accent); }                /* keywords */
+.highlight .s,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .s2,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .s1 { color: var(--secondary); }             /* strings */
+.highlight .na,
+.highlight .nb,
+.highlight .nc,
+.highlight .no,
+.highlight .nd,
+.highlight .ni,
+.highlight .ne,
+.highlight .nf { color: var(--primary); }               /* names/functions */
+.highlight .nn { color: var(--accent); }                 /* namespace */
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo { color: #d19a66; }                      /* numbers */
+.highlight .o,
+.highlight .ow { color: var(--text); }                  /* operators */
+.highlight .p { color: var(--text); }                    /* punctuation */
+.highlight .gd { color: #ff0055; }                      /* diff deleted */
+.highlight .gi { color: var(--primary); }                /* diff inserted */
+
+/* Tables */
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 1rem;
+}
+
+.markdown-content thead {
+    background: rgba(0, 255, 65, 0.1);
+}
+
+.markdown-content th {
+    font-family: 'JetBrains Mono', monospace;
+    padding: 1rem 1.2rem;
+    text-align: left;
+    color: var(--primary);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(0, 255, 65, 0.4);
+}
+
+.markdown-content td {
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.markdown-content tr:hover {
+    background: rgba(0, 255, 65, 0.05);
+}
+
+/* Blockquote */
+.markdown-content blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent);
+    background: rgba(0, 255, 255, 0.04);
+    font-style: italic;
+    color: var(--text-dim);
+}
+
+.markdown-content blockquote p {
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Horizontal Rule */
+.markdown-content hr {
+    border: none;
+    height: 1px;
+    background: var(--primary);
+    margin: 3rem 0;
+    opacity: 0.4;
+}
+
+/* Images */
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    display: block;
+    margin: 1.5rem 0;
+}
+
+/* Definition Lists */
+.markdown-content dl {
+    margin: 1.5rem 0;
+}
+
+.markdown-content dt {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--primary);
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+.markdown-content dd {
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+/* ---------- Coming Soon Badge ---------- */
+.markdown-content .coming-soon,
+.markdown-content span:has(+ .coming-soon),
+.markdown-content *:contains("[Coming Soon]") {
+    /* fallback: target via class */
+}
+
+.coming-soon-badge,
+.markdown-content span.coming-soon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.15em 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+}
+
+/* ---------- Active Nav ---------- */
+.nav-links a.active {
+    color: var(--primary);
+    text-shadow: 0 0 8px var(--primary);
+}
+
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .section-hero {
+        padding: 6rem 1rem 2.5rem;
+    }
+
+    .section-hero-title {
+        font-size: 2rem;
+    }
+
+    .page-layout {
+        padding: 5rem 1rem 2rem;
+    }
+
+    .breadcrumb-list {
+        font-size: 0.75rem;
+    }
+
+    .markdown-content {
+        font-size: 1rem;
+    }
+
+    .markdown-content pre {
+        padding: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .markdown-content table {
+        font-size: 0.85rem;
+    }
+
+    .markdown-content th,
+    .markdown-content td {
+        padding: 0.6rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .section-hero-title {
+        font-size: 1.6rem;
+    }
+
+    .markdown-content h1 {
+        font-size: 1.6rem;
+    }
+
+    .markdown-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .markdown-content h3 {
+        font-size: 1.1rem;
+    }
+}
