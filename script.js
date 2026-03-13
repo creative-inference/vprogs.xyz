@@ -66,8 +66,10 @@ function createMatrixEffect() {
     setInterval(draw, 60);
 }
 
-// Initialize matrix effect
-createMatrixEffect();
+// Only run matrix rain on the home page
+if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    createMatrixEffect();
+}
 
 // Glitch effect for hero title
 function glitchEffect() {
