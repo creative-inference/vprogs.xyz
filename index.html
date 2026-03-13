@@ -3,385 +3,855 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaspa vProgs | Native L1 Verifiable Programs</title>
-    <meta name="description" content="Kaspa vProgs - Native Layer 1 Verifiable Programs solving the smart contract trilemma with zero-knowledge proofs, synchronous composability, and 30,000+ TPS">
-    <meta name="keywords" content="Kaspa, vProgs, BlockDAG, zero-knowledge proofs, Layer 1, smart contracts, synchronous composability, DagKnight, cryptocurrency">
-    <meta name="author" content="Kaspa">
+    <title>vProgs.xyz | Kaspa Native L1 Verifiable Programs</title>
+    <meta name="description" content="vProgs - Native Layer 1 Verifiable Programs solving the smart contract trilemma with zero-knowledge proofs, synchronous composability, and 30,000+ TPS on Kaspa's BlockDAG">
+    <meta name="keywords" content="Kaspa, vProgs, BlockDAG, zero-knowledge proofs, Layer 1, smart contracts, synchronous composability, DagKnight">
     <link rel="canonical" href="https://vprogs.xyz/">
-    <link rel="stylesheet" href="styles.css">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y1HKTP16ZF"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-Y1HKTP16ZF');
     </script>
+    <style>
+    :root {
+        --primary: #00ff41;
+        --secondary: #0dff8a;
+        --dark: #0a0e0f;
+        --darker: #050707;
+        --gray: #1a2426;
+        --text: #e0e0e0;
+        --text-dim: #808080;
+        --accent: #00ffff;
+        --danger: #ff0055;
+        --glow: 0 0 10px rgba(0, 255, 65, 0.4);
+        --glow-strong: 0 0 20px rgba(0, 255, 65, 0.6), 0 0 40px rgba(0, 255, 65, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Space Grotesk', sans-serif;
+        background: var(--darker);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    /* Matrix Background */
+    .matrix-bg {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.5;
+    }
+
+    /* ---- NAV ---- */
+    .nav {
+        position: fixed;
+        top: 0; width: 100%;
+        background: rgba(5, 7, 7, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(0, 255, 65, 0.25);
+        z-index: 1000;
+        padding: 0.75rem 0;
+    }
+    .nav-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-shadow: var(--glow);
+        letter-spacing: 3px;
+        text-decoration: none;
+    }
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 1.8rem;
+    }
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--text-dim);
+        text-decoration: none;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.3s;
+        position: relative;
+    }
+    .nav-links a:hover {
+        color: var(--primary);
+        text-shadow: var(--glow);
+    }
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -4px; left: 0;
+        width: 0; height: 1px;
+        background: var(--primary);
+        box-shadow: var(--glow);
+        transition: width 0.3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ---- HERO ---- */
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 8rem 2rem 4rem;
+        text-align: center;
+        z-index: 1;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse at 50% 30%, rgba(0, 255, 65, 0.06) 0%, transparent 60%),
+            radial-gradient(ellipse at 20% 80%, rgba(0, 255, 255, 0.03) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .hero-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: clamp(5rem, 14vw, 10rem);
+        font-weight: 700;
+        color: var(--primary);
+        text-shadow: var(--glow-strong);
+        letter-spacing: 0.15em;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: clamp(1rem, 2.5vw, 1.4rem);
+        color: var(--text-dim);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        margin-bottom: 3rem;
+        font-weight: 300;
+    }
+    .hero-sub .hl { color: var(--primary); }
+
+    .hero-stats {
+        display: flex;
+        gap: 3rem;
+        margin-bottom: 4rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .stat {
+        text-align: center;
+    }
+    .stat-value {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-shadow: var(--glow);
+        display: block;
+    }
+    .stat-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .scroll-line {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        width: 1px;
+        height: 60px;
+        background: linear-gradient(transparent, var(--primary));
+        animation: pulse-down 2s infinite;
+    }
+    @keyframes pulse-down {
+        0% { opacity: 0; transform: translateX(-50%) scaleY(0); transform-origin: top; }
+        50% { opacity: 1; transform: translateX(-50%) scaleY(1); }
+        100% { opacity: 0; transform: translateX(-50%) scaleY(1); }
+    }
+
+    /* ---- PARADIGM STRIP ---- */
+    .paradigm {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid rgba(0, 255, 65, 0.15);
+        border-bottom: 1px solid rgba(0, 255, 65, 0.15);
+        background: rgba(10, 14, 15, 0.8);
+        padding: 4rem 2rem;
+    }
+    .paradigm-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .paradigm h2 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 1.5rem;
+    }
+    .paradigm-text {
+        font-size: 1.6rem;
+        color: var(--text);
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+    }
+    .paradigm-text strong { color: var(--primary); font-weight: 700; }
+    .paradigm-text em { color: var(--accent); font-style: normal; }
+
+    .pillars {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
+    .pillar {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 0.6rem 1.2rem;
+        border: 1px solid rgba(0, 255, 65, 0.3);
+        background: rgba(0, 255, 65, 0.05);
+    }
+
+    /* ---- PORTAL GRID ---- */
+    .portal {
+        position: relative;
+        z-index: 1;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 6rem 2rem;
+    }
+    .portal-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+    .portal-header h2 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 0.5rem;
+    }
+    .portal-header p {
+        color: var(--text-dim);
+        font-size: 1rem;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: rgba(0, 255, 65, 0.12);
+        border: 1px solid rgba(0, 255, 65, 0.12);
+    }
+
+    .cell {
+        background: rgba(5, 7, 7, 0.95);
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+        min-height: 260px;
+    }
+    .cell::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 2px;
+        background: var(--primary);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s;
+    }
+    .cell:hover::before { transform: scaleX(1); }
+    .cell:hover {
+        background: rgba(0, 255, 65, 0.04);
+    }
+
+    .cell-index {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+    .cell h3 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1.6rem;
+        color: var(--text);
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+        transition: color 0.3s;
+    }
+    .cell:hover h3 { color: var(--primary); text-shadow: var(--glow); }
+    .cell p {
+        font-size: 0.95rem;
+        color: var(--text-dim);
+        line-height: 1.7;
+        flex-grow: 1;
+    }
+    .cell-links {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .cell-link {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 0.3rem 0.6rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+    .cell:hover .cell-link {
+        border-color: rgba(0, 255, 65, 0.25);
+        color: var(--secondary);
+    }
+
+    /* Feature cell spanning full width */
+    .cell.featured {
+        grid-column: 1 / -1;
+        min-height: auto;
+        padding: 3rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+    }
+    .cell.featured .feat-col h4 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+    }
+    .cell.featured .feat-col a {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--text-dim);
+        text-decoration: none;
+        padding: 0.4rem 0;
+        transition: color 0.2s;
+    }
+    .cell.featured .feat-col a:hover {
+        color: var(--primary);
+    }
+    .cell.featured .feat-col a span {
+        color: rgba(255, 255, 255, 0.15);
+        margin-right: 0.5rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+    }
+
+    /* ---- COMPARISON STRIP ---- */
+    .compare {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid rgba(0, 255, 65, 0.12);
+        background: rgba(10, 14, 15, 0.6);
+        padding: 5rem 2rem;
+    }
+    .compare-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .compare h2 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+    .compare table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .compare th, .compare td {
+        font-family: 'JetBrains Mono', monospace;
+        padding: 1rem 1.2rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.85rem;
+    }
+    .compare th {
+        color: var(--text-dim);
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.7rem;
+    }
+    .compare td { color: var(--text-dim); }
+    .compare td.v {
+        color: var(--primary);
+        font-weight: 700;
+    }
+    .compare tr:hover td { color: var(--text); }
+    .compare tr:hover td.v { text-shadow: var(--glow); }
+
+    /* ---- RESOURCES SIDEBAR ---- */
+    .resources {
+        position: relative;
+        z-index: 1;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 4rem 2rem 6rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: rgba(0, 255, 65, 0.08);
+        border: 1px solid rgba(0, 255, 65, 0.08);
+    }
+    .res-col {
+        background: rgba(5, 7, 7, 0.95);
+        padding: 2.5rem;
+    }
+    .res-col h3 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 1.5rem;
+    }
+    .res-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+    .res-link:hover {
+        color: var(--primary);
+        padding-left: 0.5rem;
+    }
+    .res-link .arrow {
+        font-family: 'JetBrains Mono', monospace;
+        color: rgba(0, 255, 65, 0.3);
+        transition: color 0.2s;
+        font-size: 0.8rem;
+    }
+    .res-link:hover .arrow { color: var(--primary); }
+
+    /* ---- FOOTER ---- */
+    .footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid rgba(0, 255, 65, 0.15);
+        padding: 3rem 2rem;
+        text-align: center;
+        background: rgba(5, 7, 7, 0.9);
+    }
+    .footer p {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+    }
+    .footer a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+        .grid { grid-template-columns: repeat(2, 1fr); }
+        .cell.featured { grid-template-columns: 1fr; }
+        .resources { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .grid { grid-template-columns: 1fr; }
+        .nav-links { gap: 1rem; }
+        .nav-links a { font-size: 0.7rem; letter-spacing: 1px; }
+        .hero { padding: 7rem 1.5rem 3rem; }
+        .hero-stats { gap: 1.5rem; }
+        .pillars { gap: 0.8rem; }
+        .pillar { font-size: 0.65rem; padding: 0.4rem 0.8rem; }
+        .cell { padding: 2rem; min-height: auto; }
+        .compare th, .compare td { padding: 0.7rem; font-size: 0.75rem; }
+    }
+    @media (max-width: 480px) {
+        .nav-links { display: none; }
+        .hero-title { font-size: 3.5rem; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--darker); }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 255, 65, 0.3); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+    ::selection { background: var(--primary); color: var(--darker); }
+
+    /* Animations */
+    @keyframes flicker {
+        0%, 100% { opacity: 1; }
+        41.99% { opacity: 1; }
+        42% { opacity: 0.8; }
+        43% { opacity: 1; }
+        45.99% { opacity: 1; }
+        46% { opacity: 0.7; }
+        46.5% { opacity: 1; }
+    }
+    .hero-title { animation: flicker 4s infinite; }
+
+    .fade-in {
+        opacity: 0;
+        transform: translateY(15px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    </style>
 </head>
 <body>
     <div class="matrix-bg"></div>
 
-    <!-- Navigation -->
     <nav class="nav">
-        <div class="nav-container">
-            <div class="logo">vProgs</div>
+        <div class="nav-inner">
+            <a href="/" class="logo">vProgs</a>
             <ul class="nav-links">
-                <li><a href="#overview">Overview</a></li>
                 <li><a href="/learn/">Learn</a></li>
                 <li><a href="/architecture/">Architecture</a></li>
                 <li><a href="/build/">Build</a></li>
                 <li><a href="/research/">Research</a></li>
                 <li><a href="/ecosystem/">Ecosystem</a></li>
+                <li><a href="/changelog/">Changelog</a></li>
                 <li><a href="/references/">References</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- HERO -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="glitch" data-text="vProgs">vProgs</h1>
-                <p class="hero-subtitle">Native Layer 1 Verifiable Programs</p>
-                <p class="hero-description">
-                    The architectural solution to blockchain's smart contract trilemma
-                </p>
-                <div class="hero-features">
-                    <div class="feature-badge">Zero-Knowledge Proofs</div>
-                    <div class="feature-badge">Synchronous Composability</div>
-                    <div class="feature-badge">30,000+ TPS</div>
+        <h1 class="hero-title">vProgs</h1>
+        <p class="hero-sub"><span class="hl">Native L1</span> Verifiable Programs for Kaspa</p>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-value">30k+</span>
+                <span class="stat-label">TPS Capacity</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">&lt;1s</span>
+                <span class="stat-label">Proof Time (Noir)</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">0</span>
+                <span class="stat-label">Bridges Required</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">L1</span>
+                <span class="stat-label">Settlement</span>
+            </div>
+        </div>
+
+        <div class="scroll-line"></div>
+    </section>
+
+    <!-- PARADIGM -->
+    <section class="paradigm">
+        <div class="paradigm-inner">
+            <h2>The Third Way</h2>
+            <p class="paradigm-text">
+                Not <strong>L1 bloat</strong>. Not <strong>L2 fragmentation</strong>.<br>
+                Execute off-chain. Prove with <em>zero knowledge</em>. Verify on L1.<br>
+                Unified liquidity. Synchronous composability. Pure PoW security.
+            </p>
+            <div class="pillars">
+                <span class="pillar">Sovereign State</span>
+                <span class="pillar">Off-Chain Compute</span>
+                <span class="pillar">L1 Sequencing</span>
+                <span class="pillar">ZK Verification</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTAL -->
+    <section class="portal">
+        <div class="portal-header">
+            <h2>Explore the Documentation</h2>
+            <p>53 pages across 7 sections</p>
+        </div>
+
+        <div class="grid">
+            <!-- Learn -->
+            <a href="/learn/" class="cell fade-in">
+                <span class="cell-index">01 // Learn</span>
+                <h3>Understand vProgs</h3>
+                <p>What they are, why they matter, how they work. Comparisons with Ethereum L2s, Solana, and Sui. Glossary and FAQ.</p>
+                <div class="cell-links">
+                    <span class="cell-link">What Are vProgs</span>
+                    <span class="cell-link">How It Works</span>
+                    <span class="cell-link">Compared</span>
+                    <span class="cell-link">FAQ</span>
+                </div>
+            </a>
+
+            <!-- Architecture -->
+            <a href="/architecture/" class="cell fade-in">
+                <span class="cell-index">02 // Architecture</span>
+                <h3>Deep Technical Design</h3>
+                <p>Four-pillar architecture. Account model, execution model, ZK verification, KIP-21 sequencing, DagKnight consensus, synchronous composability.</p>
+                <div class="cell-links">
+                    <span class="cell-link">Overview</span>
+                    <span class="cell-link">Sequencing</span>
+                    <span class="cell-link">ZK Stack</span>
+                    <span class="cell-link">Composability</span>
+                </div>
+            </a>
+
+            <!-- Build -->
+            <a href="/build/" class="cell fade-in">
+                <span class="cell-index">03 // Build</span>
+                <h3>Developer Guides</h3>
+                <p>Quickstart, tutorials, API reference, Silverscript language spec. From first covenant to cross-vProg atomic transactions.</p>
+                <div class="cell-links">
+                    <span class="cell-link">Quickstart</span>
+                    <span class="cell-link">Tutorials</span>
+                    <span class="cell-link">Silverscript</span>
+                    <span class="cell-link">Testnet</span>
+                </div>
+            </a>
+
+            <!-- Research -->
+            <a href="/research/" class="cell fade-in">
+                <span class="cell-index">04 // Research</span>
+                <h3>Formal Analysis</h3>
+                <p>Computation DAG formalism, Erdos-Renyi scalability bounds, gas economics, proving system tradeoffs, security model, open questions.</p>
+                <div class="cell-links">
+                    <span class="cell-link">Formal Model</span>
+                    <span class="cell-link">Gas Economics</span>
+                    <span class="cell-link">Security</span>
+                </div>
+            </a>
+
+            <!-- Ecosystem -->
+            <a href="/ecosystem/" class="cell fade-in">
+                <span class="cell-index">05 // Ecosystem</span>
+                <h3>Roadmap & Community</h3>
+                <p>Development timeline from Crescendo through Covenants++ to full vProgs. Applications, KII Foundation, partners, community.</p>
+                <div class="cell-links">
+                    <span class="cell-link">Roadmap</span>
+                    <span class="cell-link">Applications</span>
+                    <span class="cell-link">KII</span>
+                </div>
+            </a>
+
+            <!-- Changelog + References -->
+            <a href="/changelog/" class="cell fade-in">
+                <span class="cell-index">06 // Changelog</span>
+                <h3>Latest Developments</h3>
+                <p>R&D channel insights, testnet updates, development timeline. Track progress from TN12 through Covenants++ hard fork.</p>
+                <div class="cell-links">
+                    <span class="cell-link">R&D Insights</span>
+                    <span class="cell-link">Testnet</span>
+                    <span class="cell-link">Timeline</span>
+                </div>
+            </a>
+
+            <!-- Featured content row -->
+            <div class="cell featured fade-in">
+                <div class="feat-col">
+                    <h4>Start Here</h4>
+                    <a href="/learn/what-are-vprogs/"><span>//</span> What Are vProgs</a>
+                    <a href="/learn/how-it-works/"><span>//</span> How It Works</a>
+                    <a href="/learn/compared/"><span>//</span> Platform Comparison</a>
+                    <a href="/learn/faq/"><span>//</span> FAQ</a>
+                </div>
+                <div class="feat-col">
+                    <h4>Key Architecture</h4>
+                    <a href="/architecture/composability/"><span>//</span> Synchronous Composability</a>
+                    <a href="/architecture/sequencing/"><span>//</span> KIP-21 Sequencing</a>
+                    <a href="/architecture/zk-verification/"><span>//</span> ZK Verification Stack</a>
+                    <a href="/architecture/dagknight/"><span>//</span> DagKnight Consensus</a>
+                </div>
+                <div class="feat-col">
+                    <h4>Build</h4>
+                    <a href="/build/quickstart/"><span>//</span> Quickstart Guide</a>
+                    <a href="/build/tutorials/first-vprog/"><span>//</span> Your First vProg</a>
+                    <a href="/build/silverscript-reference/"><span>//</span> Silverscript Reference</a>
+                    <a href="/build/testnet/"><span>//</span> TN12 Testnet Guide</a>
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">↓</div>
     </section>
 
-    <div class="main-layout">
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Overview Section -->
-            <section id="overview" class="section">
-                <h2 class="section-title">Breaking the Trilemma</h2>
-                <div class="content-block">
-                    <div class="problem-solution">
-                        <div class="problem">
-                            <h3>The Problem</h3>
-                            <ul class="issue-list">
-                                <li><span class="issue-label">L1 Bloat:</span> Monolithic VMs cause congestion, high fees, centralization</li>
-                                <li><span class="issue-label">L2 Fragmentation:</span> Rollups create isolated liquidity, bridge risks, async delays</li>
-                            </ul>
-                        </div>
-                        <div class="solution">
-                            <h3>The Solution</h3>
-                            <p class="highlight-text">
-                                vProgs: Lightweight, deterministic logic modules native to L1
-                            </p>
-                            <p>Off-chain execution + on-chain ZK verification = infinite scalability without fragmentation</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- COMPARISON -->
+    <section class="compare fade-in">
+        <div class="compare-inner">
+            <h2>Architectural Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>EVM L1</th>
+                        <th>L2 Rollups</th>
+                        <th>vProgs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Execution</td>
+                        <td>On-chain (heavy)</td>
+                        <td>Off-chain (isolated)</td>
+                        <td class="v">Off-chain (unified)</td>
+                    </tr>
+                    <tr>
+                        <td>Composability</td>
+                        <td>Synchronous</td>
+                        <td>Asynchronous</td>
+                        <td class="v">Synchronous</td>
+                    </tr>
+                    <tr>
+                        <td>Liquidity</td>
+                        <td>Unified</td>
+                        <td>Fragmented</td>
+                        <td class="v">Unified</td>
+                    </tr>
+                    <tr>
+                        <td>L1 Load</td>
+                        <td>High</td>
+                        <td>Minimal</td>
+                        <td class="v">Minimal</td>
+                    </tr>
+                    <tr>
+                        <td>Security</td>
+                        <td>Economic (PoS)</td>
+                        <td>Inherited + bridge risk</td>
+                        <td class="v">Cryptographic (PoW + ZK)</td>
+                    </tr>
+                    <tr>
+                        <td>Finality</td>
+                        <td>~12 min</td>
+                        <td>7 day challenge</td>
+                        <td class="v">Instant (DagKnight)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-            <!-- Architecture Section -->
-            <section id="architecture" class="section">
-                <h2 class="section-title">Architecture</h2>
-                <div class="content-block">
-                    <div class="architecture-grid">
-                        <div class="arch-card">
-                            <div class="arch-icon">🔐</div>
-                            <h3>Sovereign State</h3>
-                            <p>Each vProg owns exclusive accounts. Mutually trustless. Complete sovereignty over resource management.</p>
-                        </div>
-                        <div class="arch-card">
-                            <div class="arch-icon">⚡</div>
-                            <h3>Off-Chain Compute</h3>
-                            <p>Complex execution happens off-chain. L1 only validates ZK proofs. Scales horizontally with prover market.</p>
-                        </div>
-                        <div class="arch-card">
-                            <div class="arch-icon">🔗</div>
-                            <h3>L1 Sequencing</h3>
-                            <p>BlockDAG consensus provides immutable sequencing. Pure PoW security. Instant finality via DagKnight.</p>
-                        </div>
-                        <div class="arch-card">
-                            <div class="arch-icon">✓</div>
-                            <h3>ZK Verification</h3>
-                            <p>Cryptographic proofs submitted to L1. State commitments via Merkle roots. Concise witnesses for composability.</p>
-                        </div>
-                    </div>
-
-                    <div class="comparison-table">
-                        <h3>Architectural Comparison</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Feature</th>
-                                    <th>EVM L1</th>
-                                    <th>L2 Rollups</th>
-                                    <th>vProgs</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Execution</td>
-                                    <td>On-chain (heavy)</td>
-                                    <td>Off-chain (isolated)</td>
-                                    <td class="highlight">Off-chain (unified)</td>
-                                </tr>
-                                <tr>
-                                    <td>Composability</td>
-                                    <td>Synchronous</td>
-                                    <td>Asynchronous</td>
-                                    <td class="highlight">Synchronous</td>
-                                </tr>
-                                <tr>
-                                    <td>Liquidity</td>
-                                    <td>Unified</td>
-                                    <td>Fragmented</td>
-                                    <td class="highlight">Unified</td>
-                                </tr>
-                                <tr>
-                                    <td>L1 Load</td>
-                                    <td>High</td>
-                                    <td>Minimal</td>
-                                    <td class="highlight">Minimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Scalability</td>
-                                    <td>Limited</td>
-                                    <td>Bridge latency</td>
-                                    <td class="highlight">Prover market</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Syncompo Section -->
-            <section id="syncompo" class="section">
-                <h2 class="section-title">Synchronous Composability</h2>
-                <div class="content-block">
-                    <p class="lead-text">
-                        Multiple dApps interact in a single, atomic transaction. No bridges. No delays. No fragmentation.
-                    </p>
-
-                    <div class="syncompo-features">
-                        <div class="sync-feature">
-                            <h3>Cross-vProg Atomicity</h3>
-                            <p>Trustless read/write interactions. State dependencies resolved in one transaction. Mathematical cryptographic proof.</p>
-                        </div>
-                        <div class="sync-feature">
-                            <h3>Unified Liquidity</h3>
-                            <p>All applications share L1 settlement state. No parasitic rollup monopolies. True decentralization.</p>
-                        </div>
-                        <div class="sync-feature">
-                            <h3>MEV Resistance</h3>
-                            <p>Deterministic, synchronous execution. No latency-based front-running. Bundled operations protected.</p>
-                        </div>
-                    </div>
-
-                    <div class="use-case">
-                        <h4>Example: Complex DeFi Flow</h4>
-                        <p>Borrow stablecoins → Swap immediately → Stake in one atomic L1 transaction</p>
-                        <p class="use-case-detail">Compute off-chain → Generate combined proof → Submit to L1 → Instant finality</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- DagKnight Section -->
-            <section id="dagknight" class="section">
-                <h2 class="section-title">DagKnight + vProgs</h2>
-                <div class="content-block">
-                    <p class="lead-text">
-                        DagKnight consensus upgrade enables precise sequencing essential for programmable applications.
-                    </p>
-
-                    <div class="dagknight-grid">
-                        <div class="dk-card">
-                            <h3>Precise Ordering</h3>
-                            <p>Parameterless adaptive consensus. Faster convergence. No sequencing jitter.</p>
-                        </div>
-                        <div class="dk-card">
-                            <h3>30,000+ TPS</h3>
-                            <p>Parallel BlockDAG sequencing + ZK computational offloading = exponential scalability.</p>
-                        </div>
-                        <div class="dk-card">
-                            <h3>Instant Finality</h3>
-                            <p>Near-instant finality at scale. Reliable state verification. Enterprise-grade settlement.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Applications Section -->
-            <section id="applications" class="section">
-                <h2 class="section-title">Enabled Applications</h2>
-                <div class="content-block">
-                    <div class="app-grid">
-                        <div class="app-card">
-                            <h3>DeFi Primitives</h3>
-                            <p>DEXs, auctions, vaults, lending protocols</p>
-                        </div>
-                        <div class="app-card">
-                            <h3>DAOs & Governance</h3>
-                            <p>Programmable multi-sig, autonomous organizations</p>
-                        </div>
-                        <div class="app-card">
-                            <h3>Privacy & Identity</h3>
-                            <p>ZK-based privacy, identity verification, escrow</p>
-                        </div>
-                        <div class="app-card">
-                            <h3>Enterprise Finance</h3>
-                            <p>Automated compliance, audit trails, institutional settlement</p>
-                        </div>
-                    </div>
-
-                    <div class="institutional">
-                        <h3>Enterprise-Grade Infrastructure</h3>
-                        <p>Automated compliance logic on-chain. ZK-based monitoring and reporting. Real-time settlement without trusted third parties.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Strategic Position Section -->
-            <section id="strategic" class="section">
-                <h2 class="section-title">Strategic Position</h2>
-                <div class="content-block">
-                    <div class="position-statement">
-                        <p class="highlight-text large">
-                            Kaspa vProgs occupy a new category: programmable, scalable, PoW-secured settlement layer with instant DAG finality.
-                        </p>
-                    </div>
-
-                    <div class="advantages">
-                        <div class="advantage">
-                            <span class="adv-icon">✓</span>
-                            <p>Pure PoW security</p>
-                        </div>
-                        <div class="advantage">
-                            <span class="adv-icon">✓</span>
-                            <p>BlockDAG speed</p>
-                        </div>
-                        <div class="advantage">
-                            <span class="adv-icon">✓</span>
-                            <p>Native programmability</p>
-                        </div>
-                        <div class="advantage">
-                            <span class="adv-icon">✓</span>
-                            <p>Unified L1 liquidity</p>
-                        </div>
-                        <div class="advantage">
-                            <span class="adv-icon">✓</span>
-                            <p>Synchronous composability</p>
-                        </div>
-                        <div class="advantage">
-                            <span class="adv-icon">✓</span>
-                            <p>No fragmentation</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-sticky">
-                <h3>Key Resources</h3>
-                <div class="reference-links">
-                    <a href="https://kaspa.org/features/" target="_blank" class="ref-link">
-                        <span class="ref-title">Kaspa Features</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://research.kas.pa/t/concrete-proposal-for-a-synchronously-composable-verifiable-programs-architecture/387" target="_blank" class="ref-link">
-                        <span class="ref-title">vProgs Research</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://research.kas.pa/t/zoom-in-a-formal-backbone-model-for-the-vprog-computation-dag/407" target="_blank" class="ref-link">
-                        <span class="ref-title">Formal Model</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://medium.com/@jcroger/a-quick-introduction-to-vprogs-b3a93395e6ed" target="_blank" class="ref-link">
-                        <span class="ref-title">vProgs Intro</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://www.reddit.com/r/kaspa/comments/1oyevzm/kaspas_yellow_paper_explained_for_crypto_dummies/" target="_blank" class="ref-link">
-                        <span class="ref-title">Yellow Paper Guide</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://kaspa.org/kaspa-development-milestones-revealed-2025/" target="_blank" class="ref-link">
-                        <span class="ref-title">2025-2026 Roadmap</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://kaspa.org/the-global-payment-problem-and-how-kaspa-can-fix-this/" target="_blank" class="ref-link">
-                        <span class="ref-title">Global Payments</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://kaspa-kii.org/" target="_blank" class="ref-link">
-                        <span class="ref-title">Kaspa KII Foundation</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                    <a href="https://www.reddit.com/r/CryptoTechnology/comments/1ox1mek/vprogs_and_kaspa/" target="_blank" class="ref-link">
-                        <span class="ref-title">Tech Discussion</span>
-                        <span class="ref-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-        </aside>
+    <!-- RESOURCES -->
+    <div class="resources fade-in">
+        <div class="res-col">
+            <h3>Key Resources</h3>
+            <a href="https://research.kas.pa/t/concrete-proposal-for-a-synchronously-composable-verifiable-programs-architecture/387" target="_blank" class="res-link">
+                <span>vProgs Composability Proposal</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="https://research.kas.pa/t/zoom-in-a-formal-backbone-model-for-the-vprog-computation-dag/407" target="_blank" class="res-link">
+                <span>Formal Computation Model</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="https://kaspa.org/features/" target="_blank" class="res-link">
+                <span>Kaspa Features</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="https://kaspa.org/kaspa-development-milestones-revealed-2025/" target="_blank" class="res-link">
+                <span>2025-2026 Roadmap</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="https://kaspa-kii.org/" target="_blank" class="res-link">
+                <span>KII Foundation</span>
+                <span class="arrow">-></span>
+            </a>
+        </div>
+        <div class="res-col">
+            <h3>References</h3>
+            <a href="/references/kips/" class="res-link">
+                <span>KIP Index (9 proposals)</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="/references/repos/" class="res-link">
+                <span>GitHub Repositories</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="/references/sources/" class="res-link">
+                <span>Sources & Links</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="/learn/glossary/" class="res-link">
+                <span>Glossary (50+ terms)</span>
+                <span class="arrow">-></span>
+            </a>
+            <a href="/changelog/rnd-insights/" class="res-link">
+                <span>R&D Channel Insights</span>
+                <span class="arrow">-></span>
+            </a>
+        </div>
     </div>
 
-    <!-- Documentation Hub -->
-    <section id="docs" class="section" style="max-width: 1200px; margin: 0 auto; padding: 4rem 2rem;">
-        <h2 class="section-title">Documentation</h2>
-        <div class="content-block">
-            <p class="lead-text" style="text-align: center; margin-bottom: 2rem;">
-                Explore the full vProgs knowledge base — from introductory guides to deep technical research.
-            </p>
-            <div class="architecture-grid">
-                <a href="/learn/" class="arch-card" style="text-decoration: none; color: inherit;">
-                    <div class="arch-icon">L</div>
-                    <h3>Learn</h3>
-                    <p>What vProgs are, why they matter, how they work, comparisons, glossary, and FAQ.</p>
-                </a>
-                <a href="/architecture/" class="arch-card" style="text-decoration: none; color: inherit;">
-                    <div class="arch-icon">A</div>
-                    <h3>Architecture</h3>
-                    <p>Four pillars, account model, execution, ZK verification, sequencing, composability, DagKnight.</p>
-                </a>
-                <a href="/build/" class="arch-card" style="text-decoration: none; color: inherit;">
-                    <div class="arch-icon">B</div>
-                    <h3>Build</h3>
-                    <p>Quickstart, tutorials, API reference, Silverscript language spec, testnet guide, example projects.</p>
-                </a>
-                <a href="/research/" class="arch-card" style="text-decoration: none; color: inherit;">
-                    <div class="arch-icon">R</div>
-                    <h3>Research</h3>
-                    <p>Formal model, composability proposal, gas economics, proving systems, security model.</p>
-                </a>
-                <a href="/ecosystem/" class="arch-card" style="text-decoration: none; color: inherit;">
-                    <div class="arch-icon">E</div>
-                    <h3>Ecosystem</h3>
-                    <p>Roadmap, applications, KII Foundation, partners, and community resources.</p>
-                </a>
-                <a href="/references/" class="arch-card" style="text-decoration: none; color: inherit;">
-                    <div class="arch-icon">&#x2197;</div>
-                    <h3>References</h3>
-                    <p>Sources, KIP index, repositories, changelog, R&D insights, and testnet updates.</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer">
-        <p>vProgs: Native L1 Verifiable Programs for Kaspa BlockDAG</p>
-        <p class="footer-tagline">Breaking the smart contract trilemma</p>
+        <p>vProgs.xyz &mdash; Native L1 Verifiable Programs for <a href="https://kaspa.org" target="_blank">Kaspa</a></p>
     </footer>
 
     <script src="script.js"></script>
+
+    <script>
+    // Intersection observer for fade-in
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const fadeObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                fadeObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    fadeEls.forEach(el => fadeObs.observe(el));
+    </script>
 </body>
 </html>
