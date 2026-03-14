@@ -113,6 +113,20 @@ body {
     width: 100%;
 }
 
+/* X/Twitter icon in nav */
+.nav-x {
+    color: var(--text-dim);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+.nav-x:hover {
+    color: var(--primary);
+    filter: drop-shadow(0 0 6px var(--primary));
+}
+
 /* Hamburger toggle -- hidden on desktop */
 .nav-toggle-input {
     display: none;
@@ -680,6 +694,18 @@ td.highlight {
 .footer-tagline {
     color: var(--secondary);
     font-size: 1rem;
+}
+
+.footer-x {
+    display: inline-block;
+    color: var(--text-dim);
+    margin-top: 1rem;
+    transition: all 0.3s;
+}
+
+.footer-x:hover {
+    color: var(--primary);
+    filter: drop-shadow(0 0 6px var(--primary));
 }
 
 /* Responsive Design */
