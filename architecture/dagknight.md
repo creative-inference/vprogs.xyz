@@ -100,7 +100,7 @@ Without DagKnight's ordering guarantees, concurrent vProgs could read inconsiste
 
 ### 3. Proof Verification
 
-L1 ZK verification requires reliable, consistent sequencing to validate state commitments. The [KIP-21 sequencing commitment](/architecture/sequencing) chains through selected-parent ancestry -- if the selected-parent chain changes due to reordering, all downstream commitments must be recomputed.
+L1 ZK verification requires reliable, consistent sequencing to validate state commitments. The [sequencing commitment proposed in KIP-21](/architecture/sequencing) chains through selected-parent ancestry -- if the selected-parent chain changes due to reordering, all downstream commitments must be recomputed.
 
 DagKnight's precise ordering minimizes reordering, making the sequencing commitment chain stable and predictable.
 
@@ -215,7 +215,7 @@ These vectors multiply rather than add, because they operate on different dimens
 
 ## DagKnight and the Sequencing Commitment
 
-DagKnight's ordering directly feeds into [KIP-21's sequencing commitment](/architecture/sequencing):
+DagKnight's ordering directly feeds into the [sequencing commitment specified in KIP-21](/architecture/sequencing):
 
 ```
 DagKnight orders blocks:  B1 < B2 < B3 < B4 < B5

@@ -155,7 +155,7 @@ Anchoring provides:
 
 ### The Two-Anchor Proof Model
 
-KIP-21 defines a two-anchor model for lane-based proving:
+KIP-21 specifies a two-anchor model for lane-based proving:
 
 ```
 Anchor B_start                           Anchor B_end

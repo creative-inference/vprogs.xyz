@@ -289,7 +289,7 @@ This means security-by-construction -- the compiler enforces correct covenant pa
 
 ## The Covenant Foundation
 
-Silverscript is built on top of Kaspa's [Covenants++](/architecture/covenants) hard fork, the same consensus infrastructure that KIP-21 extends for vProgs:
+Silverscript is built on top of Kaspa's [Covenants++](/architecture/covenants) hard fork, the same consensus infrastructure that KIP-21 proposes extending for vProgs:
 
 ```
 Silverscript Source Code

@@ -62,7 +62,7 @@ The security model draws on properties established in the [Formal Computation Mo
 - **Exclusive write enforcement.** The account ownership model guarantees that only vProg `p` can write to accounts in `S_p`. This is enforced at the L1 covenant level, not by application logic.
 - **ZK validity proofs.** Every state transition must be accompanied by a valid ZK proof. An attacker cannot submit a false state commitment because the proof would fail verification.
 - **Merkle commitment integrity.** State commitments are hierarchical Merkle roots. Modifying any account state changes the root, making forgery detectable.
-- **L1 covenant verification.** KIP-16 opcodes verify proofs on-chain. The covenant script rejects transactions with invalid proofs --- there is no off-chain verification that could be bypassed.
+- **L1 covenant verification.** The opcodes proposed in KIP-16 verify proofs on-chain. The covenant script rejects transactions with invalid proofs --- there is no off-chain verification that could be bypassed.
 
 **Residual risk:** A flaw in the ZK proving system's soundness would allow state manipulation. This is mitigated by using well-audited proving systems and the three-tier strategy (no single proving system failure compromises all vProgs).
 

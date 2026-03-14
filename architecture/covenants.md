@@ -53,7 +53,7 @@ Crescendo also enabled **transaction payloads** for native (non-coinbase) transa
 
 ## KIP-10: Transaction Introspection (The Foundation)
 
-KIP-10 is the bedrock -- it gave Kaspa scripts the ability to inspect the spending transaction. Without this, no covenants are possible.
+KIP-10 is the bedrock proposal -- it introduced the ability for Kaspa scripts to inspect the spending transaction. Without these introspection opcodes, no covenants are possible.
 
 ### Opcodes Introduced
 
@@ -112,7 +112,7 @@ The upcoming hard fork extends covenants with four major KIPs:
 
 ### KIP-16: ZK Verification Opcodes
 
-KIP-16 bridges covenants and vProgs:
+KIP-16 proposes the bridge between covenants and vProgs:
 
 - Adds opcodes for verifying ZK validity proofs on L1
 - External execution environments submit proofs; L1 validates cryptographically
@@ -123,7 +123,7 @@ See [ZK Verification](/architecture/zk-verification) for the full ZK stack archi
 
 ### KIP-17: Extended Covenant Opcodes
 
-KIP-17 adds the auth and covenant binding system that [Silverscript's](/architecture/silverscript) declaration macros compile to:
+KIP-17 specifies the auth and covenant binding system that [Silverscript's](/architecture/silverscript) declaration macros compile to:
 
 **Auth Binding (`OpAuth*`):**
 - Per-input authorization
@@ -143,7 +143,7 @@ These opcodes make stateful UTXO contracts possible -- a covenant can carry stat
 
 ### KIP-20: Covenant IDs (Native Lineage)
 
-Before KIP-20, proving that a UTXO descended from a specific covenant required recursive lineage proofs -- expensive and complex. KIP-20 introduces native covenant IDs at the protocol level:
+Before KIP-20, proving that a UTXO descended from a specific covenant required recursive lineage proofs -- expensive and complex. KIP-20 proposes native covenant IDs at the protocol level:
 
 - Each covenant UTXO carries an ID tracking its lineage
 - The protocol enforces lineage without script-level recursion
@@ -152,7 +152,7 @@ Before KIP-20, proving that a UTXO descended from a specific covenant required r
 
 ### KIP-21: Partitioned Sequencing Commitment
 
-KIP-21 replaces the monolithic sequencing commitment with lane-based partitions:
+KIP-21 proposes replacing the monolithic sequencing commitment with lane-based partitions:
 
 - Each application lane maintains its own recursive tip hash
 - Enables O(activity) ZK proving per application

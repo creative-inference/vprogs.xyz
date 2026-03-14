@@ -77,7 +77,7 @@ Zero-knowledge proofs are the trust anchor. State transitions are attested by cr
                     +---------------------------+
 ```
 
-Off-chain provers execute vProg logic and generate ZK proofs. The L1 sequences operations via KIP-21's lane-based commitment structure and verifies proofs via KIP-16's verifier opcodes. Sovereign state ensures isolation; synchronous composability enables cross-program atomicity without fragmentation.
+Off-chain provers execute vProg logic and generate ZK proofs. The L1 sequences operations via the lane-based commitment structure proposed in KIP-21 and verifies proofs via the verifier opcodes specified in KIP-16. Sovereign state ensures isolation; synchronous composability enables cross-program atomicity without fragmentation.
 
 ---
 

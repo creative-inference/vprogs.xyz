@@ -104,7 +104,7 @@ The L1 does not interpret, execute, or reason about vProg logic. This separation
 
 ### KIP-21: Partitioned Lanes
 
-KIP-21 replaces the monolithic per-block sequencing commitment with partitioned application lanes. Each lane maintains:
+KIP-21 proposes replacing the monolithic per-block sequencing commitment with partitioned application lanes. Each lane maintains:
 
 - Its own recursive tip hash
 - A last-touch blue score for activity tracking
@@ -132,7 +132,7 @@ The ZK strategy, finalized in January 2026, establishes three tiers optimized fo
 
 ### KIP-16: Verifier Opcodes
 
-KIP-16 adds opcodes for verifying ZK validity proofs directly on L1. This bridges the gap between the covenant layer and vProgs -- UTXOs can carry spending conditions that require ZK proof verification.
+KIP-16 proposes opcodes for verifying ZK validity proofs directly on L1, bridging the gap between the covenant layer and vProgs -- UTXOs can carry spending conditions that require ZK proof verification.
 
 For the complete ZK verification architecture, see [ZK Verification](/architecture/zk-verification).
 
@@ -191,7 +191,7 @@ The four pillars are not independent features -- they form an integrated system 
 
 **Off-Chain Compute + ZK Verification:** Provers generate ZK proofs that L1 verifies. The proof object contains state commitments that L1 anchors into the sequencing chain.
 
-**L1 Sequencing + ZK Verification:** KIP-21's lane structure provides the anchoring points that provers use. The two-anchor proof model connects a lane's state at two points in the sequencing chain, proving all intermediate transitions.
+**L1 Sequencing + ZK Verification:** The lane structure proposed in KIP-21 provides the anchoring points that provers use. The two-anchor proof model connects a lane's state at two points in the sequencing chain, proving all intermediate transitions.
 
 **Sovereign State + Synchronous Composability:** Concise witnesses (Merkle inclusion proofs from state commitments) allow one vProg to trustlessly read another's state within a single atomic transaction, without compromising sovereignty.
 

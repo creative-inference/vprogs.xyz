@@ -96,7 +96,7 @@ Based ZK rollups handle the most complex case: applications where users themselv
 
 ## KIP-16: ZK Verifier Opcodes
 
-KIP-16 is the consensus-level bridge between covenants and vProgs. It adds opcodes to Kaspa's script engine for verifying ZK validity proofs directly on L1.
+KIP-16 specifies the consensus-level bridge between covenants and vProgs, proposing opcodes for Kaspa's script engine that verify ZK validity proofs directly on L1.
 
 ### What KIP-16 Enables
 
@@ -296,7 +296,7 @@ Unlike optimistic rollups (which require challenge periods), ZK proofs provide *
 
 ## Hash Function Selection
 
-KIP-21 uses BLAKE3 with explicit domain separation tags for all cryptographic hashing. The selection involved tradeoffs across ZK stacks:
+KIP-21 specifies BLAKE3 with explicit domain separation tags for all cryptographic hashing. The selection involved tradeoffs across ZK stacks:
 
 | Hash | Cairo (Tier 3) | SP1/RISC Zero (Tier 2) | Decision |
 |------|---------------|----------------------|----------|

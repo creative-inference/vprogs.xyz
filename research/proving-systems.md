@@ -230,7 +230,7 @@ Recursive composition enables:
 
 ### L1 Verification Infrastructure
 
-KIP-16 provides the L1 opcodes for verifying proofs:
+The L1 opcodes proposed in KIP-16 handle proof verification:
 
 | Verifier | Opcode | Supported tiers |
 |----------|--------|-----------------|

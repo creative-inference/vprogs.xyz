@@ -169,7 +169,7 @@ Several converging developments make this architecture feasible today in a way i
 
 - **ZK proof maturity**: proving systems (Noir, RISC Zero, SP1, Cairo) have reached practical performance levels -- sub-second on mobile for inline proofs, 10-30 seconds for aggregated proofs
 - **BlockDAG consensus**: DagKnight provides the precise ordering and instant finality that vProgs require
-- **KIP-21 infrastructure**: partitioned lane-based sequencing commitments enable O(activity) proving per program, making the system scalable for real workloads
+- **Partitioned sequencing (KIP-21)**: the proposed lane-based sequencing commitments enable O(activity) proving per program, making the system scalable for real workloads
 - **Covenants++ hard fork**: the foundational consensus changes (KIP-16, 17, 20, 21) are specified, tested on TN12, and scheduled for mainnet activation on May 5, 2026
 
 ---

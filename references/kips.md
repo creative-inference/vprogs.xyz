@@ -79,7 +79,7 @@ Part of the Crescendo hard fork that brought Kaspa to 10 blocks per second. Adju
 
 ### KIP-10: Transaction Introspection Opcodes
 
-The foundation for all covenant functionality. KIP-10 adds opcodes that allow scripts to inspect the transaction they are part of -- examining inputs, outputs, amounts, and other transaction fields. Also introduces 8-byte arithmetic, expanding the computational capabilities of Kaspa's script system.
+The foundation for all covenant functionality. KIP-10 specifies opcodes that allow scripts to inspect the transaction they are part of -- examining inputs, outputs, amounts, and other transaction fields. It also proposes 8-byte arithmetic, expanding the computational capabilities of Kaspa's script system.
 
 Without KIP-10, covenants cannot exist -- scripts need to "see" the transaction to enforce spending conditions.
 
@@ -93,7 +93,7 @@ The meta-KIP that defined the Crescendo hard fork activation. Bundled KIP-9, KIP
 
 ### KIP-15: Sequencing Commitments
 
-Introduces a recursive canonical transaction ordering commitment (seqcommit) into blocks. This allows scripts and external verifiers to prove the ordering of transactions within the DAG. KIP-15 provides the base mechanism that KIP-21 later partitions into lanes for vProgs.
+Specifies a recursive canonical transaction ordering commitment (seqcommit) for blocks, allowing scripts and external verifiers to prove the ordering of transactions within the DAG. KIP-15 provides the base mechanism that KIP-21 later proposes partitioning into lanes for vProgs.
 
 ---
 
@@ -101,7 +101,7 @@ Introduces a recursive canonical transaction ordering commitment (seqcommit) int
 
 ### KIP-16: ZK Verification Precompiles
 
-Authored by Alexander S, KIP-16 adds on-chain verification capabilities for zero-knowledge proofs. Two proof systems are supported:
+Authored by Alexander S, KIP-16 proposes on-chain verification capabilities for zero-knowledge proofs. Two proof systems are specified:
 
 - **Groth16** -- mature SNARK with tiny constant-size proofs (approximately 200 bytes) and fast verification
 - **RISC Zero** -- STARK-based system running on a RISC-V VM, no trusted setup required
@@ -112,7 +112,7 @@ These precompiles are the second pillar of Covenants++, enabling based rollup in
 
 ### KIP-17: Covenant Scripts
 
-Authored by Ori Newman, KIP-17 implements the covenant script system -- the first pillar of Covenants++. Covenants allow scripts to enforce conditions on how UTXOs can be spent, enabling:
+Authored by Ori Newman, KIP-17 specifies the covenant script system -- the first pillar of Covenants++. The proposed covenants allow scripts to enforce conditions on how UTXOs can be spent, enabling:
 
 - Native non-KAS assets
 - Smart money management
@@ -132,7 +132,7 @@ Provides unique identification for covenant instances. Assigns opcodes 0xcf thro
 
 ### KIP-21: Partitioned Sequencing Commitment
 
-Authored by Michael Sutton, KIP-21 is the foundational KIP for vProgs. It partitions the sequencing commitment (from KIP-15) into lanes, where each lane corresponds to a vProg or subnet. This enables:
+Authored by Michael Sutton, KIP-21 is the foundational proposal for vProgs. It specifies partitioning the sequencing commitment (from KIP-15) into lanes, where each lane corresponds to a vProg or subnet. This would enable:
 
 - **O(activity) proving** -- a vProg only proves work proportional to its own activity, not all L1 activity
 - **Scalable verification** -- the cost of running a vProg scales with its usage, not the network's total throughput

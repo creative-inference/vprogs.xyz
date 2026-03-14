@@ -4,17 +4,17 @@ title: "L1 Sequencing (KIP-21)"
 section: architecture
 ---
 
-KIP-21 is a consensus-level specification authored by Michael Sutton that replaces Kaspa's monolithic per-chain-block sequencing commitment with a **partitioned lane-based commitment scheme**. It is the foundational infrastructure that vProgs will plug into -- not the vProgs specification itself, but the consensus plumbing that makes vProgs possible.
+KIP-21 is a consensus-level proposal authored by Michael Sutton that specifies replacing Kaspa's monolithic per-chain-block sequencing commitment with a **partitioned lane-based commitment scheme**. It describes the foundational infrastructure that vProgs will plug into -- not the vProgs specification itself, but the consensus plumbing that makes vProgs possible.
 
 ---
 
 ## Why Partitioned Sequencing
 
-Before KIP-21, Kaspa's sequencing commitment (introduced in KIP-15 during the Crescendo hard fork) operated as a single global append-only stream. Every chain block committed to all accepted transactions as one undifferentiated hash chain.
+Before the changes proposed in KIP-21, Kaspa's sequencing commitment (introduced by KIP-15 during the Crescendo hard fork) operated as a single global append-only stream. Every chain block committed to all accepted transactions as one undifferentiated hash chain.
 
 This creates a proving problem: a vProg prover that wants to prove its own application's state transitions must process **the entire chain's activity** -- every transaction in every block, even those unrelated to its program. Proving cost scales as O(global DAG activity).
 
-KIP-21 solves this by partitioning the commitment into **lanes** -- logical application partitions where each lane maintains its own state independently. A vProg prover only needs to process its own lane's activity, achieving **O(lane activity) proving cost**.
+KIP-21 addresses this by specifying a partitioned commitment using **lanes** -- logical application partitions where each lane maintains its own state independently. A vProg prover only needs to process its own lane's activity, achieving **O(lane activity) proving cost**.
 
 ```
 Before KIP-21 (monolithic):
@@ -182,7 +182,7 @@ The two-anchor model provides:
 
 ## Sparse Merkle Tree Specification
 
-KIP-21 fully specifies the SMT used for `ActiveLanesRoot`:
+The proposal fully specifies the SMT used for `ActiveLanesRoot`:
 
 ### Structure
 
@@ -260,7 +260,7 @@ These are sufficient to verify `SeqCommit(PP)` and continue normal block process
 
 ## Optional Persistent Witness Store
 
-For provers needing historical witnesses (e.g., proving state from hours ago), KIP-21 describes an optional content-addressed commitment-node store:
+For provers needing historical witnesses (e.g., proving state from hours ago), the proposal describes an optional content-addressed commitment-node store:
 
 ```
 node_hash -> (left_child_hash, right_child_hash)

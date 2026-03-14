@@ -157,7 +157,7 @@ The composability proposal notes the complexity tradeoffs of gossip protocols fo
 
 ### Problem Statement
 
-KIP-21 introduces partitioned sequencing commitments with lane-based structure. External users (provers, vProg operators, application developers) need programmatic access to lane data to construct and verify proofs. What RPC interface should expose this data?
+KIP-21 proposes partitioned sequencing commitments with lane-based structure. External users (provers, vProg operators, application developers) need programmatic access to lane data to construct and verify proofs. What RPC interface should expose this data?
 
 ### Context
 

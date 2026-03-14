@@ -77,7 +77,7 @@ The guarantee that transaction data is published and accessible so that anyone c
 The simplified Computation DAG scheme used in Phase 1 (Standalone vProgs). Groups activity by program/subnet rather than by individual account, enabling O(program activity) proving without requiring the full per-account modeling of Phase 2.
 
 ### Domain Separation Tag
-A string prefix used in hash computations to ensure that hashes computed for different purposes cannot collide. KIP-21 defines explicit domain separation tags for each hash function (e.g., `"SeqCommitLaneKey"`, `"SeqCommitLaneTip"`).
+A string prefix used in hash computations to ensure that hashes computed for different purposes cannot collide. KIP-21 specifies explicit domain separation tags for each hash function (e.g., `"SeqCommitLaneKey"`, `"SeqCommitLaneTip"`).
 
 ---
 

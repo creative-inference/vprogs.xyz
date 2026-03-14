@@ -4,7 +4,7 @@ title: "KIP-21 to vProgs Mapping"
 section: architecture
 ---
 
-KIP-21 defines the consensus plumbing that vProgs will plug into. This page maps abstract vProgs concepts -- as described in the research proposals and yellow paper -- to concrete KIP-21 infrastructure. It answers: what is already specified, what is partially addressed, and what remains future work?
+KIP-21 specifies the consensus plumbing that vProgs will plug into. This page maps abstract vProgs concepts -- as described in the research proposals and yellow paper -- to concrete KIP-21 infrastructure. It answers: what is already specified, what is partially addressed, and what remains future work?
 
 ---
 
@@ -186,7 +186,7 @@ Committed in both `SeqStateRoot(B)` and inside each touched lane-tip update.
 
 ## The Forward-Compatibility Guarantee
 
-The critical design property of KIP-21 is its **forward compatibility**. The specification explicitly separates the outer machinery (commitment structure, SMT, lane proofs) from the inner machinery (lane-local update rules):
+The critical design property of KIP-21's proposed architecture is its **forward compatibility**. The specification explicitly separates the outer machinery (commitment structure, SMT, lane proofs) from the inner machinery (lane-local update rules):
 
 ```
 +-------------------------------------------------------+
@@ -259,7 +259,7 @@ KIP-21 sits at a critical junction: above the raw consensus layer and below the 
 
 ## Key Takeaway
 
-KIP-21 establishes five foundational elements for vProgs:
+KIP-21 specifies five foundational elements for vProgs:
 
 1. **The lane abstraction** -- vProgs will be modeled as lanes
 2. **The commitment structure** -- `SeqCommit(B)` chains through selected-parent ancestry
