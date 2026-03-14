@@ -2,6 +2,7 @@
 layout: page
 title: "Open Research Questions"
 section: research
+description: "Unresolved research questions in the vProgs architecture. Witness storage, state rent, prover economics, and cross-program verification challenges."
 ---
 
 This is a living document tracking unresolved research questions in the vProgs architecture. Each question includes context, the current state of discussion, proposed approaches where they exist, and cross-references to related research areas. Questions are drawn from the [Kaspa Research Forum](https://research.kas.pa/), the [Kaspa Core R&D channel](https://t.me/kasparnd), and the [Composability Architecture Proposal](/research/composability-proposal).

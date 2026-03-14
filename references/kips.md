@@ -2,6 +2,7 @@
 layout: page
 title: "KIP Index"
 section: references
+description: "Index of Kaspa Improvement Proposals for Covenants++ and vProgs. KIP-9 through KIP-21 with status, summaries, and links to full proposals."
 ---
 
 Kaspa Improvement Proposals (KIPs) are the formal mechanism for proposing changes to the Kaspa protocol. This page indexes all KIPs relevant to Covenants++ and vProgs, with their current status, a summary, and links to the full proposals.

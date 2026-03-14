@@ -2,6 +2,7 @@
 layout: page
 title: "R&D Channel Insights"
 section: changelog
+description: "Curated technical insights from Kaspa Core R&D Telegram. Key architectural decisions, breakthroughs, and strategy from December 2025 to March 2026."
 ---
 
 Curated technical intelligence from the [Kaspa Core R&D (public)](https://t.me/kasparnd) Telegram group. This page distills the most significant architectural decisions, technical breakthroughs, and strategic direction from core developer discussions spanning December 2025 through March 2026.

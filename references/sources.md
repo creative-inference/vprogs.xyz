@@ -2,6 +2,7 @@
 layout: page
 title: "Sources & Links"
 section: references
+description: "Comprehensive link directory for vProgs research and development. Primary papers, KIPs, forum posts, gists, and developer resources in one place."
 ---
 
 A categorized collection of all reference material used across the vProgs documentation site. This page serves as a comprehensive link directory for researchers, developers, and anyone looking to verify or explore the primary sources.

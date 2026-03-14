@@ -2,6 +2,7 @@
 layout: page
 title: "Development Roadmap"
 section: ecosystem
+description: "Kaspa vProgs development roadmap from Crescendo through Covenants++ to full programmability. Phased rollout timeline with DagKnight and ZK milestones."
 ---
 
 Kaspa is evolving from a pure proof-of-work digital currency into a universal programmable settlement layer. Two major concurrent upgrades drive this transformation: **DagKnight** (consensus) and **vProgs** (programmability). This page tracks the phased rollout from foundational consensus changes through to a full application ecosystem.

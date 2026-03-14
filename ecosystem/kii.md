@@ -2,6 +2,7 @@
 layout: page
 title: "KII Foundation"
 section: ecosystem
+description: "Kaspa Industrial Initiative Foundation overview. Enterprise adoption, regulatory readiness, and industry partnerships for Kaspa BlockDAG technology."
 ---
 
 The Kaspa Industrial Initiative (KII) Foundation is the enterprise adoption arm of the Kaspa ecosystem. Its mission is to unlock new levels of transparency, speed, and security for industrial and enterprise applications by leveraging Kaspa's BlockDAG technology across key sectors.

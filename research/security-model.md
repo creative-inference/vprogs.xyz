@@ -2,6 +2,7 @@
 layout: page
 title: "Security Model"
 section: research
+description: "Threat model and security analysis for vProgs on Kaspa. Covers proof generation, state management, cross-vProg composability, and attack mitigations."
 ---
 
 This document presents the threat model and security analysis for the vProgs architecture on Kaspa. It identifies attack surfaces across proof generation, state management, cross-vProg composability, and L1 interaction, and describes the structural and economic mechanisms that mitigate each class of attack.

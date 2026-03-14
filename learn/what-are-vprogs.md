@@ -2,6 +2,7 @@
 layout: page
 title: "What Are vProgs?"
 section: learn
+description: "Learn what Kaspa vProgs are — verifiable programs that execute off-chain and verify on-chain using ZK proofs, enabling scalable L1 programmability."
 ---
 
 Verifiable Programs (vProgs) are lightweight, deterministic logic modules native to Kaspa's Layer 1. They represent a fundamentally new approach to blockchain programmability -- a "third way" that avoids both the monolithic bloat of L1 virtual machines and the fragmentation of L2 rollups.

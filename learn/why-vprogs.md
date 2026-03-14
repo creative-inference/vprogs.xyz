@@ -2,6 +2,7 @@
 layout: page
 title: "Why vProgs?"
 section: learn
+description: "Discover why Kaspa chose vProgs over L1 virtual machines and L2 rollups — solving the smart contract trilemma with ZK-verified BlockDAG execution."
 ---
 
 Every blockchain that wants to support applications beyond simple transfers must answer a fundamental question: where does the computation happen, and how do you guarantee it was done correctly? The industry's existing answers -- L1 virtual machines and L2 rollups -- each carry serious tradeoffs. vProgs exist because a better synthesis is possible.

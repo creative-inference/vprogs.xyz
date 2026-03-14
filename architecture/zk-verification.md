@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "ZK Verification"
+description: "Discover how Kaspa's three-tier ZK stack and KIP-16 verifier opcodes enable trustless proof verification for vProgs without re-executing transactions."
 section: architecture
 ---
 

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Account Model & State"
+description: "Learn how vProgs use a Solana-inspired account model with pre-declared read/write sets to enable parallel transaction processing on Kaspa's BlockDAG."
 section: architecture
 ---
 

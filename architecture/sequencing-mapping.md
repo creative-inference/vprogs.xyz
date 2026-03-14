@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "KIP-21 to vProgs Mapping"
+description: "Map abstract vProgs concepts to concrete KIP-21 infrastructure: state commitments, lane routing, proof verification, and what remains as future work."
 section: architecture
 ---
 

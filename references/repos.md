@@ -2,6 +2,7 @@
 layout: page
 title: "Repositories"
 section: references
+description: "Annotated directory of Kaspa and vProgs GitHub repositories. rusty-kaspa, Silverscript, research repos, and key branches with current status."
 ---
 
 An annotated directory of the key GitHub repositories in the Kaspa and vProgs ecosystem. Each entry describes what the repository contains, its current status, and notable branches or pull requests.

@@ -2,6 +2,7 @@
 layout: page
 title: "Create a Native Asset"
 section: build
+description: "Issue, transfer, and burn native tokens on Kaspa L1 using Silverscript covenants and Covenant ID lineage tracking from the Covenants++ hard fork."
 ---
 
 Issue, transfer, and burn tokens on Kaspa using covenant primitives and Silverscript. Native assets are first-class citizens on L1, activated with the Covenants++ hard fork (May 5, 2026).

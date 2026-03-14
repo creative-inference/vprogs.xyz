@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "L1 Sequencing (KIP-21)"
+description: "Learn how KIP-21 replaces monolithic sequencing with partitioned lane-based commitments, enabling efficient per-application proving for Kaspa vProgs."
 section: architecture
 ---
 

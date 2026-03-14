@@ -2,6 +2,7 @@
 layout: page
 title: "Partners & Projects"
 section: ecosystem
+description: "Directory of teams and projects building on Kaspa and vProgs. Core contributors, protocol developers, and ecosystem partners in early development."
 ---
 
 This directory tracks the teams and projects building on or contributing to the Kaspa and vProgs ecosystem. As the ecosystem is in active early development, many of these are core contributors and research-stage projects rather than production deployments.

@@ -2,6 +2,7 @@
 layout: page
 title: "Developer Tools"
 section: build
+description: "Essential developer tools for vProgs and Silverscript on Kaspa. CLI compilers, testing frameworks, debuggers, and block explorers for covenant development."
 ---
 
 Tools for building, testing, debugging, and monitoring vProgs and Silverscript contracts on Kaspa.

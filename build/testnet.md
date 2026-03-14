@@ -2,6 +2,7 @@
 layout: page
 title: "Testnet Guide"
 section: build
+description: "Guide to Kaspa TN12, the public Covenants++ testnet. Connect, get test KAS, deploy Silverscript contracts, and verify ZK proofs before mainnet."
 ---
 
 TN12 is the public Covenants++ testnet for Kaspa. It is the primary environment for testing Silverscript contracts, covenant operations, and ZK proof verification before mainnet launch.

@@ -2,6 +2,7 @@
 layout: page
 title: "Composability Architecture Proposal"
 section: research
+description: "Architectural proposal for synchronous vProg composability on Kaspa. Account-centric execution, atomic cross-program interactions, and L1 settlement."
 ---
 
 This document describes the concrete architectural proposal for synchronously composable verifiable programs on Kaspa. The design establishes an account-centric execution model where sovereign vProgs interact atomically within single L1 transactions, achieving composability without sacrificing decentralization or introducing trusted intermediaries.

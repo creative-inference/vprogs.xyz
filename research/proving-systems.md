@@ -2,6 +2,7 @@
 layout: page
 title: "Proving Systems Analysis"
 section: research
+description: "Analysis of ZK proving systems for Kaspa's three-tier strategy. Compares Noir, RISC Zero, SP1, and Cairo on proof times, aggregation, and tradeoffs."
 ---
 
 This document evaluates the zero-knowledge proving systems selected for Kaspa's three-tier ZK strategy. The analysis covers Noir, RISC Zero, SP1, and Cairo, examining proof times, circuit characteristics, aggregation strategies, and hash function tradeoffs. The tier assignments were finalized by Yonatan Sompolinsky (hashdag) in January 2026 and validated through subsequent PoC implementations.

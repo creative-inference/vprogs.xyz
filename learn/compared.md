@@ -2,6 +2,7 @@
 layout: page
 title: "vProgs Compared"
 section: learn
+description: "Compare Kaspa vProgs against Ethereum rollups, Solana, Sui, and traditional EVM chains on execution, composability, finality, and scalability."
 ---
 
 How do Kaspa's Verifiable Programs stack up against other approaches to blockchain programmability? This page provides structured comparisons against the major platforms and architectures in the space.

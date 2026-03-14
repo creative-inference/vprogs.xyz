@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Silverscript"
+description: "Learn about Silverscript, Kaspa's high-level smart contract language that compiles to native script -- handling local-state UTXO covenants alongside vProgs."
 section: architecture
 ---
 

@@ -2,6 +2,7 @@
 layout: page
 title: "Formal Computation Model"
 section: research
+description: "Mathematical formalism of the vProg computation DAG on Kaspa. Covers state evolution, dependency graphs, Merkle commitments, and scalability bounds."
 ---
 
 This document presents the mathematical formalism underlying the vProg computation DAG --- the directed acyclic graph structure that models state evolution, dependency formation, and proof anchoring across verifiable programs on Kaspa. The model draws on random graph theory to establish rigorous scalability bounds and uses hierarchical Merkle commitments to enable efficient cross-program state verification.

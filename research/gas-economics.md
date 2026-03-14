@@ -2,6 +2,7 @@
 layout: page
 title: "Gas and Resource Economics"
 section: research
+description: "Gas model and resource economics for vProgs on Kaspa. Weighted Area functions, STORM regulation, parallelism-aware pricing, and fee market design."
 ---
 
 This document describes the gas model and resource economics for vProgs on Kaspa. The system uses Weighted Area gas functions, STORM-based autonomous resource regulation, and parallelism-aware pricing to create an efficient fee market that incentivizes frequent proof submission, efficient cross-vProg interaction patterns, and sustainable state growth.

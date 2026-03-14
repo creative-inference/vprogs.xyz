@@ -2,6 +2,7 @@
 layout: page
 title: "Cross-vProg Transaction"
 section: build
+description: "Compose multiple vProgs in one atomic Kaspa L1 transaction. Borrow, swap, and stake across programs with synchronous composability and no bridges."
 ---
 
 > **Phase 2 -- Coming Soon.** This tutorial describes synchronous composability, which requires the extended Computation DAG with per-account modeling. Phase 1 (standalone vProgs) must ship first. The concepts and architecture described here are based on the published research and are subject to change.

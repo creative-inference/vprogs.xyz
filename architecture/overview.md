@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Architecture Overview"
+description: "Explore the vProgs architecture on Kaspa: off-chain execution, on-chain ZK verification, synchronous composability, and unified L1 state design."
 section: architecture
 ---
 

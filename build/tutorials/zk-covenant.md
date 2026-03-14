@@ -2,6 +2,7 @@
 layout: page
 title: "Inline ZK Covenant with Noir"
 section: build
+description: "Write a ZK circuit in Noir, compile to Groth16, and integrate with a Kaspa covenant. Sub-second inline proofs for wallets, escrows, and payments."
 ---
 
 Write a ZK circuit in Noir, compile it to a Groth16 proof, and integrate it with a Kaspa covenant. Inline ZK covenants are the simplest ZK tier -- users prove their own transactions with sub-second proof times, no prover market needed.

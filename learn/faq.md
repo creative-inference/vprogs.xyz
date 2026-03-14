@@ -2,6 +2,7 @@
 layout: page
 title: "Frequently Asked Questions"
 section: learn
+description: "Get answers to common questions about Kaspa vProgs — how they differ from L2s, what languages they support, and how ZK verification works."
 ---
 
 Answers to the most common questions about Kaspa's Verifiable Programs (vProgs).

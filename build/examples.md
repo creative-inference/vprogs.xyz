@@ -2,6 +2,7 @@
 layout: page
 title: "Example Projects"
 section: build
+description: "Reference implementations for vProgs and Silverscript on Kaspa. DEX, lending, stablecoin, and DAO examples with architecture overviews and key files."
 ---
 
 Reference implementations demonstrating common patterns for vProgs and Silverscript development. Each example includes a description, architecture overview, and key file listing.

@@ -2,6 +2,7 @@
 layout: page
 title: "Applications & Use Cases"
 section: ecosystem
+description: "Applications and use cases for vProgs on Kaspa. DEXs, lending, rollups, stablecoins, and more with native L1 deployment and ZK-based security."
 ---
 
 vProgs transform Kaspa from a payment rail into a comprehensive programmable platform. All applications benefit from native L1 deployment (no L2 fragmentation), ZK-based security (cryptographic proof, not economic guarantees), and unified liquidity (all apps share L1 state). Synchronous composability -- the ability for vProgs to interact atomically within a single transaction -- arrives in Phase 2.

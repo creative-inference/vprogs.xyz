@@ -2,6 +2,7 @@
 layout: page
 title: "Myths & Misconceptions"
 section: learn
+description: "Debunking common myths about Kaspa vProgs — they are not lightweight, not an L2, and not limited. Learn what the architecture actually delivers."
 ---
 
 # Myths and Misconceptions

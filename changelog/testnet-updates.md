@@ -2,6 +2,7 @@
 layout: page
 title: "Testnet Updates"
 section: changelog
+description: "Kaspa TN12 testnet changelog. Launch history, resets, Covenants++ feature activations, ZK verification tests, and known issues for developers."
 ---
 
 TN12 is the primary testnet for Covenants++ and vProgs development. This page tracks its launch, resets, feature set, and known issues.

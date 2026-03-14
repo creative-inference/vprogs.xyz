@@ -2,6 +2,7 @@
 layout: page
 title: "API Reference"
 section: build
+description: "Complete gRPC API reference for vProgs nodes on Kaspa. Covers RPC endpoints, data types, error codes, and connection examples in Rust."
 ---
 
 > **Preliminary.** This API reference documents the intended RPC interface for vProgs nodes. The API is under active development and subject to change before mainnet launch. Endpoints marked with [Coming Soon] are not yet implemented.

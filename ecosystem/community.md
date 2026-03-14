@@ -2,6 +2,7 @@
 layout: page
 title: "Community"
 section: ecosystem
+description: "Join the Kaspa developer community. Telegram channels, research forums, contribution pathways, and resources for vProgs and Covenants++ builders."
 ---
 
 The Kaspa community spans developers, researchers, miners, investors, and enterprise stakeholders across multiple platforms. This page collects the key gathering points, contribution pathways, and developer resources.

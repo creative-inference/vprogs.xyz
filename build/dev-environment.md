@@ -2,6 +2,7 @@
 layout: page
 title: "Dev Environment Setup"
 section: build
+description: "Configure your Rust toolchain, protobuf compiler, and IDE for building vProgs and Silverscript smart contracts on Kaspa from scratch."
 ---
 
 A complete guide to configuring your development environment for building vProgs and Silverscript contracts on Kaspa.

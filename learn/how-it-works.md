@@ -2,6 +2,7 @@
 layout: page
 title: "How vProgs Work"
 section: learn
+description: "Walk through the full vProgs lifecycle: define state transitions, execute off-chain, generate ZK proofs, and verify on Kaspa's L1 BlockDAG."
 ---
 
 This page walks through the complete vProgs execution lifecycle, from defining a state transition to final on-chain settlement. Each step is explained in plain terms with enough technical detail to build a solid understanding of the mechanics.

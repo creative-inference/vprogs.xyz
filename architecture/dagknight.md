@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "DagKnight Consensus"
+description: "Explore DagKnight, Kaspa's parameterless adaptive consensus protocol that provides instant finality and precise ordering required by the vProgs architecture."
 section: architecture
 ---
 

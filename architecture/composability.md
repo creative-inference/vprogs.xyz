@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Synchronous Composability"
+description: "See how vProgs achieve synchronous composability on Kaspa L1 -- atomic cross-program interactions without bridges, rollups, or liquidity fragmentation."
 section: architecture
 ---
 

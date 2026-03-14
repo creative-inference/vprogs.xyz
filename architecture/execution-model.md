@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Execution Model"
+description: "Understand the vProgs execution lifecycle: off-chain computation, ZK proof generation, permissionless prover market, and constant-time L1 verification."
 section: architecture
 ---
 

@@ -2,6 +2,7 @@
 layout: page
 title: "Glossary"
 section: learn
+description: "Glossary of key vProgs terms — from zero-knowledge proofs and BlockDAG consensus to accounts, lanes, and state transitions on Kaspa's L1."
 ---
 
 A comprehensive reference of key terms used across the vProgs documentation. Terms are listed alphabetically for quick lookup.

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Covenant Stack"
+description: "Understand Kaspa's covenant KIP stack from Crescendo through Covenants++ hard fork -- UTXO spending conditions that underpin Silverscript and vProgs."
 section: architecture
 ---
 

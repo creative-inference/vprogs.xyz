@@ -2,6 +2,7 @@
 layout: page
 title: "Build a Vault with Silverscript"
 section: build
+description: "Build a time-locked vault in Silverscript on Kaspa. Covers deposits, configurable lock periods, withdrawals, and emergency recovery with full code."
 ---
 
 Build a fully functional time-locked vault in Silverscript. This tutorial covers deposit, time-based locking, and withdrawal with complete code and line-by-line explanations.

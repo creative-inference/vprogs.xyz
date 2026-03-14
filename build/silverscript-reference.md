@@ -2,6 +2,7 @@
 layout: page
 title: "Silverscript Language Reference"
 section: build
+description: "Silverscript language reference for Kaspa covenant development. Syntax, types, opcodes, and compilation to native Kaspa Script with no VM needed."
 ---
 
 Silverscript is Kaspa's high-level smart contract language. It compiles directly to native Kaspa Script -- no virtual machine, no intermediate representation. Designed for writing covenant spending conditions on L1 UTXOs.

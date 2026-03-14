@@ -2,6 +2,7 @@
 layout: page
 title: "Real-World Use Cases"
 section: learn
+description: "Explore real-world vProgs use cases on Kaspa — from instant global payments and decentralized exchanges to lending, NFTs, and supply chains."
 ---
 
 # Real-World Use Cases

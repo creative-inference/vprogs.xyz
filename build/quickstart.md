@@ -2,6 +2,7 @@
 layout: page
 title: "Quickstart"
 section: build
+description: "Deploy your first Silverscript covenant on Kaspa in under 30 minutes. Clone repos, build from source, and deploy to a local vProgs testnet."
 ---
 
 Get from zero to a deployed covenant on a local testnet in under 30 minutes. This guide covers cloning the repositories, building from source, and deploying a minimal Silverscript contract.

@@ -2,6 +2,7 @@
 layout: page
 title: "Your First vProg"
 section: build
+description: "Build your first verifiable program on Kaspa. Define state, write Rust transition logic, generate a ZK proof, and submit to L1 for verification."
 ---
 
 Build a complete verifiable program from scratch: define a state schema, write transition logic in Rust, execute off-chain, generate a ZK proof, and submit to L1 for verification.
