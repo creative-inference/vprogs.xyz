@@ -43,6 +43,14 @@ What can you actually do with vProgs? Instant global payments, trustless trading
 
 ---
 
+### [Myths and Misconceptions](/learn/myths)
+
+"vProgs are lightweight." "It's basically an L2." "Off-chain means centralized." This page dismantles the most common misconceptions about vProgs with direct, evidence-based responses.
+
+**Best for:** Anyone encountering skepticism or wanting ready-made counterarguments.
+
+---
+
 ## Evaluation and Reference
 
 ### [vProgs Compared](/learn/compared)
