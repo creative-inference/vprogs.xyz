@@ -1,4 +1,4 @@
-version: "1.8"
+version: "1.9"
 title: "Kaspa vProgs"
 description: "Native L1 Verifiable Programs for Kaspa BlockDAG"
 url: "https://vprogs.xyz"

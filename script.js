@@ -69,6 +69,17 @@ if (window.location.pathname === '/' || window.location.pathname === '/index.htm
     createMatrixEffect();
 }
 
+// Wrap tables in scrollable container for mobile
+document.querySelectorAll('.markdown-content table').forEach(table => {
+    const wrapper = document.createElement('div');
+    wrapper.style.overflowX = 'auto';
+    wrapper.style.webkitOverflowScrolling = 'touch';
+    wrapper.style.margin = '1.5rem 0';
+    table.parentNode.insertBefore(wrapper, table);
+    table.style.margin = '0';
+    wrapper.appendChild(table);
+});
+
 // Console easter egg
 console.log('%c vProgs | Breaking the Smart Contract Trilemma ', 'background: #00ff41; color: #0a0e0f; font-size: 20px; font-weight: bold; padding: 10px;');
 console.log('%c Native L1 Verifiable Programs for Kaspa BlockDAG ', 'color: #00ff41; font-size: 14px;');

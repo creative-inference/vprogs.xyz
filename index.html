@@ -514,18 +514,31 @@ layout: false
     }
     @media (max-width: 768px) {
         .grid { grid-template-columns: 1fr; }
-        .nav-links { gap: 1rem; }
-        .nav-links a { font-size: 0.7rem; letter-spacing: 1px; }
-        .hero { padding: 7rem 1.5rem 3rem; }
+        .nav-inner { flex-direction: column; gap: 0.5rem; padding: 0 1rem; }
+        .nav-links { gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+        .nav-links a { font-size: 0.7rem; letter-spacing: 0.5px; }
+        .hero { padding: 8rem 1.5rem 3rem; }
         .hero-stats { gap: 1.5rem; }
         .pillars { gap: 0.8rem; }
         .pillar { font-size: 0.65rem; padding: 0.4rem 0.8rem; }
-        .cell { padding: 2rem; min-height: auto; }
-        .compare th, .compare td { padding: 0.7rem; font-size: 0.75rem; }
+        .cell { padding: 1.5rem; min-height: auto; }
+        .cell h3 { font-size: 1.2rem; }
+        .cell-links { gap: 0.3rem; }
+        .compare th, .compare td { padding: 0.5rem; font-size: 0.7rem; }
+        .compare table { overflow-x: auto; display: block; }
+        .res-link { font-size: 0.8rem; }
     }
     @media (max-width: 480px) {
-        .nav-links { display: none; }
+        .nav-links a { font-size: 0.6rem; letter-spacing: 0; }
+        .nav-links { gap: 0.25rem; }
         .hero-title { font-size: 3.5rem; }
+        .hero-sub { font-size: 0.85rem; letter-spacing: 0.15em; }
+        .stat-value { font-size: 1.6rem; }
+        .stat-label { font-size: 0.6rem; }
+        .paradigm-text { font-size: 1.1rem; }
+        .cell h3 { font-size: 1rem; }
+        .cell p { font-size: 0.85rem; }
+        .cell-link { font-size: 0.6rem; }
     }
 
     /* Scrollbar */

@@ -338,11 +338,18 @@
 .highlight .gi { color: var(--primary); }                /* diff inserted */
 
 /* Tables */
+.markdown-content .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.5rem 0;
+}
+
 .markdown-content table {
     width: 100%;
     border-collapse: collapse;
     margin: 1.5rem 0;
     font-size: 1rem;
+    min-width: 400px;
 }
 
 .markdown-content thead {
@@ -459,7 +466,7 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
     .section-hero {
-        padding: 6rem 1rem 2.5rem;
+        padding: 8rem 1rem 2.5rem;
     }
 
     .section-hero-title {
@@ -467,7 +474,7 @@
     }
 
     .page-layout {
-        padding: 5rem 1rem 2rem;
+        padding: 7rem 1rem 2rem;
     }
 
     .breadcrumb-list {
@@ -475,36 +482,27 @@
     }
 
     .markdown-content {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .markdown-content pre {
         padding: 1rem;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
 
     .markdown-content table {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        min-width: 300px;
     }
 
     .markdown-content th,
     .markdown-content td {
-        padding: 0.6rem 0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-links {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .section-hero-title {
-        font-size: 1.6rem;
+        padding: 0.5rem 0.6rem;
     }
 
     .markdown-content h1 {
         font-size: 1.6rem;
+        padding-left: 0.75rem;
     }
 
     .markdown-content h2 {
@@ -513,5 +511,54 @@
 
     .markdown-content h3 {
         font-size: 1.1rem;
+    }
+
+    .markdown-content blockquote {
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-layout {
+        padding: 8rem 0.75rem 2rem;
+    }
+
+    .section-hero {
+        padding: 8rem 0.75rem 2rem;
+    }
+
+    .section-hero-title {
+        font-size: 1.5rem;
+    }
+
+    .markdown-content {
+        font-size: 0.9rem;
+    }
+
+    .markdown-content h1 {
+        font-size: 1.4rem;
+    }
+
+    .markdown-content h2 {
+        font-size: 1.15rem;
+    }
+
+    .markdown-content h3 {
+        font-size: 1rem;
+    }
+
+    .markdown-content table {
+        font-size: 0.7rem;
+        min-width: 250px;
+    }
+
+    .markdown-content th,
+    .markdown-content td {
+        padding: 0.35rem 0.4rem;
+    }
+
+    .markdown-content pre {
+        font-size: 0.7rem;
+        padding: 0.75rem;
     }
 }
