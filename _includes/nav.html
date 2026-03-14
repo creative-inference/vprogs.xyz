@@ -1,6 +1,12 @@
 <nav class="nav">
   <div class="nav-container">
     <a href="/" class="logo">vProgs</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Toggle navigation">
+    <label for="nav-toggle" class="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
     <ul class="nav-links">
       <li><a href="/learn/"{% if page.section == "learn" %} class="active"{% endif %}>Learn</a></li>
       <li><a href="/architecture/"{% if page.section == "architecture" %} class="active"{% endif %}>Architecture</a></li>

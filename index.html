@@ -512,12 +512,54 @@ layout: false
         .cell.featured { grid-template-columns: 1fr; }
         .resources { grid-template-columns: 1fr; }
     }
+    /* Hamburger toggle */
+    .nav-toggle-input { display: none; }
+    .nav-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1001;
+    }
+    .nav-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--primary);
+        transition: all 0.3s;
+        box-shadow: 0 0 4px var(--primary);
+    }
+
     @media (max-width: 768px) {
         .grid { grid-template-columns: 1fr; }
-        .nav-inner { flex-direction: column; gap: 0.5rem; padding: 0 1rem; }
-        .nav-links { gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
-        .nav-links a { font-size: 0.7rem; letter-spacing: 0.5px; }
-        .hero { padding: 8rem 1.5rem 3rem; }
+        .nav-toggle { display: flex; }
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0; right: 0;
+            background: rgba(5, 7, 7, 0.98);
+            border-bottom: 1px solid var(--primary);
+            flex-direction: column;
+            padding: 0; gap: 0;
+        }
+        .nav-toggle-input:checked ~ .nav-links { display: flex; }
+        .nav-toggle-input:checked ~ .nav-toggle span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .nav-toggle-input:checked ~ .nav-toggle span:nth-child(2) { opacity: 0; }
+        .nav-toggle-input:checked ~ .nav-toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .nav-links li { border-bottom: 1px solid rgba(0, 255, 65, 0.1); list-style: none; }
+        .nav-links li:last-child { border-bottom: none; }
+        .nav-links a {
+            display: block;
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+        .nav-links a::after { display: none; }
+        .nav-links a:hover { background: rgba(0, 255, 65, 0.08); }
+        .hero { padding: 6rem 1.5rem 3rem; }
         .hero-stats { gap: 1.5rem; }
         .pillars { gap: 0.8rem; }
         .pillar { font-size: 0.65rem; padding: 0.4rem 0.8rem; }
@@ -529,8 +571,6 @@ layout: false
         .res-link { font-size: 0.8rem; }
     }
     @media (max-width: 480px) {
-        .nav-links a { font-size: 0.6rem; letter-spacing: 0; }
-        .nav-links { gap: 0.25rem; }
         .hero-title { font-size: 3.5rem; }
         .hero-sub { font-size: 0.85rem; letter-spacing: 0.15em; }
         .stat-value { font-size: 1.6rem; }
@@ -568,6 +608,12 @@ layout: false
     <nav class="nav">
         <div class="nav-inner">
             <a href="/" class="logo">vProgs</a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Toggle navigation">
+            <label for="nav-toggle" class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
             <ul class="nav-links">
                 <li><a href="/learn/">Learn</a></li>
                 <li><a href="/architecture/">Architecture</a></li>

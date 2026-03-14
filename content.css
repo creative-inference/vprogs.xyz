@@ -466,7 +466,7 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
     .section-hero {
-        padding: 8rem 1rem 2.5rem;
+        padding: 5rem 1rem 2.5rem;
     }
 
     .section-hero-title {
@@ -474,7 +474,7 @@
     }
 
     .page-layout {
-        padding: 7rem 1rem 2rem;
+        padding: 5rem 1rem 2rem;
     }
 
     .breadcrumb-list {
@@ -520,11 +520,11 @@
 
 @media (max-width: 480px) {
     .page-layout {
-        padding: 8rem 0.75rem 2rem;
+        padding: 5rem 0.75rem 2rem;
     }
 
     .section-hero {
-        padding: 8rem 0.75rem 2rem;
+        padding: 5rem 0.75rem 2rem;
     }
 
     .section-hero-title {
