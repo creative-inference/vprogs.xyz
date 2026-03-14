@@ -125,14 +125,17 @@ layout: false
         padding: 8rem 2rem 4rem;
         text-align: center;
         z-index: 1;
+        background:
+            linear-gradient(180deg, rgba(5, 7, 7, 0.7) 0%, rgba(5, 7, 7, 0.85) 50%, rgba(5, 7, 7, 1) 100%),
+            url('img/cypherpunk.png') center center / cover no-repeat;
     }
     .hero::before {
         content: '';
         position: absolute;
         inset: 0;
         background:
-            radial-gradient(ellipse at 50% 30%, rgba(0, 255, 65, 0.06) 0%, transparent 60%),
-            radial-gradient(ellipse at 20% 80%, rgba(0, 255, 255, 0.03) 0%, transparent 50%);
+            radial-gradient(ellipse at 50% 30%, rgba(0, 255, 65, 0.08) 0%, transparent 60%),
+            radial-gradient(ellipse at 20% 80%, rgba(0, 255, 255, 0.04) 0%, transparent 50%);
         pointer-events: none;
     }
 
