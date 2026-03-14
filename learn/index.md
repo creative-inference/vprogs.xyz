@@ -35,6 +35,14 @@ An end-to-end walkthrough of the vProgs execution flow: from defining a state tr
 
 ---
 
+### [Real-World Use Cases](/learn/use-cases)
+
+What can you actually do with vProgs? Instant global payments, trustless trading, verified credentials, supply chain tracking, insurance that pays itself, community-run organizations, and more -- explained without jargon.
+
+**Best for:** Anyone who wants concrete examples of how vProgs change everyday things.
+
+---
+
 ## Evaluation and Reference
 
 ### [vProgs Compared](/learn/compared)
