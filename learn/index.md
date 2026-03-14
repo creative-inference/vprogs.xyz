@@ -82,7 +82,7 @@ Answers to the most common questions: Is this an L2? Do I need to learn a new la
 Once you have a solid understanding of vProgs, explore these areas for deeper technical detail:
 
 - [Architecture Overview](/architecture/overview) -- Formal specification and design documents
-- [KIP-21 Sequencing](/architecture/kip-21-sequencing) -- The consensus foundation enabling lane-based proving
+- [L1 Sequencing](/architecture/sequencing/) -- The consensus foundation enabling lane-based proving
 - [Covenants++](/architecture/covenants) -- The hard fork KIP stack powering vProgs infrastructure
 - [Silverscript](/architecture/silverscript) -- The complementary L1 covenant language
 - [Roadmap](/ecosystem/roadmap) -- Development phases and milestones

@@ -180,4 +180,4 @@ Several converging developments make this architecture feasible today in a way i
 - [What Are vProgs?](/learn/what-are-vprogs) -- Core concepts and architecture pillars
 - [How It Works](/learn/how-it-works) -- Step-by-step execution flow
 - [vProgs Compared](/learn/compared) -- Detailed platform comparison
-- [Full Architectural Analysis](/architecture/full-analysis) -- Complete technical deep dive
+- [Architecture Overview](/architecture/overview/) -- Complete technical deep dive
