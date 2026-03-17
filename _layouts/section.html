@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<section class="section-hero{% if page.hero_image %} section-hero--image{% endif %}"{% if page.hero_image %} style="--hero-bg: url('{{ page.hero_image }}')"{% endif %}>
+<section class="section-hero{% if page.hero_image %} section-hero--image{% endif %}"{% if page.hero_image %} style="background-image: url('{{ page.hero_image }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"{% endif %}>
   <div class="section-hero-overlay"></div>
   <div class="container">
     <h1 class="section-hero-title">{{ page.title }}</h1>
