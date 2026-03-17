@@ -49,8 +49,8 @@ rustup target add wasm32-unknown-unknown  # For future WASM support
 ### Verify Installation
 
 ```bash
-rustc --version   # rustc 1.8x.0-nightly (...)
-cargo --version   # cargo 1.8x.0-nightly (...)
+rustc --version   # rustc 1.96.0-nightly (...)
+cargo --version   # cargo 1.96.0-nightly (...)
 ```
 
 ### Additional Build Dependencies
