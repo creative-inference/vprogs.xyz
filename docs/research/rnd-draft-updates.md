@@ -4,6 +4,17 @@ Auto-generated 2026-03-17. Review before merging into [R&D Insights](/changelog/
 
 ---
 
+Here is a draft update for the vProgs documentation site based on the new message.
+
+---
+
+### Code Development (March 17, 2026)
+A pull request was merged into the `rusty-kaspa` repository, marking a development milestone. As announced by @coderofstuff, this PR integrates new code into the primary Rust implementation of the Kaspa node.
+
+*   **Merged PR:** [rusty-kaspa#919](https://github.com/kaspanet/rusty-kaspa/pull/919)
+
+---
+
 Here is a draft update for the vProgs technical documentation site, summarizing the recent messages from the Kaspa Core R&D channel.
 
 ### Silverscript Language & Tooling (2026-02-10)
