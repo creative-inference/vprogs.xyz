@@ -9,6 +9,24 @@ A complete guide to configuring your development environment for building vProgs
 
 ---
 
+## Recommended Hardware
+
+These specs cover running a local dev node, compiling the workspace, and generating ZK proofs during development.
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| **CPU** | 4 cores / 8 threads | 8+ cores (e.g. AMD Ryzen 7 / Intel Core i7) |
+| **RAM** | 16 GB | 32 GB |
+| **Storage** | 50 GB SSD | 200 GB NVMe SSD |
+| **OS** | Ubuntu 22.04 LTS | Ubuntu 22.04 / 24.04 LTS |
+| **Network** | 10 Mbps | 100 Mbps+ (for testnet sync) |
+
+> **ZK proving note:** Generating ZK proofs locally is CPU-intensive. If you plan to run proving workloads frequently, 16+ cores and 64 GB RAM will significantly reduce proof generation times. For lighter development work (writing contracts, running unit tests), the minimum spec is sufficient.
+
+> **macOS / Windows:** Development is supported on macOS (Apple Silicon or Intel) and Windows via WSL2. Native Windows builds are not currently supported.
+
+---
+
 ## Rust Toolchain
 
 vProgs and Silverscript are written in Rust and require the nightly toolchain.
