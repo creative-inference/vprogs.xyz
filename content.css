@@ -27,7 +27,7 @@
     letter-spacing: 1px;
     margin-bottom: 1.5rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.15);
+    border-bottom: 1px solid rgba(112, 199, 186, 0.15);
 }
 
 /* ---------- Breadcrumb ---------- */
@@ -76,7 +76,7 @@
     text-align: center;
     background:
         linear-gradient(rgba(10, 14, 15, 0.9), rgba(10, 14, 15, 0.85)),
-        radial-gradient(ellipse at center, rgba(0, 255, 65, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse at center, rgba(112, 199, 186, 0.08) 0%, transparent 70%),
         var(--darker);
     border-bottom: 2px solid var(--primary);
     z-index: 1;
@@ -138,7 +138,7 @@
     color: var(--text);
     margin: 2.5rem 0 1.25rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.15);
+    border-bottom: 1px solid rgba(112, 199, 186, 0.15);
     letter-spacing: 0.03em;
     line-height: 1.3;
 }
@@ -193,7 +193,7 @@
 .markdown-content a {
     color: var(--primary);
     text-decoration: none;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    border-bottom: 1px solid rgba(112, 199, 186, 0.3);
     transition: all 0.3s;
 }
 
@@ -260,8 +260,8 @@
 .markdown-content code {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9em;
-    background: rgba(0, 255, 65, 0.08);
-    border: 1px solid rgba(0, 255, 65, 0.25);
+    background: rgba(112, 199, 186, 0.08);
+    border: 1px solid rgba(112, 199, 186, 0.25);
     padding: 0.15em 0.4em;
     border-radius: 2px;
     color: var(--primary);
@@ -272,7 +272,7 @@
     margin: 1.5rem 0;
     padding: 1.5rem;
     background: rgba(5, 7, 7, 0.9);
-    border: 1px solid rgba(0, 255, 65, 0.3);
+    border: 1px solid rgba(112, 199, 186, 0.3);
     border-left: 3px solid var(--primary);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -291,7 +291,7 @@
 /* Syntax highlighting (Rouge) */
 .highlight {
     background: rgba(5, 7, 7, 0.9);
-    border: 1px solid rgba(0, 255, 65, 0.3);
+    border: 1px solid rgba(112, 199, 186, 0.3);
     border-left: 3px solid var(--primary);
     padding: 1.5rem;
     margin: 1.5rem 0;
@@ -361,7 +361,7 @@
 }
 
 .markdown-content thead {
-    background: rgba(0, 255, 65, 0.1);
+    background: rgba(112, 199, 186, 0.1);
 }
 
 .markdown-content th {
@@ -369,18 +369,18 @@
     padding: 1rem 1.2rem;
     text-align: left;
     color: var(--secondary);
-    border: 1px solid rgba(0, 255, 65, 0.2);
+    border: 1px solid rgba(112, 199, 186, 0.2);
     font-size: 1rem;
     letter-spacing: 1px;
 }
 
 .markdown-content td {
     padding: 1rem 1.2rem;
-    border: 1px solid rgba(0, 255, 65, 0.2);
+    border: 1px solid rgba(112, 199, 186, 0.2);
 }
 
 .markdown-content tr:hover {
-    background: rgba(0, 255, 65, 0.05);
+    background: rgba(112, 199, 186, 0.05);
 }
 
 /* Blockquote */
@@ -415,7 +415,7 @@
 .markdown-content img {
     max-width: 100%;
     height: auto;
-    border: 1px solid rgba(0, 255, 65, 0.3);
+    border: 1px solid rgba(112, 199, 186, 0.3);
     display: block;
     margin: 1.5rem 0;
 }
@@ -483,7 +483,7 @@
     transform: translateX(-50%);
     min-width: 200px;
     background: rgba(5, 7, 7, 0.98);
-    border: 1px solid rgba(0, 255, 65, 0.2);
+    border: 1px solid rgba(112, 199, 186, 0.2);
     border-top: 2px solid var(--primary);
     padding: 0.5rem 0;
     margin-top: 0.75rem;
@@ -518,7 +518,7 @@
 
 .nav-dropdown a:hover {
     color: var(--primary);
-    background: rgba(0, 255, 65, 0.06);
+    background: rgba(112, 199, 186, 0.06);
     padding-left: 1.4rem;
 }
 
@@ -533,7 +533,7 @@
 .site-footer {
     position: relative;
     z-index: 1;
-    border-top: 1px solid rgba(0, 255, 65, 0.15);
+    border-top: 1px solid rgba(112, 199, 186, 0.15);
     background: rgba(5, 7, 7, 0.95);
 }
 
@@ -554,7 +554,7 @@
     letter-spacing: 2px;
     margin-bottom: 0.75rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+    border-bottom: 1px solid rgba(112, 199, 186, 0.2);
 }
 
 .footer-col a {
@@ -572,7 +572,7 @@
 }
 
 .footer-bottom {
-    border-top: 1px solid rgba(0, 255, 65, 0.1);
+    border-top: 1px solid rgba(112, 199, 186, 0.1);
     padding: 2rem;
     text-align: center;
 }

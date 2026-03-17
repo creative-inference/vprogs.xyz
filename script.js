@@ -49,7 +49,7 @@ function createMatrixEffect() {
                 const y = drops[i] - t;
                 if (y < 0) continue;
                 const alpha = (1 - t / 12) * 0.6;
-                ctx.fillStyle = 'rgba(74, 196, 110, ' + alpha + ')';
+                ctx.fillStyle = 'rgba(112, 199, 186, ' + alpha + ')';
                 ctx.font = fontSize + 'px monospace';
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 ctx.fillText(text, i * fontSize, y * fontSize);
@@ -81,6 +81,6 @@ document.querySelectorAll('.markdown-content table').forEach(table => {
 });
 
 // Console easter egg
-console.log('%c vProgs | Breaking the Smart Contract Trilemma ', 'background: #00ff41; color: #0a0e0f; font-size: 20px; font-weight: bold; padding: 10px;');
-console.log('%c Native L1 Verifiable Programs for Kaspa BlockDAG ', 'color: #00ff41; font-size: 14px;');
-console.log('%c https://kaspa.org ', 'color: #0dff8a; font-size: 12px;');
+console.log('%c vProgs | Scalable. Composable. Secure. ', 'background: #70c7ba; color: #0a0e0f; font-size: 20px; font-weight: bold; padding: 10px;');
+console.log('%c Native L1 Verifiable Programs for Kaspa BlockDAG ', 'color: #70c7ba; font-size: 14px;');
+console.log('%c https://kaspa.org ', 'color: #5aab9f; font-size: 12px;');

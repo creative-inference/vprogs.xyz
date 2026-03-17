@@ -1,7 +1,7 @@
 /* Cypherpunk Theme Variables */
 :root {
-    --primary: #4ac46e;
-    --secondary: #3da85e;
+    --primary: #70c7ba;
+    --secondary: #5aab9f;
     --dark: #0a0e0f;
     --darker: #050707;
     --gray: #1a2426;
@@ -38,8 +38,8 @@ body {
             0deg,
             transparent,
             transparent 2px,
-            rgba(0, 255, 65, 0.03) 2px,
-            rgba(0, 255, 65, 0.03) 4px
+            rgba(112, 199, 186, 0.03) 2px,
+            rgba(112, 199, 186, 0.03) 4px
         );
     pointer-events: none;
     z-index: 0;
@@ -162,7 +162,7 @@ body {
     background:
         linear-gradient(rgba(10, 14, 15, 0.85), rgba(10, 14, 15, 0.75)),
         url('img/cypherpunk.png') center center / cover no-repeat,
-        radial-gradient(ellipse at center, rgba(0, 255, 65, 0.05) 0%, transparent 70%),
+        radial-gradient(ellipse at center, rgba(112, 199, 186, 0.05) 0%, transparent 70%),
         var(--darker);
     border-bottom: 2px solid var(--primary);
 }
@@ -219,7 +219,7 @@ body {
 
 .feature-badge {
     font-family: 'JetBrains Mono', monospace;
-    background: rgba(0, 255, 65, 0.1);
+    background: rgba(112, 199, 186, 0.1);
     border: 2px solid var(--primary);
     padding: 1rem 2rem;
     font-size: 1.2rem;
@@ -227,13 +227,13 @@ body {
     color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 2px;
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 20px rgba(112, 199, 186, 0.3);
     transition: all 0.3s;
 }
 
 .feature-badge:hover {
-    background: rgba(0, 255, 65, 0.2);
-    box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+    background: rgba(112, 199, 186, 0.2);
+    box-shadow: 0 0 30px rgba(112, 199, 186, 0.5);
     transform: translateY(-2px);
 }
 
@@ -288,7 +288,7 @@ body {
 
 .content-block {
     background: rgba(26, 36, 38, 0.5);
-    border: 1px solid rgba(0, 255, 65, 0.3);
+    border: 1px solid rgba(112, 199, 186, 0.3);
     padding: 3rem;
     backdrop-filter: blur(10px);
 }
@@ -307,8 +307,8 @@ body {
 }
 
 .solution {
-    border-color: rgba(0, 255, 65, 0.5);
-    background: rgba(0, 255, 65, 0.05);
+    border-color: rgba(112, 199, 186, 0.5);
+    background: rgba(112, 199, 186, 0.05);
 }
 
 .problem h3, .solution h3 {
@@ -371,7 +371,7 @@ body {
 }
 
 .arch-card {
-    background: rgba(0, 255, 65, 0.05);
+    background: rgba(112, 199, 186, 0.05);
     border: 1px solid var(--primary);
     padding: 2rem;
     transition: all 0.3s;
@@ -379,8 +379,8 @@ body {
 
 .arch-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
-    background: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 10px 30px rgba(112, 199, 186, 0.3);
+    background: rgba(112, 199, 186, 0.1);
 }
 
 .arch-icon {
@@ -422,7 +422,7 @@ table {
 }
 
 thead {
-    background: rgba(0, 255, 65, 0.1);
+    background: rgba(112, 199, 186, 0.1);
 }
 
 th {
@@ -430,24 +430,24 @@ th {
     padding: 1.2rem;
     text-align: left;
     color: var(--primary);
-    border: 1px solid rgba(0, 255, 65, 0.3);
+    border: 1px solid rgba(112, 199, 186, 0.3);
     font-size: 1.1rem;
     letter-spacing: 1px;
 }
 
 td {
     padding: 1.2rem;
-    border: 1px solid rgba(0, 255, 65, 0.2);
+    border: 1px solid rgba(112, 199, 186, 0.2);
 }
 
 tr:hover {
-    background: rgba(0, 255, 65, 0.05);
+    background: rgba(112, 199, 186, 0.05);
 }
 
 td.highlight {
     color: var(--primary);
     font-weight: 700;
-    background: rgba(0, 255, 65, 0.1);
+    background: rgba(112, 199, 186, 0.1);
 }
 
 /* Syncompo Features */
@@ -476,7 +476,7 @@ td.highlight {
 }
 
 .use-case {
-    background: rgba(0, 255, 65, 0.1);
+    background: rgba(112, 199, 186, 0.1);
     border: 2px solid var(--primary);
     padding: 2rem;
     margin-top: 2rem;
@@ -542,7 +542,7 @@ td.highlight {
 }
 
 .app-card {
-    background: rgba(0, 255, 65, 0.08);
+    background: rgba(112, 199, 186, 0.08);
     border: 1px solid var(--primary);
     padding: 2rem;
     transition: all 0.3s;
@@ -550,7 +550,7 @@ td.highlight {
 
 .app-card:hover {
     border-color: var(--secondary);
-    box-shadow: 0 5px 20px rgba(0, 255, 65, 0.2);
+    box-shadow: 0 5px 20px rgba(112, 199, 186, 0.2);
 }
 
 .app-card h3 {
@@ -567,7 +567,7 @@ td.highlight {
 }
 
 .institutional {
-    background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 255, 255, 0.1));
+    background: linear-gradient(135deg, rgba(112, 199, 186, 0.1), rgba(0, 255, 255, 0.1));
     border: 2px solid var(--accent);
     padding: 2.5rem;
     margin-top: 2rem;
@@ -589,7 +589,7 @@ td.highlight {
 .position-statement {
     text-align: center;
     padding: 3rem;
-    background: rgba(0, 255, 65, 0.1);
+    background: rgba(112, 199, 186, 0.1);
     border: 3px solid var(--primary);
     margin-bottom: 3rem;
 }
@@ -604,7 +604,7 @@ td.highlight {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: rgba(0, 255, 65, 0.05);
+    background: rgba(112, 199, 186, 0.05);
     border-left: 3px solid var(--primary);
     padding: 1.5rem;
     font-size: 1.3rem;
@@ -650,8 +650,8 @@ td.highlight {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(0, 255, 65, 0.05);
-    border: 1px solid rgba(0, 255, 65, 0.3);
+    background: rgba(112, 199, 186, 0.05);
+    border: 1px solid rgba(112, 199, 186, 0.3);
     padding: 1rem;
     color: var(--text);
     text-decoration: none;
@@ -660,10 +660,10 @@ td.highlight {
 }
 
 .ref-link:hover {
-    background: rgba(0, 255, 65, 0.15);
+    background: rgba(112, 199, 186, 0.15);
     border-color: var(--primary);
     transform: translateX(5px);
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 15px rgba(112, 199, 186, 0.3);
 }
 
 .ref-title {
@@ -761,7 +761,7 @@ td.highlight {
     }
 
     .nav-links li {
-        border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+        border-bottom: 1px solid rgba(112, 199, 186, 0.1);
     }
 
     .nav-links li:last-child {
@@ -781,7 +781,7 @@ td.highlight {
 
     .nav-links a:hover,
     .nav-links a.active {
-        background: rgba(0, 255, 65, 0.08);
+        background: rgba(112, 199, 186, 0.08);
     }
 
     .logo {
