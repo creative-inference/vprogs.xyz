@@ -1,7 +1,7 @@
 {
   "channel": "kasparnd",
-  "exported_at": "2026-03-17T01:36:51.505091+00:00",
-  "message_count": 500,
+  "exported_at": "2026-03-17T06:00:34.120048+00:00",
+  "message_count": 501,
   "messages": [
     {
       "id": 12074,
@@ -7180,6 +7180,22 @@
       "text": "https://github.com/kaspanet/silverscript/pull/76\n\nDebugger now supports struct/state args -\n\ncli-debugger debug_state.sil -f inspect_state --arg '{\"amount\":5,\"active\":true,\"tag\":\"0xaa\"}'\n\nI also renamed the vars section names to better display covenant/contract consts/state/args/locals",
       "links": [
         "https://github.com/kaspanet/silverscript/pull/76"
+      ]
+    },
+    {
+      "id": 12684,
+      "date": "2026-03-17T04:07:15",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 12682,
+      "topic_id": null,
+      "text": "Merged: https://github.com/kaspanet/rusty-kaspa/pull/919",
+      "links": [
+        "https://github.com/kaspanet/rusty-kaspa/pull/919"
       ]
     }
   ]
