@@ -463,6 +463,65 @@
     width: 100%;
 }
 
+/* ---------- Nav Dropdowns (desktop only) ---------- */
+.nav-links .has-dropdown {
+    position: relative;
+}
+
+.nav-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    background: rgba(5, 7, 7, 0.98);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    border-top: 2px solid var(--primary);
+    padding: 0.5rem 0;
+    margin-top: 0.75rem;
+    z-index: 1001;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.nav-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -0.75rem;
+    left: 0;
+    right: 0;
+    height: 0.75rem;
+}
+
+.has-dropdown:hover .nav-dropdown {
+    display: block;
+}
+
+.nav-dropdown a {
+    display: block;
+    padding: 0.45rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.nav-dropdown a:hover {
+    color: var(--primary);
+    background: rgba(0, 255, 65, 0.06);
+    padding-left: 1.4rem;
+}
+
+/* Hide dropdowns on mobile — just show top-level links */
+@media (max-width: 768px) {
+    .nav-dropdown {
+        display: none !important;
+    }
+}
+
 /* ---------- Site Footer ---------- */
 .site-footer {
     position: relative;

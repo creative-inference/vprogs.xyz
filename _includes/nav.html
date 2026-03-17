@@ -8,13 +8,82 @@
       <span></span>
     </label>
     <ul class="nav-links">
-      <li><a href="/learn/"{% if page.section == "learn" %} class="active"{% endif %}>Learn</a></li>
-      <li><a href="/architecture/"{% if page.section == "architecture" %} class="active"{% endif %}>Architecture</a></li>
-      <li><a href="/build/"{% if page.section == "build" %} class="active"{% endif %}>Build</a></li>
-      <li><a href="/research/"{% if page.section == "research" %} class="active"{% endif %}>Research</a></li>
-      <li><a href="/ecosystem/"{% if page.section == "ecosystem" %} class="active"{% endif %}>Ecosystem</a></li>
-      <li><a href="/changelog/"{% if page.section == "changelog" %} class="active"{% endif %}>Changelog</a></li>
-      <li><a href="/references/"{% if page.section == "references" %} class="active"{% endif %}>References</a></li>
+      <li class="has-dropdown">
+        <a href="/learn/"{% if page.section == "learn" %} class="active"{% endif %}>Learn</a>
+        <div class="nav-dropdown">
+          <a href="/learn/what-are-vprogs/">What Are vProgs</a>
+          <a href="/learn/why-vprogs/">Why vProgs</a>
+          <a href="/learn/how-it-works/">How It Works</a>
+          <a href="/learn/compared/">Platform Comparison</a>
+          <a href="/learn/use-cases/">Real-World Use Cases</a>
+          <a href="/learn/timeline/">When Going Live?</a>
+          <a href="/learn/myths/">Myths vs Reality</a>
+          <a href="/learn/glossary/">Glossary</a>
+          <a href="/learn/faq/">FAQ</a>
+        </div>
+      </li>
+      <li class="has-dropdown">
+        <a href="/architecture/"{% if page.section == "architecture" %} class="active"{% endif %}>Architecture</a>
+        <div class="nav-dropdown">
+          <a href="/architecture/overview/">Overview</a>
+          <a href="/architecture/account-model/">Account Model</a>
+          <a href="/architecture/execution-model/">Execution Model</a>
+          <a href="/architecture/zk-verification/">ZK Verification</a>
+          <a href="/architecture/sequencing/">L1 Sequencing</a>
+          <a href="/architecture/composability/">Composability</a>
+          <a href="/architecture/dagknight/">DagKnight</a>
+          <a href="/architecture/covenants/">Covenant Stack</a>
+          <a href="/architecture/silverscript/">Silverscript</a>
+        </div>
+      </li>
+      <li class="has-dropdown">
+        <a href="/build/"{% if page.section == "build" %} class="active"{% endif %}>Build</a>
+        <div class="nav-dropdown">
+          <a href="/build/quickstart/">Quickstart</a>
+          <a href="/build/tutorials/">Tutorials</a>
+          <a href="/build/api-reference/">API Reference</a>
+          <a href="/build/silverscript-reference/">Silverscript Reference</a>
+          <a href="/build/testnet/">TN12 Testnet</a>
+          <a href="/build/tools/">Developer Tools</a>
+          <a href="/build/examples/">Example Projects</a>
+        </div>
+      </li>
+      <li class="has-dropdown">
+        <a href="/research/"{% if page.section == "research" %} class="active"{% endif %}>Research</a>
+        <div class="nav-dropdown">
+          <a href="/research/formal-model/">Formal Model</a>
+          <a href="/research/composability-proposal/">Composability</a>
+          <a href="/research/gas-economics/">Gas Economics</a>
+          <a href="/research/proving-systems/">Proving Systems</a>
+          <a href="/research/security-model/">Security Model</a>
+          <a href="/research/open-questions/">Open Questions</a>
+        </div>
+      </li>
+      <li class="has-dropdown">
+        <a href="/ecosystem/"{% if page.section == "ecosystem" %} class="active"{% endif %}>Ecosystem</a>
+        <div class="nav-dropdown">
+          <a href="/ecosystem/roadmap/">Roadmap</a>
+          <a href="/ecosystem/applications/">Applications</a>
+          <a href="/ecosystem/kii/">KII Foundation</a>
+          <a href="/ecosystem/partners/">Partners</a>
+          <a href="/ecosystem/community/">Community</a>
+        </div>
+      </li>
+      <li class="has-dropdown">
+        <a href="/changelog/"{% if page.section == "changelog" %} class="active"{% endif %}>Changelog</a>
+        <div class="nav-dropdown">
+          <a href="/changelog/rnd-insights/">R&D Insights</a>
+          <a href="/changelog/testnet-updates/">Testnet Updates</a>
+        </div>
+      </li>
+      <li class="has-dropdown">
+        <a href="/references/"{% if page.section == "references" %} class="active"{% endif %}>References</a>
+        <div class="nav-dropdown">
+          <a href="/references/kips/">KIP Index</a>
+          <a href="/references/repos/">Repositories</a>
+          <a href="/references/sources/">Sources</a>
+        </div>
+      </li>
     </ul>
     <a href="https://x.com/dag_knight" target="_blank" rel="noopener" class="nav-x" aria-label="Follow on X">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
