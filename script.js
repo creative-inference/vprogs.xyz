@@ -81,7 +81,7 @@ document.querySelectorAll('.markdown-content table').forEach(table => {
 });
 
 // Copy buttons on code blocks
-document.querySelectorAll('.highlight').forEach(block => {
+document.querySelectorAll('div.highlight').forEach(block => {
     const btn = document.createElement('button');
     btn.className = 'copy-btn';
     btn.textContent = 'copy';
