@@ -80,6 +80,26 @@ document.querySelectorAll('.markdown-content table').forEach(table => {
     wrapper.appendChild(table);
 });
 
+// Copy buttons on code blocks
+document.querySelectorAll('.highlight').forEach(block => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'copy';
+    block.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+        const code = block.querySelector('code') || block.querySelector('pre');
+        navigator.clipboard.writeText(code.innerText).then(() => {
+            btn.textContent = 'copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    });
+});
+
 // Console easter egg
 console.log('%c vProgs | Scalable. Composable. Secure. ', 'background: #70c7ba; color: #0a0e0f; font-size: 20px; font-weight: bold; padding: 10px;');
 console.log('%c Native L1 Verifiable Programs for Kaspa BlockDAG ', 'color: #70c7ba; font-size: 14px;');

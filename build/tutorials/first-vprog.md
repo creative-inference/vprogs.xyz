@@ -301,6 +301,101 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ---
 
+## Full Code
+
+The complete `examples/counter-vprog/src/lib.rs` combining all steps above:
+
+```rust
+use borsh::{BorshDeserialize, BorshSerialize};
+use vprogs_core::types::{AccountId, StateRoot};
+
+/// The state of our counter vProg.
+#[derive(BorshSerialize, BorshDeserialize, Clone, Debug)]
+pub struct CounterState {
+    pub value: u64,
+    pub num_increments: u64,
+    pub last_modifier: Option<AccountId>,
+}
+
+impl CounterState {
+    pub fn new() -> Self {
+        Self {
+            value: 0,
+            num_increments: 0,
+            last_modifier: None,
+        }
+    }
+}
+
+/// Actions that can be performed on the counter.
+#[derive(BorshSerialize, BorshDeserialize, Clone, Debug)]
+pub enum CounterAction {
+    Increment { amount: u64, caller: AccountId },
+    Reset { caller: AccountId },
+}
+
+#[derive(Debug, thiserror::Error)]
+pub enum TransitionError {
+    #[error("increment amount must be positive")]
+    InvalidAmount,
+    #[error("counter overflow")]
+    Overflow,
+}
+
+/// State transition function — runs off-chain in the prover.
+pub fn transition(
+    state: &CounterState,
+    action: &CounterAction,
+) -> Result<CounterState, TransitionError> {
+    match action {
+        CounterAction::Increment { amount, caller } => {
+            if *amount == 0 {
+                return Err(TransitionError::InvalidAmount);
+            }
+            Ok(CounterState {
+                value: state.value.checked_add(*amount)
+                    .ok_or(TransitionError::Overflow)?,
+                num_increments: state.num_increments + 1,
+                last_modifier: Some(caller.clone()),
+            })
+        }
+        CounterAction::Reset { caller } => {
+            Ok(CounterState {
+                value: 0,
+                num_increments: state.num_increments + 1,
+                last_modifier: Some(caller.clone()),
+            })
+        }
+    }
+}
+
+use vprogs_core::hash::blake3_hash;
+
+/// Compute a state commitment from the current state.
+pub fn compute_state_root(state: &CounterState) -> StateRoot {
+    let serialized = borsh::to_vec(state)
+        .expect("serialization should not fail");
+    StateRoot(blake3_hash(&serialized))
+}
+
+/// Compute the transition commitment: hash of (old_state, action, new_state).
+pub fn compute_transition_commitment(
+    old_root: &StateRoot,
+    new_root: &StateRoot,
+    action: &CounterAction,
+) -> [u8; 32] {
+    let action_bytes = borsh::to_vec(action)
+        .expect("serialization should not fail");
+    let mut hasher = blake3::Hasher::new();
+    hasher.update(&old_root.0);
+    hasher.update(&new_root.0);
+    hasher.update(&action_bytes);
+    *hasher.finalize().as_bytes()
+}
+```
+
+---
+
 ## Key Concepts Recap
 
 | Concept | Description |

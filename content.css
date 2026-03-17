@@ -296,6 +296,39 @@
     padding: 1.5rem;
     margin: 1.5rem 0;
     overflow-x: auto;
+    position: relative;
+}
+
+/* Copy button */
+.copy-btn {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: rgba(112, 199, 186, 0.1);
+    border: 1px solid rgba(112, 199, 186, 0.3);
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.15s, background 0.15s;
+    user-select: none;
+}
+
+.highlight:hover .copy-btn {
+    opacity: 1;
+}
+
+.copy-btn:hover {
+    background: rgba(112, 199, 186, 0.2);
+}
+
+.copy-btn.copied {
+    color: #4caf79;
+    border-color: #4caf79;
+    opacity: 1;
 }
 
 .highlight pre {
