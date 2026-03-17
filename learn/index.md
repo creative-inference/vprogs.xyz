@@ -3,6 +3,7 @@ layout: section
 title: "Learn About vProgs"
 section: learn
 description: "Kaspa's Verifiable Programs (vProgs) represent a new paradigm for blockchain programmability. Whether you are a developer evaluating the platform, a researcher studying scalable smart contract architectures, or a community member looking to understand the technology, this section covers everything you need to know."
+hero_image: /img/learn.jpg
 ---
 
 Start with the fundamentals and work your way through to comparisons and advanced topics.
