@@ -18,6 +18,19 @@
     grid-template-columns: 1fr 320px;
 }
 
+/* ---------- Page Title (3rd level pages) ---------- */
+.page-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+    text-shadow: 0 0 8px rgba(74, 196, 110, 0.25);
+}
+
 /* ---------- Breadcrumb ---------- */
 .breadcrumb {
     margin-bottom: 2rem;
@@ -635,6 +648,10 @@
     .markdown-content th,
     .markdown-content td {
         padding: 0.5rem 0.6rem;
+    }
+
+    .page-title {
+        font-size: 1.4rem;
     }
 
     .markdown-content h1 {

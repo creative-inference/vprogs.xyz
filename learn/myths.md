@@ -5,8 +5,6 @@ section: learn
 description: "Debunking common myths about Kaspa vProgs — they are not lightweight, not an L2, and not limited. Learn what the architecture actually delivers."
 ---
 
-# Myths and Misconceptions
-
 vProgs represent a fundamentally different architecture. Different architectures get misread through the lens of familiar ones. This page addresses common misconceptions head-on.
 
 ---

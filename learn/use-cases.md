@@ -5,8 +5,6 @@ section: learn
 description: "Explore real-world vProgs use cases on Kaspa — from instant global payments and decentralized exchanges to lending, NFTs, and supply chains."
 ---
 
-# Real-World Use Cases
-
 vProgs make Kaspa programmable. But what does that actually mean for real people? This page walks through concrete scenarios -- things you already understand -- and shows how vProgs change the way they work.
 
 No jargon. No architecture diagrams. Just real problems and how they get solved.
