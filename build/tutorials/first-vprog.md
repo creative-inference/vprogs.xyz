@@ -396,6 +396,91 @@ pub fn compute_transition_commitment(
 
 ---
 
+## Run It
+
+The proving and submission pipeline is [Coming Soon], but you can run the transition logic and state commitment code right now using Rust's built-in test runner.
+
+Add the following test module to the bottom of `examples/counter-vprog/src/lib.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn dummy_account() -> AccountId {
+        AccountId([1u8; 32])
+    }
+
+    #[test]
+    fn test_increment() {
+        let state = CounterState::new();
+        let action = CounterAction::Increment {
+            amount: 42,
+            caller: dummy_account(),
+        };
+        let new_state = transition(&state, &action).unwrap();
+        assert_eq!(new_state.value, 42);
+        assert_eq!(new_state.num_increments, 1);
+        assert_eq!(new_state.last_modifier, Some(dummy_account()));
+    }
+
+    #[test]
+    fn test_increment_zero_rejected() {
+        let state = CounterState::new();
+        let action = CounterAction::Increment {
+            amount: 0,
+            caller: dummy_account(),
+        };
+        assert!(transition(&state, &action).is_err());
+    }
+
+    #[test]
+    fn test_reset() {
+        let mut state = CounterState::new();
+        state.value = 100;
+        let action = CounterAction::Reset { caller: dummy_account() };
+        let new_state = transition(&state, &action).unwrap();
+        assert_eq!(new_state.value, 0);
+        assert_eq!(new_state.num_increments, 1);
+    }
+
+    #[test]
+    fn test_state_commitment_changes_on_transition() {
+        let state = CounterState::new();
+        let action = CounterAction::Increment {
+            amount: 1,
+            caller: dummy_account(),
+        };
+        let new_state = transition(&state, &action).unwrap();
+        let old_root = compute_state_root(&state);
+        let new_root = compute_state_root(&new_state);
+        assert_ne!(old_root.0, new_root.0);
+    }
+}
+```
+
+Run the tests from the repo root:
+
+```bash
+cargo test -p counter-vprog
+```
+
+Expected output:
+
+```
+running 4 tests
+test tests::test_increment ... ok
+test tests::test_increment_zero_rejected ... ok
+test tests::test_reset ... ok
+test tests::test_state_commitment_changes_on_transition ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored
+```
+
+This confirms your transition logic and state commitment are working correctly. When the proving infrastructure ships, these same functions slot directly into the prover — no changes needed.
+
+---
+
 ## Key Concepts Recap
 
 | Concept | Description |
