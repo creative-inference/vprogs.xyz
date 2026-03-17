@@ -40,6 +40,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ### Configure Nightly
 
 ```bash
+source ~/.cargo/env   # Load rustup into the current shell
 rustup default nightly
 rustup component add rust-src rustfmt clippy
 rustup target add wasm32-unknown-unknown  # For future WASM support
