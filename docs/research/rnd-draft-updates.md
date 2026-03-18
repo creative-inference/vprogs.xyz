@@ -1,10 +1,24 @@
 # R&D Channel — Draft Updates
 
-Auto-generated 2026-03-17. Review before merging into [R&D Insights](/changelog/rnd-insights).
+Auto-generated 2026-03-18. Review before merging into [R&D Insights](/changelog/rnd-insights).
 
 ---
 
-Here is a draft update for the vProgs documentation site based on the new message.
+Here is a draft update for the vProgs documentation site based on the new messages.
+
+---
+
+### Silverscript Debugger Console Logging (2026-03-17)
+
+A pull request ([#78](https://github.com/kaspanet/silverscript/pull/78)) was submitted to add `console.log` support to the Silverscript debugger. This feature enables developers to print variable values and messages to the console during script execution, significantly improving the debugging experience for vProgs.
+
+### Covenant Integer Size Enforcement (2026-03-17 — 2026-03-18)
+
+A discussion was initiated around the behavior of `SizedEncodeInt<LEN>` when handling integers under covenant activation. It was noted that the current implementation rejects integers based on their raw byte length *before* decoding, which can cause failures even for numerically valid values that are not minimally encoded. For example, an integer with a value of 12 stored in 8 bytes would fail a check for `LEN=4`, even though its canonical representation is only 1 byte.
+
+A proposed fix is to decode the integer, re-serialize it into its canonical form, and then perform the length check. This change was met with agreement, as the original behavior was a remnant from before minimal encoding rules were relaxed.
+
+> "It made sense before the removal of minimal encoding. Now I don't see any advantage for it." — @someone235
 
 ---
 
