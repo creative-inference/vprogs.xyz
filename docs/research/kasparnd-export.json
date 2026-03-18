@@ -1,7 +1,7 @@
 {
   "channel": "kasparnd",
-  "exported_at": "2026-03-17T06:00:34.120048+00:00",
-  "message_count": 501,
+  "exported_at": "2026-03-18T06:00:28.560123+00:00",
+  "message_count": 504,
   "messages": [
     {
       "id": 12074,
@@ -7197,6 +7197,52 @@
       "links": [
         "https://github.com/kaspanet/rusty-kaspa/pull/919"
       ]
+    },
+    {
+      "id": 12698,
+      "date": "2026-03-17T15:25:26",
+      "from": {
+        "id": 776309225,
+        "username": "manyfestation",
+        "first_name": "Manyfest",
+        "last_name": null
+      },
+      "reply_to": 12273,
+      "topic_id": null,
+      "text": "https://github.com/kaspanet/silverscript/pull/78\n\nDebugger support for console logging. \n\n\nconsole.log(\"sum\", seed + a);\n\nConsole:\nsum 9",
+      "links": [
+        "https://github.com/kaspanet/silverscript/pull/78"
+      ]
+    },
+    {
+      "id": 12700,
+      "date": "2026-03-17T21:22:24",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 8953,
+      "topic_id": null,
+      "text": "question @someone235 @Max143672: under covenant activation, is it intentional that SizedEncodeInt<LEN> rejects by raw byte length before decoding, even when enforce_minimal == false? https://github.com/kaspanet/rusty-kaspa/blob/tn12/crypto/txscript/src/data_stack.rs#L215\n\nconcrete example that currently fails in silverscript:\n- store a computed int state field with value 12\n- later consume it through an index/size i32 consumer (eg OpSubstr)\n- runtime fails because it is encoded as 8 bytes (>LEN=4), even though the numeric value would canonically fit in 1 byte\n\na working workaround is to first run OpBin2Num(...) on the loaded state field before using it.\n\npossible alternative behavior would be:\n- decode first (if len <= 8)\n- canonically reserialize\n- then enforce the LEN bound on the canonical form\n\nis the current behavior intentional to avoid the cost of canonization?",
+      "links": [
+        "https://github.com/kaspanet/rusty-kaspa/blob/tn12/crypto/txscript/src/data_stack.rs#L215"
+      ]
+    },
+    {
+      "id": 12701,
+      "date": "2026-03-18T04:24:56",
+      "from": {
+        "id": 74267504,
+        "username": "someone235",
+        "first_name": "Ori",
+        "last_name": null
+      },
+      "reply_to": 12700,
+      "topic_id": 8953,
+      "text": "It made sense before the removal of minimal encoding. Now I don't see any advantage for it.",
+      "links": []
     }
   ]
 }
