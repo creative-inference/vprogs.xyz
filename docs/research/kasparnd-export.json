@@ -1,7 +1,7 @@
 {
   "channel": "kasparnd",
-  "exported_at": "2026-03-18T06:00:28.560123+00:00",
-  "message_count": 504,
+  "exported_at": "2026-03-19T06:00:27.622612+00:00",
+  "message_count": 510,
   "messages": [
     {
       "id": 12074,
@@ -7242,6 +7242,90 @@
       "reply_to": 12700,
       "topic_id": 8953,
       "text": "It made sense before the removal of minimal encoding. Now I don't see any advantage for it.",
+      "links": []
+    },
+    {
+      "id": 12705,
+      "date": "2026-03-18T13:34:00",
+      "from": {
+        "id": 246992211,
+        "username": "zelenevn",
+        "first_name": "Nikolay",
+        "last_name": null
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "Hey everyone, it looks like there are some issues with testnet-10. \nThe blocks are progressing very slowly. \nI can’t start the miner. \nCan someone take a look?",
+      "links": []
+    },
+    {
+      "id": 12706,
+      "date": "2026-03-18T16:08:14",
+      "from": {
+        "id": 5479163622,
+        "username": "wbbw55",
+        "first_name": "5bb",
+        "last_name": "55b"
+      },
+      "reply_to": 12705,
+      "topic_id": null,
+      "text": "It seems to have recovered. I remember a similar situation occurred some time ago.",
+      "links": []
+    },
+    {
+      "id": 12707,
+      "date": "2026-03-18T16:10:34",
+      "from": {
+        "id": 246992211,
+        "username": "zelenevn",
+        "first_name": "Nikolay",
+        "last_name": null
+      },
+      "reply_to": 12706,
+      "topic_id": 12705,
+      "text": "Yes, that was maybe a month or two ago, but the nature of the problem was different",
+      "links": []
+    },
+    {
+      "id": 12708,
+      "date": "2026-03-18T16:11:03",
+      "from": {
+        "id": 246992211,
+        "username": "zelenevn",
+        "first_name": "Nikolay",
+        "last_name": null
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "Does anyone know what exactly happened and how the network was restored?",
+      "links": []
+    },
+    {
+      "id": 12709,
+      "date": "2026-03-18T18:02:09",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 12708,
+      "topic_id": null,
+      "text": "Any reason to think it's not the typical hashrate rise and drop due to someone attaching an asic or something?",
+      "links": []
+    },
+    {
+      "id": 12710,
+      "date": "2026-03-18T18:11:17",
+      "from": {
+        "id": 246992211,
+        "username": "zelenevn",
+        "first_name": "Nikolay",
+        "last_name": null
+      },
+      "reply_to": 12709,
+      "topic_id": 12708,
+      "text": "Based on the statistics, that could indeed be the case. But here’s what struck me as odd: I just couldn’t get the miner to run. The miner simply couldn’t submit a single block. I’m not sure if this could theoretically be related to the reasons you described. Maybe I’m wrong",
       "links": []
     }
   ]
