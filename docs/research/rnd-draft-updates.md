@@ -1,10 +1,15 @@
 # R&D Channel — Draft Updates
 
-Auto-generated 2026-03-18. Review before merging into [R&D Insights](/changelog/rnd-insights).
+Auto-generated 2026-03-19. Review before merging into [R&D Insights](/changelog/rnd-insights).
 
 ---
 
-Here is a draft update for the vProgs documentation site based on the new messages.
+Here is a draft update for the documentation site based on the new messages.
+
+### Testnet (2026-03-18)
+Developers reported a significant slowdown in block production on `testnet-10`. The discussion centered around the likely cause, with the leading theory being a sudden, large fluctuation in network hashrate, potentially from a powerful miner or ASIC temporarily joining and leaving the testnet. While the network appeared to recover, a notable technical anomaly was observed where a developer's miner was completely unable to submit a block during the incident, raising questions about the exact behavior of the mining software under such network conditions.
+
+> "But here’s what struck me as odd: I just couldn’t get the miner to run. The miner simply couldn’t submit a single block. I’m not sure if this could theoretically be related to the reasons you described." — @zelenevn
 
 ---
 
