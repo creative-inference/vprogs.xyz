@@ -15,6 +15,12 @@ The phased journey from GHOSTDAG to DagKnight to vProgs. Covers the Crescendo an
 
 ---
 
+### [Revolutionizing Finance](/ecosystem/finance)
+
+How vProgs can transform financial infrastructure -- from instant atomic settlement and ZK-native compliance to unified DeFi liquidity and programmable financial instruments. Covers cross-border payments, RWA tokenization, institutional DeFi, and the competitive position against Ethereum, Solana, and traditional finance.
+
+---
+
 ### [Applications & Use Cases](/ecosystem/applications)
 
 What is being built on Kaspa today and what becomes possible with vProgs. Covers ZK covenant rollups, native assets, inline ZK covenants, based ZK applications, DeFi primitives, DAOs, privacy, and enterprise use cases. Organized by Phase 1 (standalone) and Phase 2 (composability).
