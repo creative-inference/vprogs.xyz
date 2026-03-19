@@ -36,7 +36,7 @@ The ZK strategy was finalized by Yonatan Sompolinsky in January 2026, establishi
 
 | Property | Value |
 |----------|-------|
-| **ZK Stack** | Noir circuits, Groth16 proofs |
+| **ZK Stack** | Noir circuits, Groth16 proofs (planned) |
 | **Proof Time** | ~1 second on mobile, ~6 seconds on mobile web |
 | **Use Case** | Small contracts, wallets, per-transaction proving |
 | **Proving Model** | User proves their own transaction inline |
@@ -44,6 +44,8 @@ The ZK strategy was finalized by Yonatan Sompolinsky in January 2026, establishi
 Inline ZK covenants are the lightest tier. The user generates a proof for their specific transaction and submits it as part of the transaction. No aggregation, no prover market -- the user is the prover.
 
 **Ideal for:** Signature schemes, time-locks, simple spending conditions, wallet-level ZK proofs.
+
+> **TN12 status:** The current `OpZkPrecompile` implementation (KIP-16) supports RISC Zero proofs (tags `0x20` and `0x21`). Native Noir/Groth16 verification is the planned Tier 1 direction but is not yet in the TN12 opcode set. Noir circuits can run today inside a RISC Zero guest via recursive verification.
 
 ### Tier 2: Based ZK Applications (RISC Zero / SP1)
 

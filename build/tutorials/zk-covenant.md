@@ -7,6 +7,8 @@ description: "Write a ZK circuit in Noir, compile to Groth16, and integrate with
 
 Write a ZK circuit in Noir, compile it to a Groth16 proof, and integrate it with a Kaspa covenant. Inline ZK covenants are the simplest ZK tier -- users prove their own transactions with sub-second proof times, no prover market needed.
 
+> **TN12 note:** This tutorial reflects the planned Tier 1 architecture (Noir/Groth16 inline covenants). The current `OpZkPrecompile` on TN12 supports RISC Zero proofs (tags `0x20`/`0x21`). Native Noir proof verification is a planned addition. To use ZK covenants on TN12 today, see the [Kaspa Chess example](/build/chess) which uses RISC Zero directly, or wrap a Noir circuit inside a RISC Zero guest program.
+
 ---
 
 ## Overview

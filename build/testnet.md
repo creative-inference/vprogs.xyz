@@ -152,19 +152,28 @@ grpcurl -plaintext localhost:16310 protowire.RPC/GetBlock \
 
 ## ZK Proof Testing
 
-TN12 supports two ZK verification backends:
+TN12 supports ZK verification via `OpZkPrecompile` (KIP-16, [rusty-kaspa PR #775](https://github.com/kaspanet/rusty-kaspa/pull/775)):
 
-### Groth16
+| Tag | System | Sigop cost | Status |
+|-----|--------|-----------|--------|
+| `0x20` | RISC0-Groth16 | 140 | Live on TN12 |
+| `0x21` | RISC0-Succinct | 740 | Live on TN12 |
 
-- Used with Noir inline ZK covenants
-- Tiny proof size
-- Sub-second verification on L1
+Both tags verify RISC Zero proofs attesting to correct RISC-V program execution.
 
-### RISC Zero
+> **Note on Noir:** The three-tier ZK strategy designates Noir/Groth16 as Tier 1 for inline covenants. Native Noir proof verification is a planned addition to `OpZkPrecompile` but is not in the current TN12 implementation. Noir circuits can be used today by wrapping them inside a RISC Zero guest program (recursive verification).
 
-- Used for based ZK applications
-- Larger proof size (STARK-based)
-- Supports general-purpose computation
+### RISC0-Groth16 (tag 0x20)
+
+- Compact proof size, 140 sigops on L1
+- Verifies any RISC Zero guest program
+- Used for [kaspa-chess](https://github.com/creative-inference/kaspa-chess) and other TN12 apps
+
+### RISC0-Succinct (tag 0x21)
+
+- STARK-based, quantum-resistant
+- Higher sigop cost (740), larger proofs
+- Suitable where post-quantum security is required
 
 ### Testing a ZK Proof
 

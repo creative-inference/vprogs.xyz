@@ -233,13 +233,17 @@ Recursive composition enables:
 
 The L1 opcodes proposed in KIP-16 handle proof verification:
 
-| Verifier | Opcode | Supported tiers |
-|----------|--------|-----------------|
-| Groth16 verifier | KIP-16 opcode | Tier 1 (Noir/Groth16), Tier 2 (wrapped) |
-| RISC Zero verifier | KIP-16 opcode | Tier 2 |
-| STARK verifier | KIP-16 opcode | Tier 2, Tier 3 |
+Current `OpZkPrecompile` implementation ([rusty-kaspa PR #775](https://github.com/kaspanet/rusty-kaspa/pull/775), saefstroem):
 
-All verification opcodes were activated on TN12 (February 2026 reset) and are scheduled for mainnet with the Covenants++ hard fork.
+| Tag | System | Sigop cost | Status |
+|-----|--------|-----------|--------|
+| `0x20` | RISC0-Groth16 | 140 | Live on TN12 |
+| `0x21` | RISC0-Succinct | 740 | Live on TN12 |
+| — | Native Noir/Groth16 | TBD | Planned (Tier 1) |
+
+> **Note:** The current KIP-16 implementation verifies RISC Zero proofs specifically — the Groth16 receipt wraps RISC Zero's execution trace, not a raw BN254 Groth16 circuit. Native Noir/Groth16 verification (Tier 1 in the research strategy) is planned but not yet in the opcode set. The arkworks-based Groth16 verifier in the implementation may be extended to support raw BN254 proofs in a future update.
+
+All active opcodes were activated on TN12 (February 2026 reset) and are scheduled for mainnet with the Covenants++ hard fork.
 
 ---
 
