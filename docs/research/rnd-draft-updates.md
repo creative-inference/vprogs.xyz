@@ -1,15 +1,48 @@
 # R&D Channel — Draft Updates
 
-Auto-generated 2026-03-19. Review before merging into [R&D Insights](/changelog/rnd-insights).
+Auto-generated 2026-03-20. Review before merging into [R&D Insights](/changelog/rnd-insights).
 
 ---
 
-Here is a draft update for the documentation site based on the new messages.
+Here is a draft update for the vProgs technical documentation site based on the new messages.
 
-### Testnet (2026-03-18)
-Developers reported a significant slowdown in block production on `testnet-10`. The discussion centered around the likely cause, with the leading theory being a sudden, large fluctuation in network hashrate, potentially from a powerful miner or ASIC temporarily joining and leaving the testnet. While the network appeared to recover, a notable technical anomaly was observed where a developer's miner was completely unable to submit a block during the incident, raising questions about the exact behavior of the mining software under such network conditions.
+***
 
-> "But here’s what struck me as odd: I just couldn’t get the miner to run. The miner simply couldn’t submit a single block. I’m not sure if this could theoretically be related to the reasons you described." — @zelenevn
+### KIP-0021: Timestamp for Virtual Sequence Commitments (2026-03-19)
+A technical debate arose regarding the source of the timestamp used in calculating the `mergeset hash` for a virtual sequence commitment (`seqcommit`), a key component of vProgs outlined in KIP-0021. The core issue is that the timestamp is only known by the miner at block creation time, which prevents nodes from pre-calculating the `seqcommit` for block templates.
+
+Michael Sutton argued against delegating this calculation to miners, proposing that the timestamp must come from a consensus-agreed source to ensure verifiability. The leading proposal is to use the timestamp of the block's selected parent (SP), as the transactions included in the virtual state are from the SP's point of view. This approach avoids miner-specific data and simplifies verification. The discussion also touched upon ensuring timestamp monotonicity, with a suggestion to use the maximum of the SP's timestamp and the timestamp used in the SP's own `seqcommit`. An alternative of removing the timestamp entirely in favor of DAA score was dismissed due to the DAA score's sensitivity to BPS changes.
+
+> "It's not something we can delegate to miners so imo the timestamp must be taken from a consensus-agreed source (of that pov), ie either from the selected parent, from past median time+1 (lower bound), or from their max." — @missutton
+
+> "daa score is sensitive to bps. i think we're overthinking it and should just relay the sp timestamp" — @missutton
+
+### Indexer Optimization for Exchanges (2026-03-19)
+A discussion was initiated on the need for a lightweight, high-performance indexer optimized for institutions like CEXs, which struggle with the performance of standard SQL databases under Kaspa's full transaction throughput.
+
+While the idea of a new, purpose-built system using `vspc2` was floated, core developer @supertypo confirmed he is already enhancing the existing `simply-kaspa-indexer` to serve this purpose. Current versions already support disabling certain indexes and pruning data, but future updates will include a `--light` flag for a simplified minimal setup and a corresponding lightweight API. This would create an all-in-one application for integrators who only need to track accepted transactions without the overhead of storing the entire block history.
+
+> "The main issue is actually to persuade exchanges that they dont need to store everything forever. Having billion rows deep indexes is costly no matter the db backend. Indexer supports pruning with per table retention, but few turn it on." — @supertypo
+
+### Pools: Verifying Mined Block Payouts (2026-03-19 to 2026-03-20)
+A conversation addressed the challenge mining pools face in efficiently verifying that their mined blocks have been confirmed and rewarded. The current method of using the `GetBlocks` RPC is too slow and resource-intensive under high network load.
+
+An initial idea to use `getVirtualChainFromBlockV2` (VSPCv2) was found to be unviable because the RPC response does not include the merge set data required to confirm a block's inclusion. The discussion then shifted towards using the `GetBlockColor` RPC. The logic is that if a pool's mined block is eventually determined to be "blue" by the consensus, it is considered paid. This method is being explored as a much more efficient and reliable alternative to parsing the full DAG.
+
+> **@coderofstuff**: "We just need to steer pools off of that RPC [GetBlocks], because there ought to be easier and reliable ways to check if my mined block was paid for. We have GetBlockColor, for example."
+>
+> **@IzioDev**: "Being blue is a sufficient argument for being paid for that block?"
+>
+> **@coderofstuff**: "Yes, after some number of confs"
+
+### SilverScript Development (2026-03-19)
+A small pull request was submitted to the SilverScript repository.
+- **[PR #79](https://github.com/kaspanet/silverscript/pull/79)**: A minor cleanup of debug code, intended to be merged before a more significant PR related to DAP (Digital Asset Protocol) and the vsc-extension.
+
+### Hard Fork Schedule Update (2026-03-20)
+An update was provided on the timeline for the upcoming hard fork that will enable vProgs. The development team is targeting a feature freeze by the end of March 2026.
+
+> "Aiming for feature freeze by EoM. Which means we're 2-3 weeks behind schedule" — @missutton
 
 ---
 
