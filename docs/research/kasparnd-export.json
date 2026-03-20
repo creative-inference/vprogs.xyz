@@ -1,7 +1,7 @@
 {
   "channel": "kasparnd",
-  "exported_at": "2026-03-19T06:00:27.622612+00:00",
-  "message_count": 510,
+  "exported_at": "2026-03-20T06:00:28.742144+00:00",
+  "message_count": 552,
   "messages": [
     {
       "id": 12074,
@@ -7326,6 +7326,602 @@
       "reply_to": 12709,
       "topic_id": 12708,
       "text": "Based on the statistics, that could indeed be the case. But here’s what struck me as odd: I just couldn’t get the miner to run. The miner simply couldn’t submit a single block. I’m not sure if this could theoretically be related to the reasons you described. Maybe I’m wrong",
+      "links": []
+    },
+    {
+      "id": 12712,
+      "date": "2026-03-19T06:01:44",
+      "from": {
+        "id": 5479163622,
+        "username": "wbbw55",
+        "first_name": "5bb",
+        "last_name": "55b"
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "@supertypo Is it possible to make a  specific lightweight indexer optimized for institutions like CEX, capable of handling full TPS on machines with average/low performance? When data throughput is very high, single-machine SQL performance is poor due to insufficient performance. I think it might be possible to customize a very lightweight system on the database side based on vspc2, but this might require further definition of the specific user-side requirements.",
+      "links": []
+    },
+    {
+      "id": 12713,
+      "date": "2026-03-19T06:43:03",
+      "from": {
+        "id": 776309225,
+        "username": "manyfestation",
+        "first_name": "Manyfest",
+        "last_name": null
+      },
+      "reply_to": 12273,
+      "topic_id": null,
+      "text": "https://github.com/kaspanet/silverscript/pull/79\n\nJust a quick debug-session cleanup.\nI wish to merge this one before the DAP & vsc-extension PR (working on your comments BTW, thanks! @IzioDev )\n@someone235",
+      "links": [
+        "https://github.com/kaspanet/silverscript/pull/79"
+      ]
+    },
+    {
+      "id": 12714,
+      "date": "2026-03-19T08:48:45",
+      "from": {
+        "id": 266828266,
+        "username": "Max143672",
+        "first_name": "Maxim",
+        "last_name": "Biryukov"
+      },
+      "reply_to": 12448,
+      "topic_id": 7562,
+      "text": "@missutton \nhttps://github.com/michaelsutton/kips/blob/kip21/kip-0021.md#52-update-or-initialize-lane-tips\n\nMergeset hash depends on timestamp which is only known to miner. And tip update hash depends on it\n\nThat implies inability to calculate virtual seq commit, so it makes it required to be calculated on the miner side, enriching template with data needed for calculation",
+      "links": [
+        "https://github.com/michaelsutton/kips/blob/kip21/kip-0021.md#52-update-or-initialize-lane-tips"
+      ]
+    },
+    {
+      "id": 12715,
+      "date": "2026-03-19T08:55:32",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 7562,
+      "topic_id": null,
+      "text": "It's not something we can delegate to miners so imo the timestamp must be taken from a consensus-agreed source (of that pov), ie either from the selected parent, from past median time+1 (lower bound), or from their max.\n\nThe accepted txs are from the sp and the mergeset and not from the local block anyway so it actually makes sense to simply use the sp timestamp \n\ncc @someone235 @elichai2 @dimdumon @wbbw55",
+      "links": []
+    },
+    {
+      "id": 12717,
+      "date": "2026-03-19T09:28:13",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 12712,
+      "topic_id": null,
+      "text": "We had a similar thought with Odie. But we ended up thinking due to the different nature of network observers infrastructure, there couldn't be a one fit in all solution. PostgreSQL might be seen as well suited here and there, but big infra use queue systems and specialized db engine for the data nature.\n\nThere could be a very simple piece of software, grabbing from vspcv2, normalizing to whatever is best, and pipe out depending on the destination of your choice (Kafka, postgresql, amq, w/e)",
+      "links": []
+    },
+    {
+      "id": 12718,
+      "date": "2026-03-19T09:37:12",
+      "from": {
+        "id": 5479163622,
+        "username": "wbbw55",
+        "first_name": "5bb",
+        "last_name": "55b"
+      },
+      "reply_to": 12717,
+      "topic_id": 12712,
+      "text": "That's exactly right, and my point of view is perhaps simpler and more direct — for example, browser APIs and CEX chain scanning can be two completely different business scenarios. Considering them separately may make it easier to solve some real problems (but this requires a deep understanding of the specific needs and details of each scenario, which CEXs are usually unwilling to do themselves, as they believe that these are things that nodes should provide).",
+      "links": []
+    },
+    {
+      "id": 12719,
+      "date": "2026-03-19T09:43:12",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 7562,
+      "topic_id": null,
+      "text": "one question to keep in mind: do we want to guarantee timestamp monotonicity over the seqcommit selected parent chain @Max143672",
+      "links": []
+    },
+    {
+      "id": 12720,
+      "date": "2026-03-19T09:44:15",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 7562,
+      "topic_id": null,
+      "text": "in which case we should use max{ timestamp used by sp seqcommit, sp timestamp}",
+      "links": []
+    },
+    {
+      "id": 12721,
+      "date": "2026-03-19T09:46:19",
+      "from": {
+        "id": 266828266,
+        "username": "Max143672",
+        "first_name": "Maxim",
+        "last_name": "Biryukov"
+      },
+      "reply_to": 12720,
+      "topic_id": 7562,
+      "text": "Can't we add this rule on consensus level during block validation? b.timestamp >= b.selected_parent.timestamp?",
+      "links": []
+    },
+    {
+      "id": 12722,
+      "date": "2026-03-19T09:50:14",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 12721,
+      "topic_id": 7562,
+      "text": "no it goes against the logic of allowed time deviation tolerance",
+      "links": []
+    },
+    {
+      "id": 12723,
+      "date": "2026-03-19T09:51:01",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 12720,
+      "topic_id": 7562,
+      "text": "conceptually consumer apps can do things like this on their own",
+      "links": []
+    },
+    {
+      "id": 12724,
+      "date": "2026-03-19T10:15:24",
+      "from": {
+        "id": 266828266,
+        "username": "Max143672",
+        "first_name": "Maxim",
+        "last_name": "Biryukov"
+      },
+      "reply_to": 12723,
+      "topic_id": 7562,
+      "text": "I think the only reason to keep timestamp as part of seq commitment - ability to efficiently prove something happened at specific timestamp. Moving max aggregation to the client side could make it impossible.\n\nOn another side I don't like to track timestamp on the node side to calculate max over them.\n\nIsn't it better to remove timestamp completely and rely on daa score, let client approximate time on it",
+      "links": []
+    },
+    {
+      "id": 12725,
+      "date": "2026-03-19T10:16:46",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 7562,
+      "topic_id": null,
+      "text": "daa score is sensitive to bps. i think we're overthinking it and should just relay the sp timestamp",
+      "links": []
+    },
+    {
+      "id": 12726,
+      "date": "2026-03-19T14:19:10",
+      "from": {
+        "id": 82478165,
+        "username": "PiDAGorass",
+        "first_name": "Mike",
+        "last_name": "Zak"
+      },
+      "reply_to": 12725,
+      "topic_id": 7562,
+      "text": "Just to make sure: Are you talking about using the sp.timestamp only for virtual, or also for ordinary blocks?\n\nI don't think this would matter much either way from my PoV, even though sp.timestamp does fill weird and un-intuitive.",
+      "links": []
+    },
+    {
+      "id": 12727,
+      "date": "2026-03-19T14:23:54",
+      "from": {
+        "id": 266828266,
+        "username": "Max143672",
+        "first_name": "Maxim",
+        "last_name": "Biryukov"
+      },
+      "reply_to": 12726,
+      "topic_id": 7562,
+      "text": "",
+      "links": []
+    },
+    {
+      "id": 12728,
+      "date": "2026-03-19T14:25:47",
+      "from": {
+        "id": 2009163421,
+        "username": "supertypo",
+        "first_name": "supertypo",
+        "last_name": null
+      },
+      "reply_to": 12712,
+      "topic_id": null,
+      "text": "I actually started on it but realized its much easier to just support it in the existing full indexer. I'm already 90% there with the --disable flags for blocks and rejected transactions, only thing missing is to disable the get_blocks subscriber entirely",
+      "links": []
+    },
+    {
+      "id": 12729,
+      "date": "2026-03-19T14:27:40",
+      "from": {
+        "id": 2009163421,
+        "username": "supertypo",
+        "first_name": "supertypo",
+        "last_name": null
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "It can already be configured to only persist accepted transactions, but it still polls from both endpoints",
+      "links": []
+    },
+    {
+      "id": 12730,
+      "date": "2026-03-19T14:32:01",
+      "from": {
+        "id": 2009163421,
+        "username": "supertypo",
+        "first_name": "supertypo",
+        "last_name": null
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "The main issue is actually to persuade exchanges that they dont need to store everything forever. Having billion rows deep indexes is costly no matter the db backend. Indexer supports pruning with per table retention, but few turn it on.",
+      "links": []
+    },
+    {
+      "id": 12731,
+      "date": "2026-03-19T14:33:48",
+      "from": {
+        "id": 2009163421,
+        "username": "supertypo",
+        "first_name": "supertypo",
+        "last_name": null
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "For reference: https://github.com/supertypo/simply-kaspa-indexer/blob/main/README.md#minimal-configuration",
+      "links": [
+        "https://github.com/supertypo/simply-kaspa-indexer/blob/main/README.md#minimal-configuration"
+      ]
+    },
+    {
+      "id": 12732,
+      "date": "2026-03-19T14:34:29",
+      "from": {
+        "id": 2009163421,
+        "username": "supertypo",
+        "first_name": "supertypo",
+        "last_name": null
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "And: https://github.com/supertypo/simply-kaspa-indexer/blob/main/README.md#pruning",
+      "links": [
+        "https://github.com/supertypo/simply-kaspa-indexer/blob/main/README.md#pruning"
+      ]
+    },
+    {
+      "id": 12733,
+      "date": "2026-03-19T14:51:46",
+      "from": {
+        "id": 5479163622,
+        "username": "wbbw55",
+        "first_name": "5bb",
+        "last_name": "55b"
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "Yes, perhaps we can provide CEXs with a default package that requires minimal or fewer storage items. Those unfamiliar with Kaspa would likely prefer to use it without changing any configurations (or even bother to read the doc carefully /laughs).",
+      "links": []
+    },
+    {
+      "id": 12735,
+      "date": "2026-03-19T15:42:17",
+      "from": {
+        "id": 2009163421,
+        "username": "supertypo",
+        "first_name": "supertypo",
+        "last_name": null
+      },
+      "reply_to": 12733,
+      "topic_id": null,
+      "text": "Yes. I've been thinking of adding a --light flag to avoid the complex configuration. I'll look into that flag and the stuff I mentioned above next",
+      "links": []
+    },
+    {
+      "id": 12736,
+      "date": "2026-03-19T15:44:06",
+      "from": {
+        "id": 2009163421,
+        "username": "supertypo",
+        "first_name": "supertypo",
+        "last_name": null
+      },
+      "reply_to": null,
+      "topic_id": null,
+      "text": "Would be nice to also provide a corresponding light api directly in the indexer, to have a more aio application for light integrators",
+      "links": []
+    },
+    {
+      "id": 12738,
+      "date": "2026-03-19T20:05:16",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "@IzioDev pools are unaware of this VSPCv2. One of their needs is to determine if a block they mined has been paid for (or is not, and has been considered red). Can you help create guidance on how to use this RPC to determine if a mined block has been paid for?",
+      "links": []
+    },
+    {
+      "id": 12739,
+      "date": "2026-03-19T20:05:55",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "Pseudo-code guidance I had was roughly:\n\n\n\nlet lowHash = starting_hash;\nlet minConfirmationCount = 300; // at least 300 confirmations for blocks returned in this chain\n\nlet poolMinedBlocks = new HashSet(); // This contains the hashes of blocks you've mined\n\nwhile (true) {\n  let blocks = rpc.getVirtualChainFromBlockV2({ lowHash, minConfirmationCount });\n\n  for (const blockData of blocks) {\n    blockData.verboseData.mergeSetBluesHashes((mergedHash) => {\n      if poolMinedBlocks.contains(mergedHash) {\n        // This means that this block that your pool mined has been paid for\n      }\n    })\n  }\n\n  await delay(1000);\n}",
+      "links": []
+    },
+    {
+      "id": 12740,
+      "date": "2026-03-19T20:11:06",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 12739,
+      "topic_id": 139,
+      "text": "Sadly, block_data aren't exposed, only the chain block header\nInitially it did and we concluded block data weren't necessary",
+      "links": []
+    },
+    {
+      "id": 12741,
+      "date": "2026-03-19T20:14:10",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "Is there another known use-case for consuming mergeset other than knowing this information?\nIf not, maybe it could justify its own tailored endpoint",
+      "links": []
+    },
+    {
+      "id": 12742,
+      "date": "2026-03-19T20:18:29",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 12741,
+      "topic_id": 139,
+      "text": "A tailored endpoint is fine, actually. The main important question to answer is “is this block paid for?”",
+      "links": []
+    },
+    {
+      "id": 12743,
+      "date": "2026-03-19T20:19:15",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 12742,
+      "topic_id": 139,
+      "text": "It must respond quickly is the second requirement, regardless of network load",
+      "links": []
+    },
+    {
+      "id": 12744,
+      "date": "2026-03-19T20:20:29",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "network load shouldn't impact it in theory, it's completely independent from acceptance data x tx, right?",
+      "links": []
+    },
+    {
+      "id": 12745,
+      "date": "2026-03-19T20:22:42",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "by hash + daa would be better i suppose in term of perf to optimize the lookup, or is there another way without a walk?",
+      "links": []
+    },
+    {
+      "id": 12746,
+      "date": "2026-03-19T20:47:13",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 12744,
+      "topic_id": 139,
+      "text": "Unless you're doing GetBlocks, which is what happens",
+      "links": []
+    },
+    {
+      "id": 12747,
+      "date": "2026-03-19T20:48:22",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "We just need to steer pools off of that RPC, because there ought to be easier and reliable ways to check if my mined block was paid for. We have GetBlockColor, for example. Not sure if that satisfies the requirement. haven't looked at the code for that in a while",
+      "links": []
+    },
+    {
+      "id": 12748,
+      "date": "2026-03-19T20:50:19",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "Being blue is a sufficient argument for being paid for that block?",
+      "links": []
+    },
+    {
+      "id": 12749,
+      "date": "2026-03-19T20:51:06",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "Yes, after some number of confs",
+      "links": []
+    },
+    {
+      "id": 12750,
+      "date": "2026-03-19T20:52:11",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "Think about it a bit 🙂 I'll explain why if you want after",
+      "links": []
+    },
+    {
+      "id": 12751,
+      "date": "2026-03-19T22:12:46",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 8953,
+      "topic_id": null,
+      "text": "Is there an ETA on the HF release?",
+      "links": []
+    },
+    {
+      "id": 12752,
+      "date": "2026-03-19T22:25:38",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 139,
+      "topic_id": null,
+      "text": "It seems there is another condition:\n// Add an output for each mergeset blue block (∩ DAA window), paying to the script reported by the block.\n// Note that combinatorically it is nearly impossible for a blue block to be non-DAA\nfor blue in ghostdag_data.mergeset_blues.iter().filter(|h| !mergeset_non_daa.contains(h)) {\n        let reward_data = mergeset_rewards.get(blue).unwrap();\n        if reward_data.subsidy + reward_data.total_fees > 0 {\n            outputs\n                .push(TransactionOutput::new(reward_data.subsidy + reward_data.total_fees, reward_data.script_public_key.clone()));\n        }\n}\nEven though it's annotated as nearly-impossible (out of daa range)",
+      "links": []
+    },
+    {
+      "id": 12753,
+      "date": "2026-03-20T00:03:08",
+      "from": {
+        "id": 744796497,
+        "username": "missutton",
+        "first_name": "Michael",
+        "last_name": "Sutton"
+      },
+      "reply_to": 12751,
+      "topic_id": 8953,
+      "text": "Aiming for feature freeze by EoM. Which means we're 2-3 weeks behind schedule",
+      "links": []
+    },
+    {
+      "id": 12754,
+      "date": "2026-03-20T00:34:05",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 12747,
+      "topic_id": 139,
+      "text": "from my understanding, GetCurrentBlockColor does this (passing some details), start with request provided block hash:\n1. verify it's in the retention period & is dag ancestor of sink\n2. fetch children of block, get their blue work\n3. for each of children, either:\n4.a. it's ancestor of sink -> return blue or red depending on child mergesets contains block hash\n4.b. or we continue the children discovery: goto 2.\n\nwhich make me realize, can my children be chain ancestor of sink, but not me? yes",
+      "links": []
+    },
+    {
+      "id": 12755,
+      "date": "2026-03-20T00:38:38",
+      "from": {
+        "id": 5835359485,
+        "username": "coderofstuff",
+        "first_name": "coderofstuff",
+        "last_name": null
+      },
+      "reply_to": 12754,
+      "topic_id": 139,
+      "text": "Chain ancestor or dag ancestor?",
+      "links": []
+    },
+    {
+      "id": 12756,
+      "date": "2026-03-20T00:39:39",
+      "from": {
+        "id": 7089248958,
+        "username": "IzioDev",
+        "first_name": "IzioDev",
+        "last_name": null
+      },
+      "reply_to": 12755,
+      "topic_id": 139,
+      "text": "ah you're right, thanks👍\nin 1. it's dag ancestor, in my remark it's chain ancestor",
       "links": []
     }
   ]
