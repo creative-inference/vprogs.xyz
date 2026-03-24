@@ -2,7 +2,7 @@
 layout: page
 title: "Developer Tools & Silverscript"
 description: "Explore the cutting-edge tools, WebAssembly support, and debugger features for building vProgs on Kaspa."
-section: developers
+section: build
 ---
 # Building on vProgs
 

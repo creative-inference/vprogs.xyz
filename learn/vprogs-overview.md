@@ -2,7 +2,7 @@
 layout: page
 title: "Introduction to vProgs"
 description: "Discover Kaspa's Verifiable Programs (vProgs), the native L1 solution for infinite scalability without fragmentation."
-section: overview
+section: learn
 ---
 # Welcome to Kaspa vProgs
 

@@ -2,7 +2,7 @@
 layout: page
 title: "What is Kaspa?"
 description: "Discover Kaspa, the scalable proof-of-work BlockDAG cryptocurrency delivering real-time Bitcoin security."
-section: overview
+section: learn
 ---
 
 # What is Kaspa?
