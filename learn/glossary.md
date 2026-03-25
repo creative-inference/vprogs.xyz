@@ -5,6 +5,8 @@ section: learn
 description: "Glossary of key vProgs terms — from zero-knowledge proofs and BlockDAG consensus to accounts, lanes, and state transitions on Kaspa's L1."
 ---
 
+# Glossary
+
 A comprehensive reference of key terms used across the vProgs documentation. Terms are listed alphabetically for quick lookup.
 
 ---
@@ -55,6 +57,9 @@ A compact Merkle inclusion proof that enables one vProg to verifiably read anoth
 ### Covenant
 A spending condition carried forward by a UTXO. Beyond checking *who* can spend a coin (via signature), a covenant enforces *how* the coin must be spent -- where funds go next, when they can move, and what the next transaction must look like. Covenants are the consensus-layer foundation for both Silverscript and vProgs.
 
+### Covenant Family
+A group of cooperating contracts that share a single KIP-20 Covenant ID but serve different roles within one logical application. Within a family, contracts are distinguished by injected template selectors that declare each contract's specific role (e.g., Player, Mux, Worker). This enables complex multi-contract applications like the chess demo, where all contracts belong to the "Chess family" but have distinct responsibilities.
+
 ### Covenant ID
 A native protocol-level identifier that tracks a covenant UTXO's lineage (introduced by KIP-20). Before covenant IDs, proving that a UTXO descended from a specific covenant required expensive recursive lineage proofs. Covenant IDs eliminate this overhead.
 
@@ -78,7 +83,7 @@ The guarantee that transaction data is published and accessible so that anyone c
 The simplified Computation DAG scheme used in Phase 1 (Standalone vProgs). Groups activity by program/subnet rather than by individual account, enabling O(program activity) proving without requiring the full per-account modeling of Phase 2.
 
 ### Domain Separation Tag
-A string prefix used in hash computations to ensure that hashes computed for different purposes cannot collide. KIP-21 specifies explicit domain separation tags for each hash function (e.g., `"SeqCommitLaneKey"`, `"SeqCommitLaneTip"`).
+A string prefix used in hash computations to ensure that hashes computed for different purposes cannot collide. KIP-21 defines explicit domain separation tags for each hash function (e.g., `"SeqCommitLaneKey"`, `"SeqCommitLaneTip"`).
 
 ---
 
@@ -111,6 +116,9 @@ The structure of state commitments in vProgs. The state commitment `C_p^t` is a 
 
 ## I
 
+### ICC (Inter-Covenant Communication)
+A cross-family authorization pattern that enables isolated UTXO covenants to cooperate without a global virtual machine. ICC works by including inputs from multiple covenant families in a single atomic transaction. Because all inputs must validate for the transaction to succeed, each covenant can trust that its peer has authorized the shared action -- without re-executing the peer's logic. For example, an Asset Covenant can verify user ownership simply by checking that the user's Player Covenant is a co-input in the same transaction.
+
 ### Inline ZK Covenant
 The simplest tier of ZK-verified applications on Kaspa (Milestone 1). Users submit covenant actions with ZK proofs as unified units. The state transition function is delegated to the ZK prover, with state hashes opaque to L1. Suitable for small contracts and wallet operations. Uses Noir/Groth16 with ~1 second proof times on mobile.
 
@@ -138,6 +146,9 @@ The recursive hash tracking the latest state of a specific lane. Updated each ti
 
 ## M
 
+### MCF (Multi-Contract Flows)
+The core architectural pattern for building complex applications on Kaspa's UTXO model. Instead of one monolithic contract, logic is split across multiple specialized contracts within a covenant family. MCF has two main flavors: **multiplexing** (a mux contract routes to specialized workers) and **role systems** (different contracts handle different lifecycle roles like League, Player, and Game).
+
 ### MEV (Maximal Extractable Value)
 Profit extracted by reordering, inserting, or censoring transactions within a block. vProgs provide structural MEV resistance through the BlockDAG's parallel structure, deterministic sequencing, and atomic transaction bundling.
 
@@ -153,6 +164,9 @@ A component of KIP-21's per-block state. Contains block context information: tim
 
 ### Native Assets
 First-class asset support on Kaspa L1, introduced as part of the Covenants++ hard fork. Native assets are protocol-level tokens (not smart-contract-defined tokens), enabling asset issuance, transfer, and burn at the consensus layer.
+
+### Mux (Multiplexer)
+In Multi-Contract Flows, the entry contract that owns shared state, authenticates user intent, and routes to a specific worker contract based on a selector. The worker performs one narrow job (e.g., validating a specific chess move type) and returns state back to the mux. This pattern keeps individual scripts small and bounded while enabling complex application logic.
 
 ### Noir
 The ZK proving stack used for inline ZK covenants. Produces Groth16 proofs with approximately 1-second proof times on mobile devices and approximately 6 seconds on mobile web. Selected for the inline tier because of its speed characteristics for per-transaction proving.
@@ -208,6 +222,9 @@ The ability for multiple vProgs to interact and update state within a single ato
 ---
 
 ## T
+
+### Template Selector
+An injected field within a covenant contract that declares its specific role within a covenant family. While all contracts in a family share the same KIP-20 Covenant ID (establishing family membership), template selectors distinguish roles -- e.g., `player_template`, `mux_template`, `worker_template`. Contracts use peer template fields to verify they are interacting with the correct role.
 
 ### TN12 (Testnet-12)
 The experimental testnet for Covenants++. Launched January 5, 2026, and reset February 9, 2026 with covenant IDs (KIP-20), BLAKE3-based sequencing commitment opcodes, ZK verify precompiles for Groth16 and RISC Zero, KIP-17 covenant opcodes, and Silverscript compiler support.

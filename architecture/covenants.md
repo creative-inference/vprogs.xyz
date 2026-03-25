@@ -5,6 +5,8 @@ description: "Understand Kaspa's covenant KIP stack from Crescendo through Coven
 section: architecture
 ---
 
+# Covenant Stack
+
 Covenants are spending conditions that UTXOs carry forward. Instead of only checking *who* can spend a coin (via signature), a covenant enforces *how* the coin must be spent -- where funds go next, when they can move, and what the next transaction must look like. In Kaspa, covenants are the consensus layer that both [Silverscript](/architecture/silverscript) (local-state contracts) and vProgs (shared-state programs) build on top of.
 
 This page covers the full KIP stack from the Crescendo foundation through the Covenants++ hard fork, the five milestones toward vProgs, and the current testing status on TN12.
@@ -54,7 +56,7 @@ Crescendo also enabled **transaction payloads** for native (non-coinbase) transa
 
 ## KIP-10: Transaction Introspection (The Foundation)
 
-KIP-10 is the bedrock proposal -- it introduced the ability for Kaspa scripts to inspect the spending transaction. Without these introspection opcodes, no covenants are possible.
+KIP-10 is the bedrock -- it gave Kaspa scripts the ability to inspect the spending transaction. Without this, no covenants are possible.
 
 ### Opcodes Introduced
 
@@ -113,7 +115,7 @@ The upcoming hard fork extends covenants with four major KIPs:
 
 ### KIP-16: ZK Verification Opcodes
 
-KIP-16 proposes the bridge between covenants and vProgs:
+KIP-16 bridges covenants and vProgs:
 
 - Adds opcodes for verifying ZK validity proofs on L1
 - External execution environments submit proofs; L1 validates cryptographically
@@ -124,7 +126,7 @@ See [ZK Verification](/architecture/zk-verification) for the full ZK stack archi
 
 ### KIP-17: Extended Covenant Opcodes
 
-KIP-17 specifies the auth and covenant binding system that [Silverscript's](/architecture/silverscript) declaration macros compile to:
+KIP-17 adds the auth and covenant binding system that [Silverscript's](/architecture/silverscript) declaration macros compile to:
 
 **Auth Binding (`OpAuth*`):**
 - Per-input authorization
@@ -144,7 +146,7 @@ These opcodes make stateful UTXO contracts possible -- a covenant can carry stat
 
 ### KIP-20: Covenant IDs (Native Lineage)
 
-Before KIP-20, proving that a UTXO descended from a specific covenant required recursive lineage proofs -- expensive and complex. KIP-20 proposes native covenant IDs at the protocol level:
+Before KIP-20, proving that a UTXO descended from a specific covenant required recursive lineage proofs -- expensive and complex. KIP-20 introduces native covenant IDs at the protocol level:
 
 - Each covenant UTXO carries an ID tracking its lineage
 - The protocol enforces lineage without script-level recursion
@@ -153,7 +155,7 @@ Before KIP-20, proving that a UTXO descended from a specific covenant required r
 
 ### KIP-21: Partitioned Sequencing Commitment
 
-KIP-21 proposes replacing the monolithic sequencing commitment with lane-based partitions:
+KIP-21 replaces the monolithic sequencing commitment with lane-based partitions:
 
 - Each application lane maintains its own recursive tip hash
 - Enables O(activity) ZK proving per application
@@ -197,6 +199,102 @@ Together, these provide the **anchoring infrastructure** that ZK provers use to 
 
 ---
 
+## Covenant Families and Template Selectors
+
+KIP-20 Covenant IDs track lineage, but in multi-contract applications a single covenant ID is shared across an entire **covenant family** -- a group of cooperating contracts that form one logical application.
+
+Within a family, contracts are distinguished by **injected template selectors** -- fields baked into each contract that declare its specific role. For example, in a chess application the family might contain Player, Mux, Worker, and Settle contracts, all sharing the same covenant ID but carrying different template selectors.
+
+This creates a two-layer identity system:
+
+| Layer | Purpose | Example |
+|-------|---------|---------|
+| **Covenant ID** (KIP-20) | Family membership -- "this UTXO belongs to the Chess family" | Shared across all chess contracts |
+| **Template selector** (injected field) | Role identity -- "this specific UTXO is a Player contract" | `player_template`, `mux_template`, etc. |
+
+Contracts carry peer template fields (`player_template`, `league_template`, `mux_template`) so they can verify they are interacting with the correct role within their family.
+
+---
+
+## Inter-Covenant Communication (ICC)
+
+Because Kaspa's UTXO model has no global state or central virtual machine, two covenants cannot simply "call" each other. ICC solves this isolation.
+
+### The Mechanism: Cross-Family Authorization
+
+ICC is a **cross-family authorization pattern** that relies on the atomic nature of blockchain transactions. Instead of traditional function calls, covenants communicate via **shared transaction authorization** (plain-text messaging in the UTXO context).
+
+**How it works:**
+
+1. A single transaction is created that includes an input from Covenant Family A and an input from Covenant Family B.
+2. Because transactions are atomic (all inputs validate or the entire transaction fails), Covenant A does not need to re-execute Covenant B's logic.
+3. Covenant A's script inspects the transaction and says: "I see that an input from Covenant B is included in this same transaction. I will authorize my part of the state change, provided Covenant B also successfully authorizes its part."
+
+### Example: Native Asset Ownership
+
+A user owns a Native Asset managed by an Asset Covenant, and has a Player Covenant (their durable identity).
+
+To spend the asset:
+- The transaction includes the Asset UTXO (Input 1) and the Player UTXO (Input 2).
+- The **Asset Covenant** logic: "Allow this asset to be spent IF the Player Covenant is also an input in this transaction."
+- The **Player Covenant** logic: "Authorize myself to be spent IF the user provides the correct cryptographic signature."
+
+Because the transaction fails instantly if the user cannot sign the Player Covenant, the Asset Covenant effectively "knows" the user is authenticated -- without containing any complex authentication logic itself.
+
+```
+Transaction (atomic -- all-or-nothing):
+  Input 1: Asset Covenant    → checks: "Is Player Covenant present?"
+  Input 2: Player Covenant   → checks: "Is user signature valid?"
+  Output 1: Asset Covenant   → (updated asset state)
+  Output 2: Player Covenant  → (recreated identity state)
+```
+
+### Why ICC Matters
+
+ICC enables deeply fragmented applications. Instead of monolithic smart contracts, developers build highly specialized, lightweight UTXOs that interact securely. Two independent state machines can confidently agree on a shared outcome simply by participating in the same atomic transaction.
+
+---
+
+## Multi-Contract Flows (MCF)
+
+MCF is the core architectural pattern that enables complex applications on the UTXO model. Instead of one heavy contract containing all logic, the logic is split across multiple specialized contracts within a [covenant family](#covenant-families-and-template-selectors).
+
+### Pattern 1: Multiplexing (Mux)
+
+A single entry contract (the **mux**) owns shared state, authenticates user intent, commits a pending state, and selects a specific **worker** based on a selector. The worker performs one narrow job and returns state back to the mux.
+
+```
+User → Mux (shared state, authentication, routing)
+         ↓ selector
+       Worker A (narrow validation, e.g. verify pawn move)
+         ↓
+       Mux (updated state)
+```
+
+### Pattern 2: Role Systems
+
+Different contracts handle different episodic roles within the application lifecycle:
+
+| Role | Responsibility | Lifecycle |
+|------|---------------|-----------|
+| **League** | Root allocator and public registration lane | Persistent |
+| **Player** | Durable identity, funds shell, and score record | Persistent |
+| **Game / Episode** | Episodic state machine of the actual match | Ephemeral |
+
+### Chess Demo: MCF in Practice
+
+The chess game built with SilverScript demonstrates both MCF patterns:
+
+- **Covenant family:** All chess contracts share a single covenant ID
+- **Multiplexing:** The mux contract owns the board state and routes each move to the correct worker (one per piece movement rule)
+- **Role system:** League handles registration, Player contracts hold identity/funds/score, Game contracts track the episodic match state
+- **ICC:** Player covenants authorize moves by co-signing transactions with Game covenants
+- **Workers:** Each worker validates a single type of chess move (e.g., pawn advance, castle, en passant), keeping individual scripts small and bounded
+
+This architecture keeps every individual contract lightweight while enabling complex multi-party, stateful game logic entirely on L1.
+
+---
+
 ## Five Milestones to vProgs
 
 Michael Sutton's [Covenants++ milestones gist](https://gist.github.com/michaelsutton/5bd9ab358f692ee4f54ce2842a0815d1) outlines a phased path from covenants to full vProgs:
@@ -234,8 +332,8 @@ The canonical bridge enables sovereign vProgs to settle on L1:
 
 Extends the bridge to native assets:
 
-- Requires Inter-Covenant Communication (ICC) protocol
-- Async messaging between covenants (ZK covenant emits signals that asset covenants verify)
+- Requires [Inter-Covenant Communication (ICC)](#inter-covenant-communication-icc) protocol
+- Cross-family authorization via shared transaction co-signing (see ICC section above)
 - Enables native asset deposits and withdrawals through the canonical bridge
 
 ### Milestone 5: Optimal SeqCommit (KIP-21)

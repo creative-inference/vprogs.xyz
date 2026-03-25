@@ -5,6 +5,8 @@ description: "Learn about Silverscript, Kaspa's high-level smart contract langua
 section: architecture
 ---
 
+# Silverscript
+
 Silverscript is Kaspa's first high-level smart contract language and compiler. It compiles directly to native Kaspa Script -- no virtual machine, no intermediate representation. Designed by Ori Newman, it draws inspiration from CashScript (Bitcoin Cash) but adds loops, arrays, function calls, and a covenant declaration system. Silverscript is a complement and infrastructure layer for vProgs, handling local-state UTXO contracts while vProgs handle shared-state sovereign programs.
 
 ---
@@ -288,9 +290,29 @@ This means security-by-construction -- the compiler enforces correct covenant pa
 
 ---
 
+## State Machine Mental Model
+
+SilverScript is best understood as a language for building **covenant-style state machines** on Kaspa's UTXO model. The key mental shifts:
+
+- **Each spend is a state transition.** When a covenant UTXO is consumed, the spending transaction represents a transition from the current state to the next.
+- **Outputs are states, not recipients.** In SilverScript, transaction outputs are not merely destinations for funds -- they represent the next state of the program. The covenant enforces that the output carries the correct updated state.
+- **Self-preservation through recreation.** Because a UTXO is destroyed when spent, a covenant must be "self-preserving" -- it forces the spending transaction to recreate the covenant in its outputs, carrying forward the updated state.
+- **Collaboration via shared transactions.** Multiple covenant inputs can participate in a single transaction, enabling multi-contract cooperation. Different contracts can exist under one shared **covenant family** (a shared [KIP-20 Covenant ID](/architecture/covenants#kip-20-covenant-ids-native-lineage)), enabling complex multi-contract systems.
+
+This model means a SilverScript contract is effectively a **chain of protected outputs** where each link in the chain is a validated state transition.
+
+```
+State 0 (UTXO)  →  Spend TX  →  State 1 (UTXO)  →  Spend TX  →  State 2 (UTXO)
+   [board: init]    [move: e2-e4]  [board: updated]   [move: e7-e5]  [board: updated]
+```
+
+See [Multi-Contract Flows](/architecture/covenants#multi-contract-flows-mcf) for how multiple SilverScript contracts collaborate within covenant families.
+
+---
+
 ## The Covenant Foundation
 
-Silverscript is built on top of Kaspa's [Covenants++](/architecture/covenants) hard fork, the same consensus infrastructure that KIP-21 proposes extending for vProgs:
+Silverscript is built on top of Kaspa's [Covenants++](/architecture/covenants) hard fork, the same consensus infrastructure that KIP-21 extends for vProgs:
 
 ```
 Silverscript Source Code

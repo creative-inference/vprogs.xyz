@@ -5,6 +5,8 @@ section: build
 description: "Reference implementations for vProgs and Silverscript on Kaspa. DEX, lending, stablecoin, and DAO examples with architecture overviews and key files."
 ---
 
+# Example Projects
+
 Reference implementations demonstrating common patterns for vProgs and Silverscript development. Each example includes a description, architecture overview, and key file listing.
 
 > **Note:** These examples are forward-looking reference designs based on the vProgs architecture. Implementations will be refined as the SDK matures. Examples marked [Coming Soon] depend on tooling not yet available.
@@ -317,6 +319,90 @@ contract Treasury(bytes verificationKey, int quorum) {
     }
 }
 ```
+
+---
+
+## 6. Chess Game (Multi-Contract Flow Demo)
+
+A fully on-chain chess game demonstrating Multi-Contract Flows (MCF), Inter-Covenant Communication (ICC), and covenant families. This is the reference example for building complex multi-party applications on Kaspa's UTXO model.
+
+**Architecture:**
+
+- **Pure Silverscript:** All game logic runs on L1 via covenant state machines -- no vProg needed
+- **Covenant family:** All contracts share a single KIP-20 Covenant ID
+- **MCF patterns:** Multiplexing (mux/worker) + role system (league/player/game)
+- **ICC:** Player covenants authorize moves by co-signing transactions with game covenants
+
+**Contract roles:**
+
+| Contract | Role | Lifecycle |
+|----------|------|-----------|
+| **League** | Root allocator, public registration lane | Persistent |
+| **Player** | Durable identity, funds shell, score record | Persistent |
+| **Mux** | Owns board state, authenticates moves, routes to workers | Per-game |
+| **Worker** (x N) | Validates one specific move type (pawn, castle, en passant, etc.) | Stateless |
+| **Settle** | End-of-game settlement, score updates, fund distribution | Per-game |
+
+**Key files:**
+
+```
+chess-covenant/
+  covenants/
+    league.ss               # Registration and matchmaking
+    player.ss               # Identity, funds, score tracking
+    mux.ss                  # Board state owner, move router
+    worker_pawn.ss          # Pawn move validation
+    worker_castle.ss        # Castling validation
+    worker_enpassant.ss     # En passant validation
+    settle.ss               # Game settlement and scoring
+  tests/
+    move_tests.rs           # Individual move validation
+    game_lifecycle.rs       # Full game: register → play → settle
+    icc_tests.rs            # Cross-covenant authorization tests
+```
+
+**How a move flows (MCF multiplexing):**
+
+```
+1. Player signs a transaction including their Player UTXO + Mux UTXO
+2. Mux authenticates (ICC: Player covenant co-authorizes)
+3. Mux reads the move selector → routes to correct Worker
+4. Worker validates the specific move against chess rules
+5. Transaction outputs: updated Mux (new board state) + recreated Player
+```
+
+**Silverscript mux contract (simplified):**
+
+```
+pragma silverscript ^0.1.0;
+
+contract ChessMux(
+    bytes32 player_template,     // Template selector: Player role
+    bytes32 worker_templates[6], // Template selectors: one per piece type
+    bytes32 board_state          // Current board hash
+) {
+    #[covenant.singleton(mode = transition)]
+    entrypoint function makeMove(
+        int pieceType,           // Selector: which worker to route to
+        int fromSquare,
+        int toSquare,
+        sig playerSig
+    ) : (bytes32 new_board_state) {
+        // ICC: verify Player covenant is co-input in this transaction
+        // (Player covenant independently verifies the user's signature)
+        require(hasCovenantInput(player_template));
+
+        // Route to the correct worker via template selector
+        require(hasCovenantInput(worker_templates[pieceType]));
+
+        // Worker validates the move; if we reach here, it passed
+        // Compute new board state
+        return applyMove(board_state, fromSquare, toSquare);
+    }
+}
+```
+
+> **Note:** This example is based on the SilverScript Chess Covenant demo presented by the Kaspa development team. The actual implementation may differ in specifics as the language and tooling evolve.
 
 ---
 
