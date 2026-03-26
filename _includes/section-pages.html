@@ -1,0 +1,4 @@
+{% for section in site.data.nav.sections %}{% if section.id == include.section %}| | |
+|---|---|
+{% for p in section.pages %}| **[{{ p.title }}]({{ p.url }})** | {{ p.description }} |
+{% endfor %}{% endif %}{% endfor %}

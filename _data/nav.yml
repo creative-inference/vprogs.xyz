@@ -1,0 +1,201 @@
+# Single source of truth for site navigation, footer, and section index pages.
+# To surface a new page, add an entry under the correct section — nav, footer,
+# and section index tables all render from this file automatically.
+
+sections:
+  - id: learn
+    title: Learn
+    url: /learn/
+    pages:
+      - url: /learn/what-are-vprogs/
+        title: What Are vProgs
+        description: "The foundational explainer — the 'third way' paradigm, four architecture pillars, off-chain execution model, and phased deployment plan."
+      - url: /learn/why-vprogs/
+        title: Why vProgs
+        description: "The Smart Contract Trilemma and why ZK verification on a BlockDAG changes the calculus for scalability, composability, and security."
+      - url: /learn/how-it-works/
+        title: How It Works
+        description: "End-to-end walkthrough of the vProgs execution flow from state transition definition to final on-chain settlement."
+      - url: /learn/compared/
+        title: Platform Comparison
+        description: "Side-by-side comparison against Ethereum L2 rollups, Solana, Sui, and traditional L1 smart contract platforms."
+      - url: /learn/use-cases/
+        title: Real-World Use Cases
+        description: "Concrete examples — instant payments, trustless trading, verified credentials, supply chain, insurance, and community organizations."
+      - url: /learn/timeline/
+        title: When Going Live?
+        footer_title: When Are vProgs Going Live?
+        description: "Timeline for vProgs shipping — Covenants++ hard fork, Phase 1 standalone programs, and Phase 2 synchronous composability."
+      - url: /learn/defi/
+        title: Revolutionary for DeFi
+        description: "How vProgs transform DeFi with unified L1 liquidity, synchronous composability, and ZK-verified settlement."
+      - url: /learn/myths/
+        title: Myths vs Reality
+        description: "Dismantles common misconceptions about vProgs with evidence-based responses."
+      - url: /learn/glossary/
+        title: Glossary
+        description: "Comprehensive A-Z reference of all key terms used across the documentation."
+      - url: /learn/faq/
+        title: FAQ
+        description: "Answers to the most common questions about vProgs, compatibility, gas, and timeline."
+
+  - id: architecture
+    title: Architecture
+    url: /architecture/
+    pages:
+      - url: /architecture/overview/
+        title: Overview
+        description: "The four pillars in depth and how they compose."
+      - url: /architecture/account-model/
+        title: Account Model
+        description: "Solana-inspired pre-declared read/write sets and sovereign state."
+      - url: /architecture/execution-model/
+        title: Execution Model
+        description: "Off-chain execution, witness generation, proof lifecycle."
+      - url: /architecture/zk-verification/
+        title: ZK Verification
+        description: "Three-tier ZK stack, KIP-16 verifier opcodes, proof lifecycle."
+      - url: /architecture/sequencing/
+        title: L1 Sequencing
+        description: "Partitioned lanes, recursive tip hashes, sparse Merkle tree."
+      - url: /architecture/composability/
+        title: Composability
+        description: "Cross-vProg atomicity, concise witnesses, parallelism-aware gas."
+      - url: /architecture/dagknight/
+        title: DagKnight
+        description: "Parameterless adaptive consensus enabling vProgs."
+      - url: /architecture/covenants/
+        title: Covenant Stack
+        description: "The KIP infrastructure from Crescendo to Covenants++."
+      - url: /architecture/silverscript/
+        title: Silverscript
+        description: "Kaspa's L1 smart contract language and its relationship to vProgs."
+
+  - id: build
+    title: Build
+    url: /build/
+    pages:
+      - url: /build/quickstart/
+        title: Quickstart
+        description: "Clone, build, run a local testnet, deploy your first covenant in under 30 minutes."
+      - url: /build/tutorials/
+        title: Tutorials
+        description: "Step-by-step guides from your first vProg to cross-program atomic transactions."
+      - url: /build/api-reference/
+        title: API Reference
+        description: "RPC endpoints, data types, and error codes for vProgs nodes."
+      - url: /build/silverscript-reference/
+        title: Silverscript Reference
+        description: "Full language specification — data types, operators, covenant macros, binding modes."
+      - url: /build/testnet/
+        title: TN12 Testnet
+        description: "Connect to TN12, get test KAS, submit your first transactions."
+      - url: /build/tools/
+        title: Developer Tools
+        description: "CLI tools, proof inspector, covenant debugger, block explorer integration."
+      - url: /build/examples/
+        title: Example Projects
+        description: "Reference implementations — DEX, multi-sig wallet, Dutch auction, escrow, DAO."
+      - url: /build/chess/
+        title: Kaspa Chess
+        description: "A chess game built on Kaspa covenants as a developer showcase."
+      - url: /build/covenant-patterns/
+        title: Covenant Patterns
+        description: "Inter-Covenant Communication (ICC), Multi-Contract Flows (MCF), and Dynamic UTXO Selection for high-concurrency dApps."
+      - url: /build/developer-tools-overview/
+        title: Developer Tools Overview
+        description: "Silverscript language, opcode refinement, enhanced debugger capabilities, and WebAssembly support."
+
+  - id: research
+    title: Research
+    url: /research/
+    pages:
+      - url: /research/formal-model/
+        title: Formal Model
+        description: "Mathematical formalism for the vProg computation DAG."
+      - url: /research/composability-proposal/
+        title: Composability
+        description: "Concrete architectural design for synchronous composability."
+      - url: /research/gas-economics/
+        title: Gas Economics
+        description: "Weighted Area gas functions, STORM constants, fee market design."
+      - url: /research/proving-systems/
+        title: Proving Systems
+        description: "Comparative evaluation of Noir, RISC Zero, SP1, and Cairo."
+      - url: /research/security-model/
+        title: Security Model
+        description: "Threat model, attack surface analysis, and structural safety guarantees."
+      - url: /research/open-questions/
+        title: Open Questions
+        description: "Living document tracking unresolved research problems."
+
+  - id: applications
+    title: Applications
+    url: /applications/
+    pages:
+      - url: /applications/banking/
+        title: Banking & Finance
+        description: "Cross-border settlement, ISO 20022 middleware, credit union DeFi."
+      - url: /applications/defi/
+        title: DeFi
+        description: "L1-native DeFi with unified liquidity and synchronous composability."
+      - url: /applications/energy/
+        title: Energy & Climate
+        description: "Tokenized energy assets, carbon credits, real-time data covenants."
+      - url: /applications/supply-chain/
+        title: Supply Chain
+        description: "Provenance, anti-counterfeiting, ZK proofs on IoT sensor data."
+      - url: /applications/government/
+        title: Government
+        description: "Digital identity, land registry, airspace management, ZK-verified voting."
+      - url: /applications/100-applications/
+        title: 100 Applications
+        description: "A comprehensive list of 100 applications possible with vProgs."
+
+  - id: ecosystem
+    title: Ecosystem
+    url: /ecosystem/
+    pages:
+      - url: /ecosystem/roadmap/
+        title: Roadmap
+        description: "Phased journey from GHOSTDAG to DagKnight to vProgs."
+      - url: /ecosystem/applications/
+        title: Applications
+        footer_hidden: true
+        description: "What is being built today and what becomes possible with vProgs."
+      - url: /ecosystem/kii/
+        title: KII Foundation
+        description: "Enterprise adoption arm of the Kaspa ecosystem."
+      - url: /ecosystem/partners/
+        title: Partners
+        description: "Teams and projects building on Kaspa."
+      - url: /ecosystem/community/
+        title: Community
+        description: "Where the community gathers and how to get involved."
+
+  - id: changelog
+    title: Changelog
+    url: /changelog/
+    footer_group: more
+    pages:
+      - url: /changelog/rnd-insights/
+        title: R&D Insights
+        description: "Curated technical intelligence with contributor context."
+      - url: /changelog/testnet-updates/
+        title: Testnet Updates
+        description: "TN12 launch, reset, features, and known issues."
+
+  - id: references
+    title: References
+    url: /references/
+    footer_group: more
+    pages:
+      - url: /references/kips/
+        title: KIP Index
+        description: "Table of all Kaspa Improvement Proposals relevant to vProgs."
+      - url: /references/repos/
+        title: Repositories
+        description: "Annotated directory of key GitHub repositories."
+      - url: /references/sources/
+        title: Sources
+        description: "Categorized collection of all reference material."
