@@ -315,9 +315,16 @@ The official implementation at [github.com/kaspanet/vprogs](https://github.com/k
 
 ```
 core -> storage -> state -> scheduling -> transaction-runtime -> node
+                                       ↘
+                                 core-codec -> core-smt -> zk-abi -> zk-transaction-prover
+                                                                  -> zk-batch-prover
+                                                                  -> zk-vm
+                                                                  -> zk-backend-risc0
 ```
 
-Dependencies flow downward only. Key components:
+Dependencies flow downward only. The ZK proving layers were completed in March 2026.
+
+### Core Layers
 
 | Layer | Responsibility |
 |-------|---------------|
@@ -328,11 +335,73 @@ Dependencies flow downward only. Key components:
 | `transaction-runtime` | Execution environment |
 | `node` | Network integration and L1 bridge |
 
-Notable PRs:
+### ZK Proving Layers
+
+| Layer | Responsibility |
+|-------|---------------|
+| `core-codec` | Zero-copy binary encoding for ZK wire formats (`no_std`, in-place data reinterpretation, sorted-unique encoding for deterministic key ordering) |
+| `core-smt` | Versioned Sparse Merkle Tree with shortcut leaves, multi-proof compression, and compact topology bit-packing; integrates into scheduler for batch commit, rollback, and pruning |
+| `zk-abi` | Host-guest wire format for proof composition at two levels: transaction processor (individual tx against resources) and batch processor (aggregate tx proofs + state root transition). Backend-agnostic, `no_std` compatible |
+| `zk-transaction-prover` | Per-transaction proving worker with pluggable `Backend` trait for different zkVM backends |
+| `zk-batch-prover` | Aggregates individual transaction proofs with an SMT proof into a single batch state-root transition proof |
+| `zk-vm` | Implements the `Processor` trait with ZK support; hooks into lifecycle events (batch creation, commit, shutdown, rollback) to feed provers. Proving is configurable: disabled, transaction-only, or full batch pipeline |
+| `zk-backend-risc0` | First concrete backend implementing both transaction and batch `Backend` traits, with pre-compiled guest programs and end-to-end integration tests |
+
+### ZK Proving Pipeline
+
+The proving pipeline maximizes parallelism at both the execution and proof production stages:
+
+```
++-----------------+     +-----------------------+     +--------------------+
+| Execute txns    |---->| Transaction Prover    |---->| Batch Prover       |
+| (parallel,      |     | (per-tx proof via     |     | (tx proofs + SMT   |
+|  scheduler)     |     |  Backend trait)        |     |  proof → single    |
++-----------------+     +-----------------------+     |  batch proof)      |
+                                                      +--------------------+
+                                                              |
+                                                              v
+                                                      +--------------------+
+                                                      | State Root         |
+                                                      | Transition Proof   |
+                                                      | (submitted to L1)  |
+                                                      +--------------------+
+```
+
+1. Transactions execute in parallel via the scheduler
+2. Each executed transaction is submitted to the **Transaction Prover**, which generates a per-transaction proof on a dedicated thread
+3. The **Batch Prover** collects all transaction proofs for a batch, pairs them with an SMT proof covering the batch's resources, and produces a single proof attesting to the batch's state root transition
+4. The batch proof is published as an artifact and submitted to L1
+
+### Guest Programming Model
+
+Guest programs use a **Solana-like API** with resources, instructions, and program contexts. The framework currently uses a single hardcoded guest program. Upcoming milestones will add:
+
+- **User-deployed guests:** The current transaction processor becomes a hardcoded circuit that handles invocation and access delegation to user programs, similar to SUI's programmable transactions (including linear type safety at the program boundary)
+- **Composability across programs:** Multiple guest programs interacting within a single proof
+- **L1 asset bridging:** Moving assets between L1 and the vProg execution environment
+- **Framework-managed authentication:** Guests currently handle their own access auth (e.g., signature checks); the framework will manage this automatically
+
+### PoW Randomness
+
+A notable property in the PoW context: the block hash provides an unpredictable, unbiasable random input that is revealed after transaction sequencing. This gives guest programs native access to on-chain randomness without oracles or additional infrastructure -- something traditionally hard to achieve in smart contract platforms.
+
+### Notable PRs
+
+**Infrastructure:**
 - [PR #7](https://github.com/kaspanet/vprogs/pull/7) -- L1 bridge implementation
 - [PR #10](https://github.com/kaspanet/vprogs/pull/10) -- Reorg filter with halving-based denoising
 - [PR #13](https://github.com/kaspanet/vprogs/pull/13) -- Rollback/pruning coordination
 - [PR #14](https://github.com/kaspanet/vprogs/pull/14) -- ChainBlockMetadata
+
+**ZK Framework (March 2026):**
+- [PR #21](https://github.com/kaspanet/vprogs/pull/21) -- ZK-framework preparations (scheduler cleanup, artifact publishing, Processor lifecycle events)
+- [PR #33](https://github.com/kaspanet/vprogs/pull/33) -- Core Codec (zero-copy binary encoding, `no_std`)
+- [PR #34](https://github.com/kaspanet/vprogs/pull/34) -- Core SMT (versioned Sparse Merkle Tree with optimizations)
+- [PR #28](https://github.com/kaspanet/vprogs/pull/28) -- ZK ABI (host-guest wire format for proof composition)
+- [PR #29](https://github.com/kaspanet/vprogs/pull/29) -- ZK Transaction Prover (per-tx proving with Backend trait)
+- [PR #30](https://github.com/kaspanet/vprogs/pull/30) -- ZK Batch Prover (aggregate proofs into single batch proof)
+- [PR #31](https://github.com/kaspanet/vprogs/pull/31) -- ZK VM (Processor trait implementation with ZK lifecycle hooks)
+- [PR #32](https://github.com/kaspanet/vprogs/pull/32) -- ZK Backend RISC0 (first concrete backend, end-to-end tests)
 
 ---
 

@@ -89,12 +89,21 @@ RISC Zero provides a zkVM that executes standard RISC-V binaries and generates S
 | Verification cost | Moderate (STARK verification opcode on L1 via KIP-16) |
 | Memory requirements | High (prover needs substantial RAM) |
 
-**Demonstrated capability:** The ZK Covenant Rollup PoC (Milestone 3, completed February 2026 by Maxim Biryukov) used RISC Zero to prove a full deposit-transfer-withdraw cycle, including:
+**Demonstrated capability:**
+
+The ZK Covenant Rollup PoC (Milestone 3, completed February 2026 by Maxim Biryukov) used RISC Zero to prove a full deposit-transfer-withdraw cycle, including:
 
 - Sparse Merkle Tree state transitions
 - Sequence commitment chaining of L1 block data
 - Both STARK (succinct) and Groth16-wrapped proof generation
 - Full on-chain verification through kaspa-txscript
+
+The vProgs ZK framework (completed March 2026 by Hans Moog) uses RISC Zero as its first production backend ([PR #32](https://github.com/kaspanet/vprogs/pull/32)), demonstrating:
+
+- Full pipeline from transaction execution through batch proof generation to state root verification
+- Two pre-compiled guest programs (transaction processing and batch aggregation)
+- End-to-end integration test suite
+- Pluggable `Backend` trait validated for the RISC Zero implementation
 
 ### SP1
 
@@ -117,6 +126,8 @@ SP1 (Succinct Processor 1) is Succinct Labs' zkVM, also targeting RISC-V executi
 | Maturity | More established | Newer, rapidly evolving |
 
 Both are suitable for Tier 2. The choice between them is application-specific, and the KIP-16 verification opcodes support both.
+
+> **Community contribution opportunity:** The vProgs framework's `Backend` trait is designed for multiple implementations. A second zkVM backend (e.g., SP1) would validate the abstraction and provide builders with backend choice. The trait interface was proven out with the RISC Zero implementation in March 2026.
 
 ### Milestone 2--3 Integration
 
@@ -261,6 +272,22 @@ All active opcodes were activated on TN12 (February 2026 reset) and are schedule
 
 ---
 
+## Builder Access: Current State
+
+As of March 2026, the vProgs ZK framework provides a functional proving pipeline for builders who want to start experimenting:
+
+- **Guest programming model:** Solana-like API with resources, instructions, and program contexts
+- **Current scope:** Single hardcoded guest program -- the pipeline is fully functional for writing and testing guest logic
+- **Backend:** RISC Zero (first implemented backend)
+- **Configurable proving:** Can be disabled entirely, run at transaction level only, or run the full batch pipeline
+- **What's coming next:** Composability across multiple user-deployed programs, L1 asset bridging, and framework-managed authentication
+
+When user-deployed guests are added, the current transaction processor will become a hardcoded circuit handling invocation and access delegation to user programs (similar to SUI's programmable transactions, with linear type safety at the program boundary). The basic programming model will not change -- guest programs will be invoked with a similar API but scoped to a subset of resources.
+
+Another area where community involvement would be impactful: an **Anchor-like DSL** for writing guest programs. The ABI is stable enough to build on, and a developer experience layer would make the framework accessible to a much wider audience.
+
+---
+
 ## References
 
 - [Security Model](/research/security-model) -- proof withholding and verification attacks
@@ -268,4 +295,5 @@ All active opcodes were activated on TN12 (February 2026 reset) and are schedule
 - [Gas and Resource Economics](/research/gas-economics) -- proving cost economics
 - [ZK Covenant Rollup PoC](https://github.com/biryukovmaxim/rusty-kaspa/tree/zk-rollup-covenant-example) -- Maxim Biryukov
 - [ZK Covenant Rollup Documentation](https://biryukovmaxim.github.io/rusty-kaspa/ch01-introduction.html)
+- [vProgs ZK Framework PRs](https://github.com/kaspanet/vprogs/pulls) -- PRs #21, #28-34
 - [KIP-16: ZK Verification Opcodes](https://github.com/kaspanet/kips)

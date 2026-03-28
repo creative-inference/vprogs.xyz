@@ -18,7 +18,7 @@ For a reverse-chronological event feed, see the [Changelog](/changelog/). For te
 | missutton | Michael Sutton | Core developer, architect of Covenants++, KIP-21, vProgs phasing |
 | someone235 | Ori Newman | Core developer, KIP-17, Silverscript lead |
 | hashdag | Yonatan Sompolinsky | Co-founder, research lead |
-| we_are_legion | Hans | vProgs L2 runtime developer |
+| we_are_legion | Hans Moog | vProgs framework developer (runtime, ZK proving pipeline) |
 | Max143672 | Maxim Biryukov | ZK covenant integration, RISC Zero |
 | saefstroem | Alexander S | KIP-16 ZK precompiles author |
 | aspectron76 | Anton Yemelyanov | RK framework/SDK architect |
@@ -31,6 +31,36 @@ See [Partners & Projects](/ecosystem/partners) for detailed profiles.
 ---
 
 ## Major Events: December 2025 -- March 2026
+
+### ZK Framework Completed (March 28, 2026)
+
+Hans Moog completed the zero-knowledge proving component of the vProgs framework across 8 PRs ([#21](https://github.com/kaspanet/vprogs/pull/21), [#33](https://github.com/kaspanet/vprogs/pull/33), [#34](https://github.com/kaspanet/vprogs/pull/34), [#28](https://github.com/kaspanet/vprogs/pull/28), [#29](https://github.com/kaspanet/vprogs/pull/29), [#30](https://github.com/kaspanet/vprogs/pull/30), [#31](https://github.com/kaspanet/vprogs/pull/31), [#32](https://github.com/kaspanet/vprogs/pull/32)), introducing the ability to prove arbitrary computation.
+
+**Architecture (new layers):**
+
+| Layer | Purpose |
+|-------|---------|
+| Core Codec | Zero-copy binary encoding for ZK wire formats (`no_std`, in-place reinterpretation) |
+| Core SMT | Versioned Sparse Merkle Tree (shortcut leaves, multi-proof compression, compact bit-packing) |
+| ZK ABI | Host-guest wire format at two proving levels: transaction processor and batch processor |
+| ZK Transaction Prover | Per-tx proving worker with pluggable `Backend` trait |
+| ZK Batch Prover | Aggregates tx proofs + SMT proof → single state root transition proof |
+| ZK VM | Processor trait with lifecycle hooks (batch creation, commit, shutdown, rollback) |
+| ZK Backend RISC0 | First concrete backend with pre-compiled guests and end-to-end tests |
+
+**Key design principle:** While the earlier framework maximized parallelizability of execution, this milestone extends that to maximizing parallelizability of proof production.
+
+**For builders:** This is the first version that lets you write guest programs with a Solana-like API (resources, instructions, program contexts) and have them proven in a zkVM. The current milestone uses a single hardcoded guest program -- composability across multiple programs and L1 asset bridging are next. The execution and proving pipeline is fully functional for building and testing guest logic.
+
+**Future evolution:** User-deployed guests will sit one layer below the current transaction processor, which becomes a hardcoded circuit handling invocation and access delegation (similar to SUI's programmable transactions, with linear type safety at the program boundary).
+
+**PoW randomness insight:** Block hashes provide unpredictable, unbiasable random inputs revealed after transaction sequencing, giving guest programs native on-chain randomness without oracles.
+
+**Community contribution opportunities:**
+- An Anchor-like DSL for writing guest programs (the ABI is stable)
+- A second zkVM backend (e.g., SP1) to validate the Backend trait abstraction
+
+**Community hangouts** starting April 12, 2026. Preferred day TBD (not Monday due to existing community event).
 
 ### Covenants++ Founding Announcement (Dec 14, 2025)
 

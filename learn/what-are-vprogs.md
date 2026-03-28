@@ -153,6 +153,8 @@ The initial deployment focuses on sovereign, independent programs:
 
 This phase delivers full programmability and ZK verification without waiting for the more complex composability layer.
 
+**Builder milestone (March 2026):** The ZK proving pipeline is now functional. Builders can write guest programs using a Solana-like API (resources, instructions, program contexts) and have them proven in a zkVM. The execution and proving pipeline provides a minimal environment to build and test guest logic today, even before user-deployed programs are enabled.
+
 ### Phase 2: Full Synchronous Composability
 
 The second phase extends the system with cross-vProg atomicity:
@@ -175,7 +177,7 @@ vProgs do not exist in isolation. They build on a stack of consensus upgrades:
 | **Verification** | KIP-16 (ZK verification opcodes) | On TN12 |
 | **Covenants** | KIP-17/20 (covenant binding and IDs) | On TN12 |
 | **Language** | Silverscript (L1 covenant contracts) | Experimental |
-| **Applications** | vProgs (sovereign programs) | Phase 1 in development |
+| **Applications** | vProgs (sovereign programs) | Phase 1 active -- ZK proving pipeline functional |
 
 The **Covenants++ hard fork** (May 5, 2026) activates the foundational KIPs (16, 17, 20, 21) that make vProgs possible. Silverscript provides the complementary local-state covenant layer, handling UTXO-level rules while vProgs handle shared-state application logic.
 

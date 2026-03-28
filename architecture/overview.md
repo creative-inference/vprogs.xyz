@@ -251,6 +251,7 @@ The vProgs rollout follows a deliberate phasing strategy:
 - L1 has no notion of accounts -- only aware of the overall vProg entity through its L1 covenant
 - The "degenerate" CD commit scheme groups activity by programs/subnets (not accounts)
 - Proving in O(program activity) time via KIP-21
+- **ZK proving pipeline functional (March 2026):** Full pipeline from transaction execution through batch proof generation to state root verification, with RISC Zero as first backend and a Solana-like guest programming API
 
 ### Phase 2: Full Synchronous Composability
 

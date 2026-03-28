@@ -50,7 +50,7 @@ The evolution of the GHOSTDAG protocol into a parameterless adaptive consensus m
 
 Native L1 programmability via off-chain execution with on-chain ZK verification. The vProgs repo went public on January 21, 2026.
 
-- **Phase 1 -- Standalone vProgs:** Sovereign programs bridging to L1 via ZK proofs, operating independently. No cross-vProg composability. No L1 account model yet.
+- **Phase 1 -- Standalone vProgs:** Sovereign programs bridging to L1 via ZK proofs, operating independently. No cross-vProg composability. No L1 account model yet. **ZK proving pipeline completed March 2026** -- full proof generation from transaction execution through batch aggregation to state root verification, with RISC Zero as the first backend and a Solana-like guest programming API.
 - **Phase 2 -- Synchronous Composability:** Cross-vProg atomic transactions, concise witness mechanism, prover market infrastructure, and the full computation DAG.
 
 ---
@@ -83,7 +83,7 @@ Focus: L1 primitives for verifiable programs.
 - L1 bridge implementation
 - KIP-21 partitioned sequencing commitments (lane-based, enabling O(activity) proving)
 
-**Status:** Active. ZK Covenant Rollup PoC completed February 19, 2026 (full deposit-transfer-withdraw cycle). KIP-21 published February 24, 2026.
+**Status:** Active. ZK Covenant Rollup PoC completed February 19, 2026 (full deposit-transfer-withdraw cycle). KIP-21 published February 24, 2026. **ZK proving pipeline completed March 2026** -- the full framework for proving arbitrary computation is functional, with RISC Zero as the first backend.
 
 ### Phase 3: Composability
 

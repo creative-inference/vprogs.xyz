@@ -245,6 +245,34 @@ User tx_4 ----+
 - **Prover efficiency:** Larger batches amortize fixed proving overhead
 - **User cost reduction:** Verification gas is shared across batch participants
 
+### Implemented Pipeline: Two-Level Proving
+
+The vProgs ZK framework (completed March 2026) implements a two-level proving architecture that maximizes parallelism in proof production:
+
+```
+Execute transactions (parallel)
+        |
+        v
++------------------------+
+| Transaction Prover     |    Level 1: per-transaction proofs
+| (one proof per tx,     |    generated on dedicated threads
+|  via Backend trait)     |
++------------------------+
+        |
+        v
++------------------------+
+| Batch Prover           |    Level 2: aggregates tx proofs
+| (tx proofs + SMT proof |    + Sparse Merkle Tree proof
+|  → single batch proof) |    → one state root transition proof
++------------------------+
+```
+
+At **Level 1**, the Transaction Prover receives serialized execution contexts via the [ZK ABI](/architecture/execution-model#zk-proving-layers) wire format and submits them to a backend-specific prover. Each transaction is proven independently, enabling parallel proof generation.
+
+At **Level 2**, the Batch Prover collects individual transaction proof artifacts, pairs them with an SMT proof covering the batch's resources, and produces a single proof attesting to the entire batch's state root transition. This is the proof that gets submitted to L1.
+
+The `Backend` trait abstracts proof generation at both levels, so different zkVM backends can be swapped without changing the pipeline. RISC Zero is the first implemented backend ([PR #32](https://github.com/kaspanet/vprogs/pull/32)), with pre-compiled guest programs for both transaction processing and batch aggregation.
+
 ### Proof Stitching
 
 For cross-vProg atomic transactions, proofs from multiple vProgs can be "stitched" together:
@@ -310,10 +338,19 @@ Since Tier 2 (RISC Zero/SP1) is the primary proving tier for most applications, 
 
 ---
 
+## PoW Randomness for Guest Programs
+
+A distinctive property of the vProgs architecture in the context of Proof-of-Work: the block hash provides an unpredictable, unbiasable random input that is revealed after transaction sequencing.
+
+This gives guest programs native access to on-chain randomness without oracles or additional infrastructure -- something traditionally hard to achieve in smart contract platforms. Applications that need verifiable randomness (gaming, lotteries, fair selection mechanisms) can consume the block hash directly within their ZK-proven execution.
+
+---
+
 ## Further Reading
 
-- [Execution Model](/architecture/execution-model) -- the off-chain execution that produces proofs
+- [Execution Model](/architecture/execution-model) -- the off-chain execution that produces proofs, including the full ZK proving pipeline
 - [L1 Sequencing (KIP-21)](/architecture/sequencing) -- how proofs anchor into the commitment chain
 - [Covenant Stack](/architecture/covenants) -- the KIP infrastructure including KIP-16
 - [Synchronous Composability](/architecture/composability) -- proof stitching and cross-vProg atomicity
+- [Proving Systems Analysis](/research/proving-systems) -- detailed comparison of ZK backends
 - [KIP-16 specification](https://github.com/kaspanet/kips) -- verifier opcode details
