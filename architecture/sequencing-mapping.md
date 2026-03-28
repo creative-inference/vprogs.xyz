@@ -171,6 +171,12 @@ Committed in both `SeqStateRoot(B)` and inside each touched lane-tip update.
 
 ---
 
+
+
+### 7. Initial Block Download (IBD) Implementation
+
+The KIP-21 Initial Block Download (IBD) implementation (PR #933 in Rusty-Kaspa) ensures that new nodes can properly sync and validate the chain history containing smart contract data, serving as a foundational requirement for vProgs.
+
 ## What Is Still Coming (Post-KIP-21)
 
 | Feature | Description | Dependency |
