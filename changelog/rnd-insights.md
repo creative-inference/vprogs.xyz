@@ -32,9 +32,9 @@ See [Partners & Projects](/ecosystem/partners) for detailed profiles.
 
 ## Major Events: December 2025 -- March 2026
 
-### ZK Framework Completed (March 28, 2026)
+### ZK Framework Proposed (March 28, 2026)
 
-Hans Moog completed the zero-knowledge proving component of the vProgs framework across 8 PRs ([#21](https://github.com/kaspanet/vprogs/pull/21), [#33](https://github.com/kaspanet/vprogs/pull/33), [#34](https://github.com/kaspanet/vprogs/pull/34), [#28](https://github.com/kaspanet/vprogs/pull/28), [#29](https://github.com/kaspanet/vprogs/pull/29), [#30](https://github.com/kaspanet/vprogs/pull/30), [#31](https://github.com/kaspanet/vprogs/pull/31), [#32](https://github.com/kaspanet/vprogs/pull/32)), introducing the ability to prove arbitrary computation.
+Hans Moog proposed the zero-knowledge proving component of the vProgs framework across 8 PRs (all open, in review) ([#21](https://github.com/kaspanet/vprogs/pull/21), [#33](https://github.com/kaspanet/vprogs/pull/33), [#34](https://github.com/kaspanet/vprogs/pull/34), [#28](https://github.com/kaspanet/vprogs/pull/28), [#29](https://github.com/kaspanet/vprogs/pull/29), [#30](https://github.com/kaspanet/vprogs/pull/30), [#31](https://github.com/kaspanet/vprogs/pull/31), [#32](https://github.com/kaspanet/vprogs/pull/32)), introducing the ability to prove arbitrary computation.
 
 **Architecture (new layers):**
 

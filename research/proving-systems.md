@@ -98,12 +98,12 @@ The ZK Covenant Rollup PoC (Milestone 3, completed February 2026 by Maxim Biryuk
 - Both STARK (succinct) and Groth16-wrapped proof generation
 - Full on-chain verification through kaspa-txscript
 
-The vProgs ZK framework (completed March 2026 by Hans Moog) uses RISC Zero as its first production backend ([PR #32](https://github.com/kaspanet/vprogs/pull/32)), demonstrating:
+The vProgs ZK framework (proposed March 2026 by Hans Moog, PRs in review) uses RISC Zero as its first backend ([PR #32](https://github.com/kaspanet/vprogs/pull/32)), demonstrating:
 
 - Full pipeline from transaction execution through batch proof generation to state root verification
 - Two pre-compiled guest programs (transaction processing and batch aggregation)
 - End-to-end integration test suite
-- Pluggable `Backend` trait validated for the RISC Zero implementation
+- Pluggable `Backend` trait implemented for the RISC Zero backend
 
 ### SP1
 
@@ -127,7 +127,7 @@ SP1 (Succinct Processor 1) is Succinct Labs' zkVM, also targeting RISC-V executi
 
 Both are suitable for Tier 2. The choice between them is application-specific, and the KIP-16 verification opcodes support both.
 
-> **Community contribution opportunity:** The vProgs framework's `Backend` trait is designed for multiple implementations. A second zkVM backend (e.g., SP1) would validate the abstraction and provide builders with backend choice. The trait interface was proven out with the RISC Zero implementation in March 2026.
+> **Community contribution opportunity:** The vProgs framework's `Backend` trait is designed for multiple implementations. A second zkVM backend (e.g., SP1) would validate the abstraction and provide builders with backend choice. The trait interface has a reference implementation in the proposed RISC Zero backend (March 2026, PR in review).
 
 ### Milestone 2--3 Integration
 
@@ -274,7 +274,7 @@ All active opcodes were activated on TN12 (February 2026 reset) and are schedule
 
 ## Builder Access: Current State
 
-As of March 2026, the vProgs ZK framework provides a functional proving pipeline for builders who want to start experimenting:
+As of March 2026, the vProgs ZK framework has been proposed across 8 open PRs. Once merged, it will provide a functional proving pipeline for builders who want to start experimenting:
 
 - **Guest programming model:** Solana-like API with resources, instructions, and program contexts
 - **Current scope:** Single hardcoded guest program -- the pipeline is fully functional for writing and testing guest logic

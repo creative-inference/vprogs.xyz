@@ -5,7 +5,7 @@ section: build
 description: "Complete technical specification for building a vProg: architecture, guest programming model, ZK proving pipeline, state management, and end-to-end development guide."
 ---
 
-This document is a comprehensive technical specification for building a verifiable program (vProg) on Kaspa. It covers the full stack from guest program development through ZK proof generation to L1 settlement, grounded in the implementation as of March 2026.
+This document is a comprehensive technical specification for building a verifiable program (vProg) on Kaspa. It covers the full stack from guest program development through ZK proof generation to L1 settlement, based on the architecture proposed in March 2026 (8 PRs in review, not yet merged).
 
 ---
 
@@ -46,6 +46,8 @@ A vProg is a sovereign state machine that executes off-chain and settles on-chai
 | **Trustless verification** | L1 verifies a ZK proof of correct execution. It never re-runs your logic. |
 | **Parallel execution** | Transactions with disjoint write sets execute in parallel on the BlockDAG. |
 | **Configurable proving** | ZK proving can be disabled (development), transaction-only, or full batch pipeline. |
+
+> **Status note:** The ZK proving layers described in this spec are proposed across 8 open PRs ([#21](https://github.com/kaspanet/vprogs/pull/21), [#28](https://github.com/kaspanet/vprogs/pull/28)--[#34](https://github.com/kaspanet/vprogs/pull/34)) and have not yet been merged. The core execution layers (core through node) are merged and functional.
 
 ---
 
@@ -221,14 +223,15 @@ pub fn process_instruction(
 }
 ```
 
-### 4.3 Current Limitations (March 2026)
+### 4.3 Current Limitations (March 2026, pending merge)
 
 | Limitation | Status | Future |
 |-----------|--------|--------|
-| Single hardcoded guest program | Current | User-deployed guests coming next |
-| Guest handles own authentication | Current | Framework-managed auth planned |
-| No cross-program composability | Current | Multi-program invocation planned |
-| No L1 asset bridging from guest | Current | Canonical bridge integration planned |
+| ZK proving layers not yet merged | PRs in review | Merge pending |
+| Single hardcoded guest program | Proposed design | User-deployed guests coming next |
+| Guest handles own authentication | Proposed design | Framework-managed auth planned |
+| No cross-program composability | Proposed design | Multi-program invocation planned |
+| No L1 asset bridging from guest | Proposed design | Canonical bridge integration planned |
 
 ### 4.4 Authentication
 
@@ -476,7 +479,7 @@ trait BatchBackend {
 
 ### 8.2 RISC Zero Backend
 
-The first implemented backend (`zk-backend-risc0`) provides:
+The first proposed backend (`zk-backend-risc0`, [PR #32](https://github.com/kaspanet/vprogs/pull/32)) provides:
 
 | Component | Description |
 |-----------|-------------|

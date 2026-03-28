@@ -322,7 +322,7 @@ core -> storage -> state -> scheduling -> transaction-runtime -> node
                                                                   -> zk-backend-risc0
 ```
 
-Dependencies flow downward only. The ZK proving layers were completed in March 2026.
+Dependencies flow downward only. The ZK proving layers were proposed in March 2026 (8 PRs open, in review).
 
 ### Core Layers
 
@@ -374,7 +374,7 @@ The proving pipeline maximizes parallelism at both the execution and proof produ
 
 ### Guest Programming Model
 
-Guest programs use a **Solana-like API** with resources, instructions, and program contexts. The framework currently uses a single hardcoded guest program. Upcoming milestones will add:
+Guest programs use a **Solana-like API** with resources, instructions, and program contexts. The proposed framework uses a single hardcoded guest program. Once merged, upcoming milestones will add:
 
 - **User-deployed guests:** The current transaction processor becomes a hardcoded circuit that handles invocation and access delegation to user programs, similar to SUI's programmable transactions (including linear type safety at the program boundary)
 - **Composability across programs:** Multiple guest programs interacting within a single proof
@@ -393,7 +393,7 @@ A notable property in the PoW context: the block hash provides an unpredictable,
 - [PR #13](https://github.com/kaspanet/vprogs/pull/13) -- Rollback/pruning coordination
 - [PR #14](https://github.com/kaspanet/vprogs/pull/14) -- ChainBlockMetadata
 
-**ZK Framework (March 2026):**
+**ZK Framework (March 2026, PRs in review):**
 - [PR #21](https://github.com/kaspanet/vprogs/pull/21) -- ZK-framework preparations (scheduler cleanup, artifact publishing, Processor lifecycle events)
 - [PR #33](https://github.com/kaspanet/vprogs/pull/33) -- Core Codec (zero-copy binary encoding, `no_std`)
 - [PR #34](https://github.com/kaspanet/vprogs/pull/34) -- Core SMT (versioned Sparse Merkle Tree with optimizations)

@@ -247,7 +247,7 @@ User tx_4 ----+
 
 ### Implemented Pipeline: Two-Level Proving
 
-The vProgs ZK framework (completed March 2026) implements a two-level proving architecture that maximizes parallelism in proof production:
+The vProgs ZK framework (proposed March 2026, PRs in review) introduces a two-level proving architecture that maximizes parallelism in proof production:
 
 ```
 Execute transactions (parallel)

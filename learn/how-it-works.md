@@ -129,14 +129,14 @@ The tiered approach means lightweight operations (like a simple transfer) can be
 
 ### How the Proving Pipeline Works
 
-As of March 2026, the vProgs framework implements a two-level proving pipeline:
+As of March 2026, the vProgs framework proposes a two-level proving pipeline (8 PRs in review):
 
 1. **Transaction proofs** -- each executed transaction is independently proven on a dedicated thread, enabling parallel proof generation
 2. **Batch proofs** -- individual transaction proofs are aggregated with a Sparse Merkle Tree proof into a single proof attesting to the entire batch's state root transition
 
 This two-level design maximizes parallelism: just as the scheduler parallelizes execution, the proving pipeline parallelizes proof production. The `Backend` trait allows different zkVM backends to be swapped in without changing the pipeline -- RISC Zero is the first implemented backend, with SP1 designed as an alternative.
 
-Guest programs are written using a Solana-like API with resources, instructions, and program contexts. If you are a builder, the execution and proving pipeline is functional today and provides a minimal environment to build and test guest logic.
+Guest programs are written using a Solana-like API with resources, instructions, and program contexts. Once merged, builders will have a functional execution and proving pipeline providing a minimal environment to build and test guest logic.
 
 ---
 
