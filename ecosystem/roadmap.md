@@ -68,6 +68,10 @@ Focus: Consensus-level prerequisites.
 
 **Status:** Active. TN12 launched January 5, 2026; reset with new features February 9, 2026.
 
+
+
+Additionally, a new custom UDP-based block relay protocol for latency reduction is undergoing community testing. Early results from a transatlantic relay show the new protocol handling up to 50% of block propagation, demonstrating major performance gains over standard TCP relay.
+
 ### Phase 2: vProgs Foundation
 
 Focus: L1 primitives for verifiable programs.
