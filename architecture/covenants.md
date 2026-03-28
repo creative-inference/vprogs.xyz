@@ -144,6 +144,10 @@ KIP-17 adds the auth and covenant binding system that [Silverscript's](/architec
 
 These opcodes make stateful UTXO contracts possible -- a covenant can carry state forward across transactions.
 
+
+
+Recent progress in the covenant infrastructure includes the solidifying of serialized covenant binding integration, a cornerstone feature for managing state within Kaspa's upcoming smart contract capabilities.
+
 ### KIP-20: Covenant IDs (Native Lineage)
 
 Before KIP-20, proving that a UTXO descended from a specific covenant required recursive lineage proofs -- expensive and complex. KIP-20 introduces native covenant IDs at the protocol level:
