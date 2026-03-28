@@ -75,6 +75,9 @@ sections:
     title: Build
     url: /build/
     pages:
+      - url: /build/vprog-technical-spec/
+        title: vProg Technical Spec
+        description: "Complete technical specification: architecture, guest programming model, ZK proving pipeline, state management, and development guide."
       - url: /build/quickstart/
         title: Quickstart
         description: "Clone, build, run a local testnet, deploy your first covenant in under 30 minutes."
