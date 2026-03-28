@@ -298,3 +298,10 @@ rustflags = ["-C", "target-cpu=native"]
 - **[Your First vProg](/build/tutorials/first-vprog)** -- Write a complete vProg
 - **[Testnet Guide](/build/testnet)** -- Connect to TN12
 - **[Developer Tools](/build/tools)** -- CLI tools and debugging utilities
+
+## Build from Source
+
+
+### Build Pipeline Optimizations
+
+Rusty-Kaspa's build pipeline has been upgraded (PR #934) to use pre-built artifacts, drastically reducing build times for developers. This optimization was recently merged into the `covpp-reset2` testnet, accelerating the development and testing cycle.
