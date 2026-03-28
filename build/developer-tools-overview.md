@@ -11,6 +11,10 @@ Developing on Kaspa's Layer 1 requires robust, efficient tooling. The ecosystem 
 ## Silverscript
 Kaspa introduces **Silverscript**, a high-level smart contract language that compiles directly into native Kaspa Script. Designed for flexibility, it empowers developers to write complex UTXO spending conditions without managing low-level assembly.
 
+
+
+Recent upgrades have introduced compiler optimizations and opcode hardening, improving both the security and performance of the smart contract language as it moves closer to a production-ready state.
+
 ## Opcode Refinement and Standardization
 
 The underlying native Kaspa Script is being continuously enhanced to support advanced applications. Recent developments include:
