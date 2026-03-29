@@ -305,3 +305,6 @@ rustflags = ["-C", "target-cpu=native"]
 ### Build Pipeline Optimizations
 
 Rusty-Kaspa's build pipeline has been upgraded (PR #934) to use pre-built artifacts, drastically reducing build times for developers. This optimization was recently merged into the `covpp-reset2` testnet, accelerating the development and testing cycle.
+
+
+Furthermore, overall CI/CD pipeline stability has been bolstered. Developers have addressed recurring timeout errors in integration tests (e.g., via PR #937 by increasing notification timeouts), ensuring a more reliable development and testing process for ongoing protocol updates.
