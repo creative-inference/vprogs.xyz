@@ -169,3 +169,10 @@ See [Repositories](/references/repos) for an annotated list of all key repos.
 - [KII Foundation](/ecosystem/kii) -- enterprise programs, hackathons, and grants
 - [Sources & Links](/references/sources) -- complete reference collection
 - [R&D Channel Insights](/changelog/rnd-insights) -- curated technical intelligence from the R&D channel
+
+## Community Initiatives
+
+### #KForce
+
+The #KForce initiative is an organized, grassroots community effort recognized for its active contributions to growing and promoting the Kaspa ecosystem.
+
