@@ -112,6 +112,16 @@ These contributors are directly involved in Kaspa protocol development, Covenant
 
 ---
 
+
+
+### @hus_qy
+
+- **Role:** Research Grantee
+- **Key contributions:**
+  - Successfully built a full zero-knowledge (ZK) proving pipeline for vProgs, a foundational breakthrough enabling future privacy and advanced smart contract capabilities on the Kaspa network.
+- **Links:** --
+
+
 ## Projects
 
 ### vProgs Runtime
