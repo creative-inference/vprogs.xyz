@@ -24,3 +24,6 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
+
+
+To further streamline integration, recent architecture refinements (such as PR #935 in Rusty-Kaspa) separate core logic from WASM-specific types. This separation paves the way for easier usage across native Rust and Python SDKs. Meanwhile, rigorous R&D on the testnet continues to fortify the smart contract layer; active testing has identified and addressed vital edge cases, including potential integer overflow and clamping issues with large numbers.
