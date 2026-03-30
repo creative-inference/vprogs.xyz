@@ -192,6 +192,11 @@ Query metadata about a registered vProg.
 
 ---
 
+
+### `notify_utxos_changed` [RPC Enhancement]
+
+A recent enhancement to the `NotifyUtxosChanged` RPC call allows clients to synchronize UTXOs starting from a specific DAA score. This provides a critical performance and bandwidth optimization for dApps managing vProgs with vast amounts of UTXOs, such as DeFi liquidity pools.
+
 ## Transaction Queries
 
 ### `get_transaction`
