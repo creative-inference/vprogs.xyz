@@ -177,6 +177,9 @@ A DAP (Debug Adapter Protocol) debugger for Silverscript is in active developmen
 
 ---
 
+
+SilverScript tooling has recently seen major leaps in developer experience, now supporting source-level debugging and complex state-transition test scenarios natively, making it drastically easier to build and test sophisticated contracts.
+
 ## Local Testnet Configuration
 
 ### Connecting to TN12
