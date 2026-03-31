@@ -18,6 +18,10 @@ Recent upgrades have introduced compiler optimizations and opcode hardening, imp
 
 Community-driven testing recently identified and resolved a critical bug causing mismatches between compile-time and runtime integer math. This fix prevents silent, hard-to-debug errors and significantly improves the overall reliability of vProg execution.
 
+
+
+Recently, a major refactoring of the SilverScript codebase was completed (PR #91). This significant overhaul simplifies the architecture, paving the way for more stable and rapid future development of the language.
+
 ## Opcode Refinement and Standardization
 
 The underlying native Kaspa Script is being continuously enhanced to support advanced applications. Recent developments include:
@@ -36,3 +40,6 @@ Building decentralized applications on a parallelized BlockDAG requires deep vis
 To further streamline integration, recent architecture refinements (such as PR #935 in Rusty-Kaspa) separate core logic from WASM-specific types. This separation paves the way for easier usage across native Rust and Python SDKs. Meanwhile, rigorous R&D on the testnet continues to fortify the smart contract layer; active testing has identified and addressed vital edge cases, including potential integer overflow and clamping issues with large numbers.
 
 SilverScript now officially supports source-level debugging and complex state-transition test scenarios. This represents a major leap in developer experience, drastically simplifying the process of building and testing sophisticated smart contracts.
+
+
+> **Note:** To accelerate the recent major codebase refactoring, the debugger recording feature was temporarily removed from the SilverScript compilation path. The development team plans to re-integrate this key developer tool soon as part of their iterative progress.
