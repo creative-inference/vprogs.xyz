@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAG Cards — KWP Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../terminal.css">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+</style>
+</head>
+<body class="game-page">
+<div class="game-banner">DAG CARDS &mdash; KWP Demo &mdash; <a href="https://github.com/creative-inference/kwp">github.com/creative-inference/kwp</a></div>
+<div id="terminal">
+  <div id="terminal-output"></div>
+  <div id="terminal-input" class="hidden">
+    <span class="prompt">&gt;</span>
+    <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+  </div>
+</div>
+
+<script src="../terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/creative-inference/kwp@main/dist/kwp.browser.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  /* ── Constants ──────────────────────────────────────────────── */
+
+  const STORAGE_KEY = 'kwp_dag_cards';
+
+  const ADJECTIVES = [
+    'Shadow','Flame','Frost','Storm','Void',
+    'Ancient','Crystal','Iron','Phantom','Chaos'
+  ];
+  const NOUNS = [
+    'Wisp','Golem','Drake','Knight','Serpent',
+    'Warden','Sphinx','Wraith','Titan','Phoenix'
+  ];
+  const ELEMENTS = ['fire','water','earth','air','void'];
+  const ELEM_EMOJI = { fire:'🔥', water:'💧', earth:'🌍', air:'💨', void:'🌀' };
+
+  // fire > earth > air > water > fire; void neutral
+  const ADVANTAGE = { fire:'earth', earth:'air', air:'water', water:'fire' };
+
+  const PACK_COST = 50;
+  const STARTING_GOLD = 200;
+  const XP_TO_LEVEL = 100;
+
+  /* ── RNG ────────────────────────────────────────────────────── */
+
+  let rng;
+
+  function initRng(seed) {
+    if (typeof KWP !== 'undefined' && KWP.rng && KWP.rng.SeededRng) {
+      rng = new KWP.rng.SeededRng(seed);
+    } else {
+      // Fallback: simple mulberry32
+      let s = seed | 0;
+      rng = { next() { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; } };
+    }
+  }
+
+  function rand() { return rng.next(); }
+  function randInt(lo, hi) { return lo + Math.floor(rand() * (hi - lo + 1)); }
+  function pick(arr) { return arr[Math.floor(rand() * arr.length)]; }
+
+  /* ── State ──────────────────────────────────────────────────── */
+
+  let state;
+
+  function newState(name) {
+    return {
+      name: name,
+      gold: STARTING_GOLD,
+      cards: [],
+      packsSeed: Date.now()
+    };
+  }
+
+  function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  function load() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch { return null; }
+  }
+
+  /* ── Card helpers ───────────────────────────────────────────── */
+
+  function generateCard() {
+    const adj = pick(ADJECTIVES);
+    const noun = pick(NOUNS);
+    const element = pick(ELEMENTS);
+    const attack = randInt(1, 20);
+    const defense = randInt(1, 20);
+    const hp = randInt(10, 50);
+    return { name: adj + ' ' + noun, element, attack, defense, hp, maxHp: hp, xp: 0, level: 1 };
+  }
+
+  function generateCardAtPower(targetPower) {
+    // Generate a card then scale to roughly match target power
+    const card = generateCard();
+    const cardPower = card.attack + card.defense + card.hp;
+    if (cardPower > 0 && targetPower > 0) {
+      const ratio = targetPower / cardPower;
+      card.attack = Math.max(1, Math.round(card.attack * ratio));
+      card.defense = Math.max(1, Math.round(card.defense * ratio));
+      card.hp = Math.max(10, Math.round(card.hp * ratio));
+      card.maxHp = card.hp;
+    }
+    return card;
+  }
+
+  function cardPower(c) { return c.attack + c.defense + c.maxHp; }
+
+  function avgPower() {
+    if (state.cards.length === 0) return 31; // default baseline
+    const total = state.cards.reduce((s, c) => s + cardPower(c), 0);
+    return Math.round(total / state.cards.length);
+  }
+
+  function elemEmoji(el) { return ELEM_EMOJI[el] || el; }
+
+  function cardLine(c, idx) {
+    const num = idx !== undefined ? T.dim(`[${idx + 1}]`) + ' ' : '';
+    const lvl = c.level > 1 ? T.cyan(` Lv${c.level}`) : '';
+    return `${num}${T.bold(c.name)} ${elemEmoji(c.element)} ` +
+           `ATK:${T.red(c.attack)} DEF:${T.teal(c.defense)} HP:${T.green(c.hp)}/${c.maxHp}${lvl}`;
+  }
+
+  function cardBox(c) {
+    const w = 32;
+    const top = '┌' + '─'.repeat(w) + '┐';
+    const bot = '└' + '─'.repeat(w) + '┘';
+    const pad = (s, len) => { const raw = s.replace(/<[^>]*>/g, ''); const need = len - raw.length; return s + ' '.repeat(Math.max(0, need)); };
+    const row = (s) => '│ ' + pad(s, w - 2) + ' │';
+
+    T.print(T.dim(top));
+    T.print(row(T.bold(c.name)));
+    T.print(row(`${elemEmoji(c.element)} ${c.element.toUpperCase()}`));
+    T.print(row(''));
+    T.print(row(`ATK: ${T.red(c.attack)}  DEF: ${T.teal(c.defense)}`));
+    T.print(row(`HP:  ${T.green(c.hp)}/${c.maxHp}`));
+    if (c.level > 1) T.print(row(`LVL: ${T.cyan(c.level)}  XP: ${c.xp}/${XP_TO_LEVEL}`));
+    else T.print(row(`XP:  ${c.xp}/${XP_TO_LEVEL}`));
+    T.print(T.dim(bot));
+  }
+
+  function getDamage(attacker, defender) {
+    let dmg = Math.max(1, attacker.attack - defender.defense);
+    const adv = ADVANTAGE[attacker.element];
+    if (adv === defender.element) {
+      dmg = Math.ceil(dmg * 1.5);
+    } else {
+      // Check if defender has advantage over attacker
+      const defAdv = ADVANTAGE[defender.element];
+      if (defAdv === attacker.element) {
+        dmg = Math.max(1, Math.floor(dmg * 0.75));
+      }
+    }
+    return dmg;
+  }
+
+  /* ── Screens ────────────────────────────────────────────────── */
+
+  function showTitle() {
+    T.clear();
+    T.print(T.teal('╔══════════════════════════════════════════╗'));
+    T.print(T.teal('║') + T.bold('   ____  ___   ______   ______              ') + T.teal('║'));
+    T.print(T.teal('║') + T.bold('  / __ \\/   | / ____/  / ____/___ _ ______ _') + T.teal('║'));
+    T.print(T.teal('║') + T.bold(' / / / / /| |/ / __   / /   / __ `// ___// /') + T.teal('║'));
+    T.print(T.teal('║') + T.bold('/ /_/ / ___ / /_/ /  / /___/ /_/ // /   / / ') + T.teal('║'));
+    T.print(T.teal('║') + T.bold('\\____/_/  |_\\____/   \\____/\\__,_//_/   /_/  ') + T.teal('║'));
+    T.print(T.teal('║') + '                                            ' + T.teal('║'));
+    T.print(T.teal('║') + T.dim('     Collectible Card Battler on DAG       ') + T.teal('║'));
+    T.print(T.teal('╚══════════════════════════════════════════╝'));
+    T.br();
+
+    const saved = load();
+    if (saved) {
+      T.print(`Welcome back, ${T.gold(saved.name)}!`);
+      T.print(`${T.dim('Cards:')} ${saved.cards.length}  ${T.dim('Gold:')} ${T.gold(saved.gold)}`);
+      T.br();
+      T.print(`${T.teal('[C]')}ontinue    ${T.teal('[N]')}ew Game    ${T.teal('[D]')}elete Save`);
+      T.prompt(input => {
+        const c = input.toLowerCase();
+        if (c === 'c') {
+          state = saved;
+          initRng(state.packsSeed);
+          showMenu();
+        } else if (c === 'n') {
+          askName();
+        } else if (c === 'd') {
+          localStorage.removeItem(STORAGE_KEY);
+          T.print(T.dim('Save deleted.'));
+          setTimeout(showTitle, 600);
+        } else {
+          showTitle();
+        }
+      });
+    } else {
+      T.print(T.dim('No save found. Starting a new adventure.'));
+      T.br();
+      askName();
+    }
+  }
+
+  function askName() {
+    T.clear();
+    T.print(T.bold('Enter your name, challenger:'));
+    T.br();
+    T.prompt(input => {
+      const name = input.substring(0, 20);
+      if (!name) { askName(); return; }
+      state = newState(name);
+      initRng(state.packsSeed);
+      save();
+      T.print(`Welcome, ${T.gold(name)}! You receive ${T.gold('200 gold')} to start.`);
+      T.print(T.dim('Open packs to build your collection, then battle!'));
+      T.br();
+      setTimeout(showMenu, 1200);
+    });
+  }
+
+  function showMenu() {
+    T.clear();
+    T.print(T.bold(`═══ ${state.name}'s Camp ═══`));
+    T.print(`Gold: ${T.gold(state.gold)}  Cards: ${T.teal(state.cards.length)}`);
+    T.br();
+    T.print(`${T.teal('[1]')} Collection`);
+    T.print(`${T.teal('[2]')} Open Pack ${T.dim(`(${PACK_COST}g)`)}`);
+    T.print(`${T.teal('[3]')} Battle`);
+    T.print(`${T.teal('[4]')} Trade Post`);
+    T.print(`${T.teal('[5]')} Quit`);
+    T.br();
+    T.prompt(input => {
+      switch (input) {
+        case '1': showCollection(); break;
+        case '2': openPack(); break;
+        case '3': startBattle(); break;
+        case '4': tradePost(); break;
+        case '5': showQuit(); break;
+        default: showMenu();
+      }
+    });
+  }
+
+  /* ── Collection ─────────────────────────────────────────────── */
+
+  function showCollection() {
+    T.clear();
+    T.print(T.bold('═══ Your Collection ═══'));
+    T.br();
+    if (state.cards.length === 0) {
+      T.print(T.dim('No cards yet. Open a pack to get started!'));
+    } else {
+      state.cards.forEach((c, i) => T.print(cardLine(c, i)));
+    }
+    T.br();
+    T.print(T.dim('Enter a card number for details, or [B]ack'));
+    T.prompt(input => {
+      if (input.toLowerCase() === 'b') { showMenu(); return; }
+      const idx = parseInt(input) - 1;
+      if (idx >= 0 && idx < state.cards.length) {
+        T.clear();
+        T.print(T.bold('═══ Card Details ═══'));
+        T.br();
+        cardBox(state.cards[idx]);
+        T.br();
+        T.print(T.dim('[B]ack to collection'));
+        T.prompt(() => showCollection());
+      } else {
+        showCollection();
+      }
+    });
+  }
+
+  /* ── Open Pack ──────────────────────────────────────────────── */
+
+  function openPack() {
+    T.clear();
+    T.print(T.bold('═══ Open Pack ═══'));
+    T.br();
+
+    if (state.gold < PACK_COST) {
+      T.print(T.red(`Not enough gold! You need ${PACK_COST}g but have ${state.gold}g.`));
+      T.print(T.dim('Win battles to earn more gold.'));
+      T.br();
+      T.print(T.dim('[B]ack'));
+      T.prompt(() => showMenu());
+      return;
+    }
+
+    state.gold -= PACK_COST;
+    T.print(`You spend ${T.gold(PACK_COST + 'g')}... ${T.dim('(' + state.gold + 'g remaining)')}`);
+    T.br();
+    T.print(T.dim('Cracking open the pack...'));
+    T.br();
+
+    const newCards = [];
+    for (let i = 0; i < 3; i++) {
+      newCards.push(generateCard());
+    }
+
+    let idx = 0;
+    function revealNext() {
+      if (idx < newCards.length) {
+        const c = newCards[idx];
+        T.print(`Card ${idx + 1} of 3:`);
+        cardBox(c);
+        T.br();
+        state.cards.push(c);
+        idx++;
+        setTimeout(revealNext, 500);
+      } else {
+        save();
+        T.print(T.green('3 new cards added to your collection!'));
+        T.br();
+        T.print(T.dim('[B]ack to menu  [O]pen another'));
+        T.prompt(input => {
+          if (input.toLowerCase() === 'o') openPack();
+          else showMenu();
+        });
+      }
+    }
+    revealNext();
+  }
+
+  /* ── Battle ─────────────────────────────────────────────────── */
+
+  function startBattle() {
+    T.clear();
+    T.print(T.bold('═══ Battle Arena ═══'));
+    T.br();
+
+    if (state.cards.length === 0) {
+      T.print(T.red('You have no cards! Open a pack first.'));
+      T.br();
+      T.print(T.dim('[B]ack'));
+      T.prompt(() => showMenu());
+      return;
+    }
+
+    T.print(T.dim('Choose a card to fight with:'));
+    T.br();
+    state.cards.forEach((c, i) => T.print(cardLine(c, i)));
+    T.br();
+    T.print(T.dim('Enter card number or [B]ack'));
+    T.prompt(input => {
+      if (input.toLowerCase() === 'b') { showMenu(); return; }
+      const idx = parseInt(input) - 1;
+      if (idx >= 0 && idx < state.cards.length) {
+        runBattle(idx);
+      } else {
+        startBattle();
+      }
+    });
+  }
+
+  function runBattle(playerIdx) {
+    const player = { ...state.cards[playerIdx] };
+    player.hp = player.maxHp; // full heal for battle
+    const enemy = generateCardAtPower(avgPower());
+
+    T.clear();
+    T.print(T.bold('═══ BATTLE ═══'));
+    T.br();
+    T.print(`${T.green('YOUR CARD:')}    ${T.bold(player.name)} ${elemEmoji(player.element)}`);
+    T.print(`              ATK:${T.red(player.attack)} DEF:${T.teal(player.defense)} HP:${T.green(player.maxHp)}`);
+    T.br();
+    T.print(`${T.red('ENEMY CARD:')}   ${T.bold(enemy.name)} ${elemEmoji(enemy.element)}`);
+    T.print(`              ATK:${T.red(enemy.attack)} DEF:${T.teal(enemy.defense)} HP:${T.green(enemy.maxHp)}`);
+    T.br();
+
+    // Show element matchup
+    const playerAdv = ADVANTAGE[player.element];
+    const enemyAdv = ADVANTAGE[enemy.element];
+    if (playerAdv === enemy.element) {
+      T.print(T.green(`${elemEmoji(player.element)} ${player.element} beats ${enemy.element} ${elemEmoji(enemy.element)} — you deal 1.5x damage!`));
+    } else if (enemyAdv === player.element) {
+      T.print(T.red(`${elemEmoji(enemy.element)} ${enemy.element} beats ${player.element} ${elemEmoji(player.element)} — enemy deals 1.5x damage!`));
+    } else {
+      T.print(T.dim('No elemental advantage.'));
+    }
+    T.br();
+    T.print(T.dim('Press [Enter] to fight each round.'));
+
+    let round = 0;
+
+    function battleRound() {
+      round++;
+      T.br();
+      T.print(T.bold(`── Round ${round} ──`));
+
+      // Player attacks first
+      const pDmg = getDamage(player, enemy);
+      enemy.hp -= pDmg;
+      if (enemy.hp < 0) enemy.hp = 0;
+      T.print(`${T.green(player.name)} strikes for ${T.gold(pDmg)} damage! ${T.dim('(Enemy HP: ' + enemy.hp + '/' + enemy.maxHp + ')')}`);
+
+      if (enemy.hp <= 0) {
+        battleEnd(true, playerIdx, round);
+        return;
+      }
+
+      // Enemy attacks
+      const eDmg = getDamage(enemy, player);
+      player.hp -= eDmg;
+      if (player.hp < 0) player.hp = 0;
+      T.print(`${T.red(enemy.name)} strikes for ${T.gold(eDmg)} damage! ${T.dim('(Your HP: ' + player.hp + '/' + player.maxHp + ')')}`);
+
+      if (player.hp <= 0) {
+        battleEnd(false, playerIdx, round);
+        return;
+      }
+
+      T.prompt(input => battleRound());
+    }
+
+    T.prompt(input => battleRound());
+  }
+
+  function battleEnd(won, cardIdx, rounds) {
+    T.br();
+    if (won) {
+      const goldReward = 20 + randInt(5, 25);
+      const xpReward = 30 + randInt(10, 30);
+
+      T.print(T.green('══════════════════════════'));
+      T.print(T.green('   ★  VICTORY!  ★'));
+      T.print(T.green('══════════════════════════'));
+      T.br();
+      T.print(`Won in ${rounds} rounds.`);
+      T.print(`Earned ${T.gold(goldReward + 'g')} and ${T.cyan(xpReward + ' XP')}`);
+
+      state.gold += goldReward;
+      state.cards[cardIdx].xp += xpReward;
+
+      // Check level up
+      const card = state.cards[cardIdx];
+      if (card.xp >= XP_TO_LEVEL) {
+        card.xp -= XP_TO_LEVEL;
+        card.level++;
+        card.attack += 2;
+        card.defense += 2;
+        card.maxHp += 5;
+        card.hp = card.maxHp;
+        T.br();
+        T.print(T.gold('★ LEVEL UP! ★') + ` ${T.bold(card.name)} is now level ${T.cyan(card.level)}!`);
+        T.print(`  ATK +2 → ${T.red(card.attack)}  DEF +2 → ${T.teal(card.defense)}  HP +5 → ${T.green(card.maxHp)}`);
+      }
+    } else {
+      T.print(T.red('══════════════════════════'));
+      T.print(T.red('      DEFEATED...'));
+      T.print(T.red('══════════════════════════'));
+      T.br();
+      T.print(`Your card fell after ${rounds} rounds.`);
+      T.print(T.dim('No rewards this time. Try a different card or strategy!'));
+
+      // Consolation XP
+      const xpReward = 10;
+      state.cards[cardIdx].xp += xpReward;
+      T.print(`${T.dim('Consolation:')} ${T.cyan(xpReward + ' XP')}`);
+    }
+
+    save();
+    T.br();
+    T.print(`${T.teal('[B]')}attle again  ${T.teal('[M]')}enu`);
+    T.prompt(input => {
+      if (input.toLowerCase() === 'b') startBattle();
+      else showMenu();
+    });
+  }
+
+  /* ── Trade Post ─────────────────────────────────────────────── */
+
+  function tradePost() {
+    T.clear();
+    T.print(T.bold('═══ Trade Post ═══'));
+    T.print(T.dim('A wandering merchant offers three cards...'));
+    T.br();
+
+    const offers = [];
+    for (let i = 0; i < 3; i++) {
+      const card = generateCard();
+      const power = cardPower(card);
+      const price = Math.max(20, Math.round(power * 1.2 + randInt(5, 15)));
+      offers.push({ card, price });
+    }
+
+    offers.forEach((o, i) => {
+      T.print(`${T.teal('[' + (i + 1) + ']')} ${cardLine(o.card)} — ${T.gold(o.price + 'g')}`);
+    });
+
+    T.br();
+    T.print(`Your gold: ${T.gold(state.gold)}`);
+    T.br();
+    T.print(T.dim('Enter number to buy, or [B]ack'));
+    T.prompt(input => {
+      if (input.toLowerCase() === 'b') { showMenu(); return; }
+      const idx = parseInt(input) - 1;
+      if (idx >= 0 && idx < offers.length) {
+        const offer = offers[idx];
+        if (state.gold < offer.price) {
+          T.print(T.red(`Not enough gold! Need ${offer.price}g.`));
+          T.br();
+          T.print(T.dim('[B]ack'));
+          T.prompt(() => showMenu());
+        } else {
+          state.gold -= offer.price;
+          state.cards.push(offer.card);
+          save();
+          T.br();
+          T.print(T.green(`Bought ${T.bold(offer.card.name)} for ${offer.price}g!`));
+          T.print(`Gold remaining: ${T.gold(state.gold)}`);
+          T.br();
+          T.print(T.dim('[B]ack to menu  [T]rade more'));
+          T.prompt(input => {
+            if (input.toLowerCase() === 't') tradePost();
+            else showMenu();
+          });
+        }
+      } else {
+        tradePost();
+      }
+    });
+  }
+
+  /* ── Quit ───────────────────────────────────────────────────── */
+
+  function showQuit() {
+    T.clear();
+    T.print(T.bold('Game saved.'));
+    T.print(`${T.dim('Cards:')} ${state.cards.length}  ${T.dim('Gold:')} ${T.gold(state.gold)}`);
+    T.br();
+    T.print(T.dim('Thanks for playing DAG Cards!'));
+    T.print(T.dim('Your progress is saved in your browser.'));
+    T.br();
+    T.print(`${T.teal('[R]')}esume  ${T.teal('[Q]')}uit for real`);
+    T.prompt(input => {
+      if (input.toLowerCase() === 'r') showMenu();
+      else {
+        T.hidePrompt();
+        T.print(T.dim('See you next time, ' + state.name + '.'));
+      }
+    });
+  }
+
+  /* ── Boot ───────────────────────────────────────────────────── */
+
+  function boot() {
+    T.init();
+    initRng(Date.now());
+    showTitle();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();
+</script>
+</body>
+</html>

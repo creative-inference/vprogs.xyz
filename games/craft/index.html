@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proof of Craft — KWP Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../terminal.css">
+</head>
+<body class="game-page">
+
+<div class="game-banner">
+  PROOF OF CRAFT &mdash; KWP Demo &mdash; <a href="https://github.com/creative-inference/kwp">github.com/creative-inference/kwp</a>
+</div>
+
+<div id="terminal">
+  <div id="terminal-output"></div>
+  <div id="terminal-input" class="hidden">
+    <span class="prompt">&gt;</span>
+    <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+  </div>
+</div>
+
+<script src="../terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/creative-inference/kwp@main/dist/kwp.browser.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  /* ================================================================
+     PROOF OF CRAFT — A resource gathering & crafting economy game
+     ================================================================ */
+
+  const STORAGE_KEY = 'kwp_proof_of_craft';
+
+  // ── Material definitions ──────────────────────────────────────
+  const MATERIAL_DEFS = [
+    { id: 'iron',         name: 'Iron',         rarity: 'common'   },
+    { id: 'wood',         name: 'Wood',         rarity: 'common'   },
+    { id: 'crystal',      name: 'Crystal',      rarity: 'uncommon' },
+    { id: 'silk',         name: 'Silk',         rarity: 'uncommon' },
+    { id: 'dragon_scale', name: 'Dragon Scale', rarity: 'rare'     },
+    { id: 'star_dust',    name: 'Star Dust',    rarity: 'rare'     },
+  ];
+
+  const QUALITY_NAMES = ['', 'Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
+  const QUALITY_COLORS = [null,
+    t => T.dim(t),      // Common
+    t => T.green(t),    // Uncommon
+    t => T.teal(t),     // Rare
+    t => T.cyan(t),     // Epic
+    t => T.gold(t),     // Legendary
+  ];
+
+  // ── Recipe definitions ────────────────────────────────────────
+  const RECIPES = [
+    {
+      id: 'iron_sword', name: 'Iron Sword', type: 'weapon', stat: 5, statLabel: 'ATK',
+      basePrice: 50,
+      ingredients: [{ id: 'iron', qty: 3 }, { id: 'wood', qty: 1 }],
+    },
+    {
+      id: 'crystal_staff', name: 'Crystal Staff', type: 'weapon', stat: 8, statLabel: 'ATK',
+      basePrice: 80,
+      ingredients: [{ id: 'crystal', qty: 2 }, { id: 'wood', qty: 1 }],
+    },
+    {
+      id: 'silk_robe', name: 'Silk Robe', type: 'armor', stat: 4, statLabel: 'DEF',
+      basePrice: 60,
+      ingredients: [{ id: 'silk', qty: 3 }, { id: 'crystal', qty: 1 }],
+    },
+    {
+      id: 'dragon_blade', name: 'Dragon Blade', type: 'weapon', stat: 15, statLabel: 'ATK',
+      basePrice: 200,
+      ingredients: [{ id: 'dragon_scale', qty: 2 }, { id: 'iron', qty: 2 }, { id: 'star_dust', qty: 1 }],
+    },
+    {
+      id: 'star_plate', name: 'Star Plate', type: 'armor', stat: 12, statLabel: 'DEF',
+      basePrice: 250,
+      ingredients: [{ id: 'star_dust', qty: 3 }, { id: 'iron', qty: 2 }, { id: 'crystal', qty: 1 }],
+    },
+    {
+      id: 'healing_potion', name: 'Healing Potion', type: 'consumable', stat: 0, statLabel: 'HEAL',
+      basePrice: 30,
+      ingredients: [{ id: 'crystal', qty: 1 }, { id: 'silk', qty: 1 }],
+    },
+  ];
+
+  const QUALITY_MULT = [0, 1, 1.5, 2.5, 4, 8];
+
+  // ── Gather node weights ───────────────────────────────────────
+  // Rarity determines base gather chance
+  const RARITY_WEIGHT = { common: 40, uncommon: 15, rare: 5 };
+
+  // ── RNG wrapper ───────────────────────────────────────────────
+  let rng;
+
+  function rand() { return rng.next(); }
+  function randInt(min, max) { return Math.floor(rand() * (max - min + 1)) + min; }
+  function pick(arr) { return arr[Math.floor(rand() * arr.length)]; }
+
+  // ── State ─────────────────────────────────────────────────────
+  let S; // game state
+
+  function newState(name, seed) {
+    return {
+      name: name,
+      gold: 100,
+      turn: 0,
+      skillLevel: 1,
+      skillXp: 0,
+      itemsCrafted: 0,
+      legendaryCount: 0,
+      materials: {},   // { materialId: { qty, qualities: {1: count, 2: count, ...} } }
+      items: [],       // crafted items
+      rngSeed: seed,
+    };
+  }
+
+  function save() {
+    S.rngSeed = rng.seed !== undefined ? rng.seed : S.rngSeed;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    return null;
+  }
+
+  // ── Material helpers ──────────────────────────────────────────
+  function addMaterial(id, qty, quality) {
+    if (!S.materials[id]) S.materials[id] = { qty: 0, qualities: {} };
+    S.materials[id].qty += qty;
+    S.materials[id].qualities[quality] = (S.materials[id].qualities[quality] || 0) + qty;
+  }
+
+  function removeMaterial(id, qty, quality) {
+    if (!S.materials[id]) return false;
+    const q = S.materials[id].qualities[quality] || 0;
+    if (q < qty) return false;
+    S.materials[id].qualities[quality] -= qty;
+    S.materials[id].qty -= qty;
+    if (S.materials[id].qualities[quality] <= 0) delete S.materials[id].qualities[quality];
+    if (S.materials[id].qty <= 0) delete S.materials[id];
+    return true;
+  }
+
+  function getMaterialCount(id) {
+    return S.materials[id] ? S.materials[id].qty : 0;
+  }
+
+  function getMaterialCountByQuality(id, quality) {
+    if (!S.materials[id]) return 0;
+    return S.materials[id].qualities[quality] || 0;
+  }
+
+  // Get best available qualities for a material (highest first)
+  function getAvailableQualities(id) {
+    if (!S.materials[id]) return [];
+    const quals = [];
+    for (let q = 5; q >= 1; q--) {
+      if (S.materials[id].qualities[q] > 0) quals.push(q);
+    }
+    return quals;
+  }
+
+  // ── Quality helpers ───────────────────────────────────────────
+  function qualityStr(q) {
+    const name = QUALITY_NAMES[q];
+    return QUALITY_COLORS[q](name);
+  }
+
+  function rollGatherQuality(skillLevel) {
+    const r = rand() * 100;
+    const uncommonChance = 5 * skillLevel;
+    const rareChance = Math.max(0, (skillLevel - 2) * 3);
+    const epicChance = Math.max(0, (skillLevel - 4) * 2);
+    const legendaryChance = Math.max(0, (skillLevel - 6) * 1);
+
+    if (r < legendaryChance) return 5;
+    if (r < legendaryChance + epicChance) return 4;
+    if (r < legendaryChance + epicChance + rareChance) return 3;
+    if (r < legendaryChance + epicChance + rareChance + uncommonChance) return 2;
+    return 1;
+  }
+
+  function rollCraftUpgrade(baseQuality, skillLevel) {
+    let upgradeChance;
+    if (skillLevel >= 7) upgradeChance = 25;
+    else if (skillLevel >= 4) upgradeChance = 15;
+    else upgradeChance = 5;
+
+    let q = baseQuality;
+    // Allow up to 2 upgrades
+    for (let i = 0; i < 2; i++) {
+      if (q >= 5) break;
+      if (rand() * 100 < upgradeChance) q++;
+    }
+    return q;
+  }
+
+  // ── ASCII art ─────────────────────────────────────────────────
+  const TITLE_ART = [
+    '╔══════════════════════════════════════════════╗',
+    '║                                              ║',
+    '║   ██████╗ ██████╗  ██████╗  ██████╗ ███████╗ ║',
+    '║   ██╔══██╗██╔══██╗██╔═══██╗██╔═══██╗██╔════╝ ║',
+    '║   ██████╔╝██████╔╝██║   ██║██║   ██║█████╗   ║',
+    '║   ██╔═══╝ ██╔══██╗██║   ██║██║   ██║██╔══╝   ║',
+    '║   ██║     ██║  ██║╚██████╔╝╚██████╔╝██║      ║',
+    '║   ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚═════╝╚═╝      ║',
+    '║                                              ║',
+    '║            ╔═╗╦═╗╔═╗╔═╗╔╦╗                   ║',
+    '║            ║  ╠╦╝╠═╣╠╣  ║                    ║',
+    '║            ╚═╝╩╚═╩ ╩╚   ╩                    ║',
+    '║                                              ║',
+    '║    Gather. Forge. Master the craft.           ║',
+    '║                                              ║',
+    '╚══════════════════════════════════════════════╝',
+  ];
+
+  // ── Game screens ──────────────────────────────────────────────
+
+  function showTitle() {
+    T.clear();
+    T.br();
+    TITLE_ART.forEach(line => T.print(T.teal(line)));
+    T.br();
+    T.print(T.dim('A terminal crafting economy powered by KWP'));
+    T.br();
+
+    const saved = load();
+    if (saved) {
+      T.print(`Welcome back, ${T.gold(saved.name)}!`);
+      T.print(`${T.dim('[C]')} Continue  |  ${T.dim('[N]')} New Game`);
+      T.br();
+      T.prompt(input => {
+        const c = input.toLowerCase();
+        if (c === 'c') {
+          S = saved;
+          initRng(S.rngSeed);
+          showMenu();
+        } else if (c === 'n') {
+          localStorage.removeItem(STORAGE_KEY);
+          askName();
+        } else {
+          showTitle();
+        }
+      });
+    } else {
+      askName();
+    }
+  }
+
+  function askName() {
+    T.clear();
+    T.br();
+    TITLE_ART.forEach(line => T.print(T.teal(line)));
+    T.br();
+    T.print('Enter your crafter name:');
+    T.br();
+    T.prompt(input => {
+      const name = input.substring(0, 20);
+      if (!name) { askName(); return; }
+      const seed = Date.now() ^ (name.length * 7919);
+      initRng(seed);
+      S = newState(name, seed);
+      save();
+      T.clear();
+      T.br();
+      T.print(`Welcome, ${T.gold(name)}! You arrive at the workshop with ${T.gold('100g')} and a dream.`);
+      T.print(T.dim('Your goal: craft a Legendary Dragon Blade or Star Plate.'));
+      T.br();
+      T.print(T.dim('Press ENTER to begin...'));
+      T.prompt(() => showMenu());
+    });
+  }
+
+  function initRng(seed) {
+    if (typeof KWP !== 'undefined' && KWP.rng && KWP.rng.SeededRng) {
+      rng = new KWP.rng.SeededRng(seed);
+      // Normalize: rng.next() should return [0,1)
+      if (!rng.next) {
+        const origRng = rng;
+        rng = { next: () => origRng.float ? origRng.float() : Math.random() };
+      }
+    } else {
+      // Fallback: simple seeded PRNG (mulberry32)
+      let s = seed | 0;
+      rng = {
+        next() {
+          s |= 0; s = s + 0x6D2B79F5 | 0;
+          let t = Math.imul(s ^ s >>> 15, 1 | s);
+          t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        }
+      };
+    }
+  }
+
+  // ── Main menu ─────────────────────────────────────────────────
+
+  function showMenu() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("PROOF OF CRAFT")} === Turn ${S.turn} ===`));
+    T.print(`Crafter: ${T.gold(S.name)}  |  Skill Lv.${S.skillLevel}  |  Gold: ${T.gold(S.gold + 'g')}`);
+    T.br();
+    T.print(`  ${T.teal('[1]')} Gather Resources`);
+    T.print(`  ${T.teal('[2]')} Inventory`);
+    T.print(`  ${T.teal('[3]')} Craft`);
+    T.print(`  ${T.teal('[4]')} Market`);
+    T.print(`  ${T.teal('[5]')} Workshop Stats`);
+    T.print(`  ${T.teal('[6]')} Quit`);
+    T.br();
+
+    T.prompt(input => {
+      const c = input.trim();
+      if (c === '1') showGather();
+      else if (c === '2') showInventory();
+      else if (c === '3') showCraft();
+      else if (c === '4') showMarket();
+      else if (c === '5') showStats();
+      else if (c === '6') showQuit();
+      else showMenu();
+    });
+  }
+
+  // ── Gather ────────────────────────────────────────────────────
+
+  function showGather() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("GATHER RESOURCES")} ===`));
+    T.print(T.dim('Choose a resource node to harvest:'));
+    T.br();
+
+    MATERIAL_DEFS.forEach((mat, i) => {
+      const rarityTag = mat.rarity === 'common' ? T.dim(mat.rarity)
+        : mat.rarity === 'uncommon' ? T.green(mat.rarity)
+        : T.gold(mat.rarity);
+      T.print(`  ${T.teal('[' + (i + 1) + ']')} ${mat.name} ${T.dim('(' + mat.rarity + ')')}`);
+    });
+    T.br();
+    T.print(`  ${T.dim('[0]')} Back`);
+    T.br();
+
+    T.prompt(input => {
+      const c = parseInt(input.trim());
+      if (c === 0 || isNaN(c)) { showMenu(); return; }
+      if (c < 1 || c > MATERIAL_DEFS.length) { showGather(); return; }
+
+      const mat = MATERIAL_DEFS[c - 1];
+      doGather(mat);
+    });
+  }
+
+  function doGather(mat) {
+    T.clear();
+    T.br();
+
+    S.turn++;
+
+    // Rarer materials have lower base find chance
+    let findChance;
+    if (mat.rarity === 'common') findChance = 95;
+    else if (mat.rarity === 'uncommon') findChance = 65 + S.skillLevel * 3;
+    else findChance = 35 + S.skillLevel * 5;
+
+    findChance = Math.min(findChance, 95);
+
+    if (rand() * 100 > findChance) {
+      T.print(T.dim('You search the ' + mat.name + ' node...'));
+      T.br();
+      T.print(T.red('You found nothing this time. The node was barren.'));
+      T.br();
+      T.print(T.dim('Press ENTER to continue...'));
+      save();
+      T.prompt(() => showMenu());
+      return;
+    }
+
+    // Quantity: rarer = fewer
+    let maxQty;
+    if (mat.rarity === 'common') maxQty = 5;
+    else if (mat.rarity === 'uncommon') maxQty = 3;
+    else maxQty = 2;
+    const qty = randInt(1, maxQty);
+
+    const quality = rollGatherQuality(S.skillLevel);
+
+    addMaterial(mat.id, qty, quality);
+
+    T.print(T.dim('You search the ' + mat.name + ' node...'));
+    T.br();
+    T.print(`  You gathered ${T.bold(qty + 'x')} ${T.gold(mat.name)} (${qualityStr(quality)} quality)`);
+
+    if (quality >= 4) {
+      T.print(T.cyan('  ★ Exceptional find!'));
+    }
+
+    T.br();
+    save();
+    T.print(T.dim('Press ENTER to continue...'));
+    T.prompt(() => showMenu());
+  }
+
+  // ── Inventory ─────────────────────────────────────────────────
+
+  function showInventory() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("INVENTORY")} ===`));
+    T.br();
+
+    // Materials
+    T.print(T.bold('─── Materials ───'));
+    let hasMaterials = false;
+    MATERIAL_DEFS.forEach(mat => {
+      if (!S.materials[mat.id] || S.materials[mat.id].qty <= 0) return;
+      hasMaterials = true;
+      const info = S.materials[mat.id];
+      let details = [];
+      for (let q = 5; q >= 1; q--) {
+        if (info.qualities[q] > 0) {
+          details.push(`${info.qualities[q]}x ${qualityStr(q)}`);
+        }
+      }
+      T.print(`  ${mat.name}: ${T.bold(info.qty + '')} total  [${details.join(', ')}]`);
+    });
+    if (!hasMaterials) T.print(T.dim('  (none)'));
+
+    T.br();
+
+    // Crafted items
+    T.print(T.bold('─── Crafted Items ───'));
+    if (S.items.length === 0) {
+      T.print(T.dim('  (none)'));
+    } else {
+      S.items.forEach((item, i) => {
+        const qStr = qualityStr(item.quality);
+        const statStr = item.type === 'consumable' ? 'HEAL' : `${item.statLabel} +${item.stat}`;
+        T.print(`  ${T.dim('[' + (i+1) + ']')} ${item.name} (${qStr}) — ${statStr} — by ${T.gold(item.crafter)}`);
+      });
+    }
+
+    T.br();
+    T.print(T.dim('Press ENTER to go back...'));
+    T.prompt(() => showMenu());
+  }
+
+  // ── Craft ─────────────────────────────────────────────────────
+
+  function showCraft() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("CRAFTING WORKSHOP")} === Skill Lv.${S.skillLevel} (${S.skillXp}/3 XP) ===`));
+    T.br();
+
+    RECIPES.forEach((recipe, i) => {
+      // Check if player can craft
+      const canCraft = checkRecipe(recipe);
+      const tag = canCraft ? T.green('✓') : T.red('✗');
+
+      const ingStr = recipe.ingredients.map(ing => {
+        const matDef = MATERIAL_DEFS.find(m => m.id === ing.id);
+        const have = getMaterialCount(ing.id);
+        const haveStr = have >= ing.qty ? T.green(have + '') : T.red(have + '');
+        return `${ing.qty}x ${matDef.name}(${haveStr})`;
+      }).join(' + ');
+
+      T.print(`  ${tag} ${T.teal('[' + (i+1) + ']')} ${T.bold(recipe.name)}`);
+      T.print(`       ${T.dim(ingStr)}`);
+      const statStr = recipe.type === 'consumable' ? 'HEAL' : `${recipe.statLabel} +${recipe.stat}`;
+      T.print(`       ${T.dim('→ ' + recipe.type + ' (' + statStr + ')')}`);
+    });
+
+    T.br();
+    T.print(`  ${T.dim('[0]')} Back`);
+    T.br();
+
+    T.prompt(input => {
+      const c = parseInt(input.trim());
+      if (c === 0 || isNaN(c)) { showMenu(); return; }
+      if (c < 1 || c > RECIPES.length) { showCraft(); return; }
+
+      const recipe = RECIPES[c - 1];
+      if (!checkRecipe(recipe)) {
+        T.clear();
+        T.br();
+        T.print(T.red('Not enough materials to craft ' + recipe.name + '!'));
+        T.br();
+        T.print(T.dim('Press ENTER to go back...'));
+        T.prompt(() => showCraft());
+        return;
+      }
+
+      doCraft(recipe);
+    });
+  }
+
+  function checkRecipe(recipe) {
+    return recipe.ingredients.every(ing => getMaterialCount(ing.id) >= ing.qty);
+  }
+
+  function doCraft(recipe) {
+    // Consume materials — use best quality available
+    let totalQuality = 0;
+    let totalIngredients = 0;
+
+    recipe.ingredients.forEach(ing => {
+      let remaining = ing.qty;
+      // Use highest quality materials first
+      for (let q = 5; q >= 1 && remaining > 0; q--) {
+        const available = getMaterialCountByQuality(ing.id, q);
+        const use = Math.min(available, remaining);
+        if (use > 0) {
+          removeMaterial(ing.id, use, q);
+          totalQuality += q * use;
+          totalIngredients += use;
+          remaining -= use;
+        }
+      }
+    });
+
+    const avgQuality = Math.round(totalQuality / totalIngredients);
+    const finalQuality = rollCraftUpgrade(Math.max(1, Math.min(5, avgQuality)), S.skillLevel);
+
+    // Build item
+    const item = {
+      id: recipe.id + '_' + Date.now(),
+      name: recipe.name,
+      type: recipe.type,
+      quality: finalQuality,
+      stat: recipe.stat,
+      statLabel: recipe.statLabel,
+      basePrice: recipe.basePrice,
+      crafter: S.name,
+      craftTurn: S.turn,
+    };
+
+    S.items.push(item);
+    S.itemsCrafted++;
+    S.skillXp++;
+    if (S.skillXp >= 3) {
+      S.skillXp = 0;
+      S.skillLevel++;
+    }
+
+    if (finalQuality === 5) S.legendaryCount++;
+
+    T.clear();
+    T.br();
+    T.print(T.bold('⚒ CRAFTING...'));
+    T.br();
+
+    const qStr = qualityStr(finalQuality);
+    T.print(`  Crafted ${T.bold(item.name)} (${qStr}) — signed by ${T.gold(S.name)}`);
+
+    if (finalQuality > avgQuality) {
+      T.print(T.cyan('  ★ Quality upgraded during crafting!'));
+    }
+
+    if (item.type !== 'consumable') {
+      T.print(`  ${T.dim(item.statLabel + ' +' + item.stat)}`);
+    }
+
+    T.print(`  ${T.dim('Skill XP: ' + S.skillXp + '/3 | Level ' + S.skillLevel)}`);
+
+    // Check victory
+    if (finalQuality === 5 && (recipe.id === 'dragon_blade' || recipe.id === 'star_plate')) {
+      T.br();
+      showVictory(item);
+      return;
+    }
+
+    if (finalQuality === 5) {
+      T.br();
+      T.print(T.gold('═══ LEGENDARY ITEM FORGED! ═══'));
+      T.print(T.dim('(Craft a Legendary Dragon Blade or Star Plate to win!)'));
+    }
+
+    T.br();
+    save();
+    T.print(T.dim('Press ENTER to continue...'));
+    T.prompt(() => showMenu());
+  }
+
+  // ── Market ────────────────────────────────────────────────────
+
+  function showMarket() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("MARKET")} === Gold: ${T.gold(S.gold + 'g')} ===`));
+    T.br();
+    T.print(`  ${T.teal('[1]')} Buy Materials`);
+    T.print(`  ${T.teal('[2]')} Sell Crafted Items`);
+    T.print(`  ${T.dim('[0]')} Back`);
+    T.br();
+
+    T.prompt(input => {
+      const c = input.trim();
+      if (c === '1') showBuy();
+      else if (c === '2') showSell();
+      else showMenu();
+    });
+  }
+
+  function showBuy() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("BUY MATERIALS")} === Gold: ${T.gold(S.gold + 'g')} ===`));
+    T.br();
+
+    // Generate 3 random offers
+    const offers = [];
+    for (let i = 0; i < 3; i++) {
+      const mat = MATERIAL_DEFS[Math.floor(rand() * MATERIAL_DEFS.length)];
+      const quality = randInt(1, Math.min(3 + Math.floor(S.skillLevel / 2), 5));
+      const qty = randInt(1, 3);
+
+      let basePrice;
+      if (mat.rarity === 'common') basePrice = 8;
+      else if (mat.rarity === 'uncommon') basePrice = 20;
+      else basePrice = 50;
+
+      const price = Math.ceil(basePrice * QUALITY_MULT[quality] * qty);
+
+      offers.push({ mat, quality, qty, price });
+      const qStr = qualityStr(quality);
+      const affordable = S.gold >= price ? T.green(price + 'g') : T.red(price + 'g');
+      T.print(`  ${T.teal('[' + (i+1) + ']')} ${qty}x ${mat.name} (${qStr}) — ${affordable}`);
+    }
+
+    T.br();
+    T.print(`  ${T.dim('[0]')} Back`);
+    T.br();
+
+    T.prompt(input => {
+      const c = parseInt(input.trim());
+      if (c === 0 || isNaN(c)) { showMarket(); return; }
+      if (c < 1 || c > 3) { showBuy(); return; }
+
+      const offer = offers[c - 1];
+      if (S.gold < offer.price) {
+        T.clear();
+        T.br();
+        T.print(T.red('Not enough gold!'));
+        T.br();
+        T.print(T.dim('Press ENTER to go back...'));
+        T.prompt(() => showBuy());
+        return;
+      }
+
+      S.gold -= offer.price;
+      addMaterial(offer.mat.id, offer.qty, offer.quality);
+
+      T.clear();
+      T.br();
+      T.print(`Purchased ${T.bold(offer.qty + 'x')} ${T.gold(offer.mat.name)} (${qualityStr(offer.quality)}) for ${T.red(offer.price + 'g')}`);
+      T.print(`Gold remaining: ${T.gold(S.gold + 'g')}`);
+      T.br();
+      save();
+      T.print(T.dim('Press ENTER to continue shopping...'));
+      T.prompt(() => showBuy());
+    });
+  }
+
+  function showSell() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("SELL ITEMS")} === Gold: ${T.gold(S.gold + 'g')} ===`));
+    T.br();
+
+    if (S.items.length === 0) {
+      T.print(T.dim('  No items to sell. Craft something first!'));
+      T.br();
+      T.print(T.dim('Press ENTER to go back...'));
+      T.prompt(() => showMarket());
+      return;
+    }
+
+    S.items.forEach((item, i) => {
+      const price = Math.ceil(item.basePrice * QUALITY_MULT[item.quality]);
+      const qStr = qualityStr(item.quality);
+      T.print(`  ${T.teal('[' + (i+1) + ']')} ${item.name} (${qStr}) — ${T.gold(price + 'g')}`);
+    });
+
+    T.br();
+    T.print(`  ${T.dim('[0]')} Back`);
+    T.br();
+
+    T.prompt(input => {
+      const c = parseInt(input.trim());
+      if (c === 0 || isNaN(c)) { showMarket(); return; }
+      if (c < 1 || c > S.items.length) { showSell(); return; }
+
+      const item = S.items[c - 1];
+      const price = Math.ceil(item.basePrice * QUALITY_MULT[item.quality]);
+      S.gold += price;
+      S.items.splice(c - 1, 1);
+
+      T.clear();
+      T.br();
+      T.print(`Sold ${T.bold(item.name)} (${qualityStr(item.quality)}) for ${T.gold(price + 'g')}!`);
+      T.print(`Gold: ${T.gold(S.gold + 'g')}`);
+      T.br();
+      save();
+      T.print(T.dim('Press ENTER to continue...'));
+      T.prompt(() => showSell());
+    });
+  }
+
+  // ── Workshop Stats ────────────────────────────────────────────
+
+  function showStats() {
+    T.clear();
+    T.br();
+    T.print(T.bold(`=== ${T.teal("WORKSHOP STATS")} ===`));
+    T.br();
+
+    T.print(`  Crafter:       ${T.gold(S.name)}`);
+    T.print(`  Skill Level:   ${T.bold(S.skillLevel + '')} (${S.skillXp}/3 XP)`);
+    T.print(`  Gold:          ${T.gold(S.gold + 'g')}`);
+    T.print(`  Turn:          ${S.turn}`);
+    T.br();
+    T.print(`  Items Crafted: ${T.bold(S.itemsCrafted + '')}`);
+    T.print(`  Legendaries:   ${S.legendaryCount > 0 ? T.gold(S.legendaryCount + '') : T.dim('0')}`);
+    T.br();
+
+    // Show material totals
+    T.print(T.bold('─── Material Stock ───'));
+    let totalMats = 0;
+    MATERIAL_DEFS.forEach(mat => {
+      const count = getMaterialCount(mat.id);
+      if (count > 0) {
+        totalMats += count;
+        T.print(`  ${mat.name}: ${count}`);
+      }
+    });
+    if (totalMats === 0) T.print(T.dim('  (none)'));
+
+    T.br();
+
+    // Skill info
+    T.print(T.bold('─── Crafting Bonuses ───'));
+    let upgradeChance;
+    if (S.skillLevel >= 7) upgradeChance = 25;
+    else if (S.skillLevel >= 4) upgradeChance = 15;
+    else upgradeChance = 5;
+    T.print(`  Quality upgrade chance: ${T.teal(upgradeChance + '%')}`);
+
+    const gatherBonus = Math.min(5 * S.skillLevel, 50);
+    T.print(`  Uncommon gather chance: ${T.teal(gatherBonus + '%')}`);
+
+    if (S.skillLevel >= 3) {
+      T.print(`  Rare gather unlocked: ${T.green('Yes')}`);
+    } else {
+      T.print(`  Rare gather unlocked: ${T.red('No')} ${T.dim('(need Lv.3)')}`);
+    }
+
+    T.br();
+
+    // Goal
+    T.print(T.bold('─── Goal ───'));
+    T.print(`  Craft a ${T.gold('Legendary')} Dragon Blade or Star Plate`);
+
+    T.br();
+    T.print(T.dim('Press ENTER to go back...'));
+    T.prompt(() => showMenu());
+  }
+
+  // ── Victory ───────────────────────────────────────────────────
+
+  function showVictory(item) {
+    T.clear();
+    T.br();
+    T.print(T.gold('╔══════════════════════════════════════════════╗'));
+    T.print(T.gold('║                                              ║'));
+    T.print(T.gold('║         ★  MASTER CRAFTER  ★                ║'));
+    T.print(T.gold('║                                              ║'));
+    T.print(T.gold('╚══════════════════════════════════════════════╝'));
+    T.br();
+    T.print(T.gold(`You have forged a LEGENDARY ${item.name}!`));
+    T.br();
+    T.print(`  Crafter:       ${T.gold(S.name)}`);
+    T.print(`  Item:          ${T.bold(item.name)} (${qualityStr(5)})`);
+    T.print(`  Turns taken:   ${S.turn}`);
+    T.print(`  Items crafted: ${S.itemsCrafted}`);
+    T.print(`  Skill level:   ${S.skillLevel}`);
+    T.print(`  Gold:          ${T.gold(S.gold + 'g')}`);
+    T.br();
+    T.print(T.teal('Your name will be remembered in the halls of craft.'));
+    T.print(T.dim('The workshop is yours. The forge never cools.'));
+    T.br();
+    save();
+    T.print(`${T.dim('[N]')} New Game  |  ${T.dim('[C]')} Continue Playing`);
+    T.br();
+    T.prompt(input => {
+      const c = input.toLowerCase();
+      if (c === 'n') {
+        localStorage.removeItem(STORAGE_KEY);
+        showTitle();
+      } else {
+        showMenu();
+      }
+    });
+  }
+
+  // ── Quit ──────────────────────────────────────────────────────
+
+  function showQuit() {
+    T.clear();
+    T.br();
+    save();
+    T.print(T.dim('Game saved.'));
+    T.print(`The forge cools as ${T.gold(S.name)} steps away...`);
+    T.br();
+    T.print(T.teal('PROOF OF CRAFT'));
+    T.print(T.dim('Refresh to play again.'));
+    T.hidePrompt();
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────
+
+  T.init();
+  showTitle();
+
+})();
+</script>
+</body>
+</html>

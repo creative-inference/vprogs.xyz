@@ -105,6 +105,9 @@ sections:
       - url: /build/chess/
         title: Kaspa Chess
         description: "A chess game built on Kaspa covenants as a developer showcase."
+      - url: /games/
+        title: "KWP Game Demos"
+        description: "Three playable games built on Kaspa World Protocol — cards, territory, crafting."
       - url: /build/dag-cards/
         title: "DAG Cards"
         description: "Collectible card battler — cards as covenant UTXOs, verifiable RNG battles, peer-to-peer trading."

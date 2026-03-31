@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chain Kingdoms — KWP Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../terminal.css">
+</head>
+<body class="game-page">
+<div class="game-banner">CHAIN KINGDOMS — KWP Demo — <a href="https://github.com/creative-inference/kwp">github.com/creative-inference/kwp</a></div>
+<div id="terminal">
+  <div id="terminal-output"></div>
+  <div id="terminal-input" class="hidden">
+    <span class="prompt">&gt;</span>
+    <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+  </div>
+</div>
+<script src="../terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/creative-inference/kwp@main/dist/kwp.browser.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  const STORAGE_KEY = 'kwp_chain_kingdoms';
+  const GRID_SIZE = 7;
+  const WIN_TILES = 15;
+
+  // Terrain definitions
+  const TERRAIN = {
+    plains:   { sym: '.', name: 'Plains' },
+    forest:   { sym: '\u2663', name: 'Forest' },
+    mountain: { sym: '\u25B2', name: 'Mountain' },
+    water:    { sym: '~', name: 'Water' },
+    desert:   { sym: '\u2248', name: 'Desert' }
+  };
+
+  const STRUCTURES = ['none', 'outpost', 'fortress', 'citadel'];
+  const STRUCTURE_DEF = { none: 0, outpost: 10, fortress: 25, citadel: 50 };
+  const STRUCTURE_COST = { outpost: 20, fortress: 50, citadel: 100 };
+  const STRUCTURE_LABELS = { none: '--', outpost: 'Outpost', fortress: 'Fortress', citadel: 'Citadel' };
+
+  const AI_NAMES = ['Ironhold', 'Ashveil', 'Thornmire'];
+
+  let rng;
+  let state;
+
+  // ── Hex helpers (axial offset coords) ──
+
+  // For offset coordinates (odd-r), adjacency differs for even/odd rows
+  function getNeighbors(q, r) {
+    const neighbors = [];
+    const isOddRow = r % 2 === 1;
+    const dirs = isOddRow
+      ? [[-1,0],[1,0],[0,-1],[1,-1],[0,1],[1,1]]
+      : [[-1,0],[1,0],[-1,-1],[0,-1],[-1,1],[0,1]];
+    for (const [dq, dr] of dirs) {
+      const nq = q + dq;
+      const nr = r + dr;
+      if (nq >= 0 && nq < GRID_SIZE && nr >= 0 && nr < GRID_SIZE) {
+        neighbors.push({ q: nq, r: nr });
+      }
+    }
+    return neighbors;
+  }
+
+  function getTile(q, r) {
+    return state.tiles.find(t => t.q === q && t.r === r);
+  }
+
+  function tilesOwnedBy(owner) {
+    return state.tiles.filter(t => t.owner === owner);
+  }
+
+  function isAdjacent(q1, r1, q2, r2) {
+    return getNeighbors(q1, r1).some(n => n.q === q2 && n.r === r2);
+  }
+
+  // ── RNG helpers ──
+
+  function rngNext() {
+    state._rngAdvance++;
+    return rng.next();
+  }
+
+  function rngInt(max) {
+    // Returns 0..max-1
+    return Math.floor(rngNext() * max);
+  }
+
+  function rngDie() {
+    // 1-6
+    return rngInt(6) + 1;
+  }
+
+  function rngTerrain() {
+    const roll = rngNext() * 100;
+    if (roll < 10) return 'water';
+    if (roll < 25) return 'mountain';
+    if (roll < 50) return 'forest';
+    if (roll < 60) return 'desert';
+    return 'plains';
+  }
+
+  // ── State management ──
+
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        state = JSON.parse(raw);
+        // Re-seed RNG from stored seed
+        rng = new KWP.rng.SeededRng(state._seed);
+        // Advance RNG to match saved advance count
+        for (let i = 0; i < state._rngAdvance; i++) rng.next();
+        return true;
+      }
+    } catch(e) { /* ignore */ }
+    return false;
+  }
+
+  function clearState() {
+    localStorage.removeItem(STORAGE_KEY);
+    state = null;
+  }
+
+  // ── Map display ──
+
+  function tileChar(tile) {
+    if (tile.terrain === 'water' && tile.owner === null) return T.cyan(TERRAIN.water.sym);
+    if (tile.owner === null) return T.dim(TERRAIN[tile.terrain].sym);
+    if (tile.owner === 0) return T.green('@');
+    return T.red('X');
+  }
+
+  function tileCharDetailed(tile) {
+    if (tile.owner === null) {
+      if (tile.terrain === 'water') return T.cyan(TERRAIN.water.sym);
+      if (tile.terrain === 'mountain') return T.bold(TERRAIN.mountain.sym);
+      if (tile.terrain === 'forest') return T.green(TERRAIN.forest.sym);
+      if (tile.terrain === 'desert') return T.gold(TERRAIN.desert.sym);
+      return T.dim(TERRAIN.plains.sym);
+    }
+    if (tile.owner === 0) {
+      const ch = '@';
+      if (tile.structure === 'citadel') return T.green(T.bold(ch));
+      if (tile.structure === 'fortress') return T.green(ch);
+      return T.green(ch);
+    }
+    // AI owner
+    const kingdom = state.kingdoms[tile.owner];
+    const ch = kingdom ? kingdom.name[0] : 'X';
+    return T.red(ch);
+  }
+
+  function renderMap() {
+    T.print(T.teal('══════════ THE MAP ══════════'));
+    T.print(T.dim('  Coords: q,r | @ = You | Letters = AI kingdoms'));
+    T.br();
+
+    // Column header
+    let header = '    ';
+    for (let q = 0; q < GRID_SIZE; q++) header += q + ' ';
+    T.print(T.dim(header));
+
+    for (let r = 0; r < GRID_SIZE; r++) {
+      const indent = (r % 2 === 1) ? ' ' : '';
+      let row = T.dim((r < 10 ? ' ' : '') + r + '  ') + indent;
+      for (let q = 0; q < GRID_SIZE; q++) {
+        const tile = getTile(q, r);
+        row += tileCharDetailed(tile) + ' ';
+      }
+      T.print(row);
+    }
+
+    T.br();
+    // Legend
+    T.print(T.dim('Terrain: ') + T.dim('.') + '=Plains ' + T.green('\u2663') + '=Forest ' + T.bold('\u25B2') + '=Mountain ' + T.cyan('~') + '=Water ' + T.gold('\u2248') + '=Desert');
+  }
+
+  // ── Game initialization ──
+
+  function initGame(name) {
+    const seed = 'kingdoms_' + Date.now();
+    rng = new KWP.rng.SeededRng(seed);
+
+    state = {
+      name: name,
+      resources: 50,
+      turn: 0,
+      tiles: [],
+      kingdoms: [
+        { name: name, color: 'green' },
+        { name: AI_NAMES[0], color: 'red' },
+        { name: AI_NAMES[1], color: 'red' },
+        { name: AI_NAMES[2], color: 'red' }
+      ],
+      lastHarvest: 0,
+      aiResources: [0, 50, 50, 50],
+      _seed: seed,
+      _rngAdvance: 0
+    };
+
+    // Generate terrain
+    for (let r = 0; r < GRID_SIZE; r++) {
+      for (let q = 0; q < GRID_SIZE; q++) {
+        state.tiles.push({
+          q, r,
+          terrain: rngTerrain(),
+          owner: null,
+          structure: 'none',
+          garrison: 0
+        });
+      }
+    }
+
+    // Player starts at center
+    const center = getTile(3, 3);
+    center.owner = 0;
+    center.garrison = 10;
+    center.terrain = 'plains'; // Ensure center is traversable
+
+    // Place 3 AI kingdoms on random non-water, non-center tiles
+    const candidates = state.tiles.filter(t =>
+      t.owner === null && t.terrain !== 'water' && !(t.q === 3 && t.r === 3)
+    );
+    for (let i = 1; i <= 3; i++) {
+      if (candidates.length === 0) break;
+      const idx = rngInt(candidates.length);
+      const tile = candidates.splice(idx, 1)[0];
+      const actual = getTile(tile.q, tile.r);
+      actual.owner = i;
+      actual.garrison = 10;
+    }
+
+    saveState();
+  }
+
+  // ── Combat ──
+
+  function combat(attackTile, defTile) {
+    const atkGarrison = attackTile.garrison;
+    const defGarrison = defTile.garrison;
+    const defBonus = STRUCTURE_DEF[defTile.structure] || 0;
+
+    let atkTotal = 0;
+    let defTotal = 0;
+
+    // Each unit rolls a die
+    for (let i = 0; i < atkGarrison; i++) {
+      atkTotal += rngDie();
+    }
+    for (let i = 0; i < defGarrison; i++) {
+      defTotal += rngDie();
+    }
+    defTotal += defBonus;
+
+    const attackerWins = atkTotal > defTotal;
+    const loserTotal = attackerWins ? defTotal : atkTotal;
+    const losses = Math.max(1, Math.floor(loserTotal / 4));
+
+    return { atkTotal, defTotal, attackerWins, losses, atkGarrison, defGarrison, defBonus };
+  }
+
+  // ── AI Turn ──
+
+  function aiTurn(aiIdx) {
+    const owned = tilesOwnedBy(aiIdx);
+    if (owned.length === 0) return null; // eliminated
+
+    const res = state.aiResources[aiIdx];
+    const kingdom = state.kingdoms[aiIdx];
+
+    // Priority: attack weak adjacent enemy, then claim, then build
+    // Try to attack
+    for (const tile of owned) {
+      if (tile.garrison < 3) continue;
+      const neighbors = getNeighbors(tile.q, tile.r);
+      for (const n of neighbors) {
+        const target = getTile(n.q, n.r);
+        if (target.owner !== null && target.owner !== aiIdx && target.garrison < tile.garrison) {
+          // Attack
+          const result = combat(tile, target);
+          if (result.attackerWins) {
+            tile.garrison -= result.losses;
+            if (tile.garrison < 1) tile.garrison = 1;
+            target.owner = aiIdx;
+            target.garrison = Math.max(1, tile.garrison - 1);
+            target.structure = 'none';
+            tile.garrison = Math.max(1, tile.garrison - target.garrison);
+            return { action: 'attack', kingdom: kingdom.name, from: tile, to: target, result, won: true };
+          } else {
+            const lost = tile.garrison;
+            tile.garrison = Math.max(0, tile.garrison - result.losses);
+            if (tile.garrison <= 0) {
+              tile.garrison = 0;
+              // Tile stays owned but undefended
+            }
+            return { action: 'attack', kingdom: kingdom.name, from: tile, to: target, result, won: false };
+          }
+        }
+      }
+    }
+
+    // Try to claim
+    if (res >= 10) {
+      for (const tile of owned) {
+        const neighbors = getNeighbors(tile.q, tile.r);
+        for (const n of neighbors) {
+          const target = getTile(n.q, n.r);
+          if (target.owner === null && target.terrain !== 'water') {
+            target.owner = aiIdx;
+            target.garrison = 5;
+            state.aiResources[aiIdx] -= 10;
+            return { action: 'claim', kingdom: kingdom.name, tile: target };
+          }
+        }
+      }
+    }
+
+    // Try to build
+    if (res >= 20) {
+      for (const tile of owned) {
+        const idx = STRUCTURES.indexOf(tile.structure);
+        if (idx < STRUCTURES.length - 1) {
+          const next = STRUCTURES[idx + 1];
+          const cost = STRUCTURE_COST[next];
+          if (res >= cost) {
+            tile.structure = next;
+            state.aiResources[aiIdx] -= cost;
+            return { action: 'build', kingdom: kingdom.name, tile, structure: next };
+          }
+        }
+      }
+    }
+
+    return { action: 'idle', kingdom: kingdom.name };
+  }
+
+  function runAiTurns() {
+    const reports = [];
+    for (let i = 1; i <= 3; i++) {
+      // AI harvests resources passively each turn
+      const owned = tilesOwnedBy(i);
+      state.aiResources[i] += owned.length * 3;
+
+      const report = aiTurn(i);
+      if (report && report.action !== 'idle') {
+        reports.push(report);
+      }
+    }
+    return reports;
+  }
+
+  function showAiReports(reports) {
+    if (reports.length === 0) return;
+    T.br();
+    T.print(T.dim('── AI Kingdoms act ──'));
+    for (const r of reports) {
+      if (r.action === 'claim') {
+        T.print(T.red(r.kingdom) + ' claims tile (' + r.tile.q + ',' + r.tile.r + ')');
+      } else if (r.action === 'build') {
+        T.print(T.red(r.kingdom) + ' builds ' + r.structure + ' at (' + r.tile.q + ',' + r.tile.r + ')');
+      } else if (r.action === 'attack') {
+        const outcome = r.won ? T.red('won') : T.green('lost');
+        T.print(T.red(r.kingdom) + ' attacks (' + r.to.q + ',' + r.to.r + ') — ' + outcome);
+      }
+    }
+  }
+
+  // ── Win/loss check ──
+
+  function checkGameEnd() {
+    const playerTiles = tilesOwnedBy(0).length;
+    if (playerTiles >= WIN_TILES) return 'win';
+    if (playerTiles === 0) return 'lose';
+
+    // Check if all AI eliminated
+    let anyAi = false;
+    for (let i = 1; i <= 3; i++) {
+      if (tilesOwnedBy(i).length > 0) { anyAi = true; break; }
+    }
+    if (!anyAi) return 'win';
+
+    return null;
+  }
+
+  // ── Screens ──
+
+  function showTitle() {
+    T.clear();
+    T.print(T.teal(''));
+    T.print(T.gold('   _____ _           _         _  ___                 _'));
+    T.print(T.gold('  / ____| |         (_)       | |/ (_)               | |'));
+    T.print(T.gold(' | |    | |__   __ _ _ _ __   | \' / _ _ __   __ _ __| | ___  _ __ ___  ___'));
+    T.print(T.gold(' | |    | \'_ \\ / _` | | \'_ \\  |  < | | \'_ \\ / _` / _` |/ _ \\| \'_ ` _ \\/ __|'));
+    T.print(T.gold(' | |____| | | | (_| | | | | | | . \\| | | | | (_| | (_| | (_) | | | | | \\__ \\'));
+    T.print(T.gold('  \\_____|_| |_|\\__,_|_|_| |_| |_|\\_\\_|_| |_|\\__, |\\__,_|\\___/|_| |_| |_|___/'));
+    T.print(T.gold('                                               __/ |'));
+    T.print(T.gold('                                              |___/'));
+    T.br();
+    T.print(T.teal('  ╔══════════════════════════════════════════════╗'));
+    T.print(T.teal('  ║') + T.dim('   Hex Territory Control — KWP Deterministic  ') + T.teal('║'));
+    T.print(T.teal('  ╚══════════════════════════════════════════════╝'));
+    T.br();
+
+    if (loadState()) {
+      T.print('  Saved game found: ' + T.gold(state.name) + ' — Turn ' + state.turn);
+      T.print('  ' + T.dim('[C]ontinue  [N]ew Game'));
+      T.br();
+      T.prompt(function(input) {
+        const ch = input.toLowerCase();
+        if (ch === 'c') {
+          mainMenu();
+        } else if (ch === 'n') {
+          clearState();
+          showNamePrompt();
+        } else {
+          showTitle();
+        }
+      });
+    } else {
+      showNamePrompt();
+    }
+  }
+
+  function showNamePrompt() {
+    T.print('  ' + T.teal('Name your kingdom:'));
+    T.br();
+    T.prompt(function(input) {
+      const name = input.substring(0, 20);
+      if (name.length === 0) {
+        T.print(T.red('  Enter a name.'));
+        showNamePrompt();
+        return;
+      }
+      initGame(name);
+      T.clear();
+      T.print(T.gold('Kingdom "' + name + '" founded!'));
+      T.print('You claim the central tile. Your people settle in.');
+      T.print('Resources: ' + T.gold('50') + ' | Garrison: ' + T.teal('10'));
+      T.br();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { mainMenu(); });
+    });
+  }
+
+  function mainMenu() {
+    T.clear();
+    T.print(T.gold('═══ ' + state.name + ' ═══') + '  Turn: ' + T.teal(state.turn) + '  Resources: ' + T.gold(state.resources) + '  Tiles: ' + T.green(tilesOwnedBy(0).length));
+    T.br();
+    T.print('  ' + T.teal('[1]') + ' View Map');
+    T.print('  ' + T.teal('[2]') + ' Claim Tile       ' + T.dim('(10 res)'));
+    T.print('  ' + T.teal('[3]') + ' Build Structure');
+    T.print('  ' + T.teal('[4]') + ' Attack');
+    T.print('  ' + T.teal('[5]') + ' Move Garrison');
+    T.print('  ' + T.teal('[6]') + ' Harvest Resources');
+    T.print('  ' + T.teal('[7]') + ' Kingdom Stats');
+    T.print('  ' + T.teal('[8]') + ' Quit');
+    T.br();
+
+    T.prompt(function(input) {
+      const ch = input.trim();
+      if (ch === '1') { viewMap(); }
+      else if (ch === '2') { claimTile(); }
+      else if (ch === '3') { buildStructure(); }
+      else if (ch === '4') { attackTile(); }
+      else if (ch === '5') { moveGarrison(); }
+      else if (ch === '6') { harvestResources(); }
+      else if (ch === '7') { showStats(); }
+      else if (ch === '8') { quitGame(); }
+      else { mainMenu(); }
+    });
+  }
+
+  // ── After player action: AI turns, check win, save ──
+
+  function endTurn() {
+    state.turn++;
+    const reports = runAiTurns();
+
+    const result = checkGameEnd();
+    if (result === 'win') {
+      T.clear();
+      showAiReports(reports);
+      T.br();
+      T.print(T.gold('╔══════════════════════════════════════╗'));
+      T.print(T.gold('║         VICTORY IS YOURS!            ║'));
+      T.print(T.gold('╚══════════════════════════════════════╝'));
+      T.br();
+      T.print('The kingdom of ' + T.gold(state.name) + ' rules all!');
+      T.print('Turns taken: ' + T.teal(state.turn));
+      T.print('Tiles controlled: ' + T.green(tilesOwnedBy(0).length));
+      T.br();
+      clearState();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { showTitle(); });
+      return;
+    }
+    if (result === 'lose') {
+      T.clear();
+      showAiReports(reports);
+      T.br();
+      T.print(T.red('╔══════════════════════════════════════╗'));
+      T.print(T.red('║         YOUR KINGDOM HAS FALLEN      ║'));
+      T.print(T.red('╚══════════════════════════════════════╝'));
+      T.br();
+      T.print('The kingdom of ' + T.gold(state.name) + ' is no more.');
+      T.br();
+      clearState();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { showTitle(); });
+      return;
+    }
+
+    saveState();
+    showAiReports(reports);
+    T.br();
+    T.print(T.dim('[press any key + enter]'));
+    T.prompt(function() { mainMenu(); });
+  }
+
+  // ── View Map ──
+
+  function viewMap() {
+    T.clear();
+    renderMap();
+    T.br();
+
+    // Show kingdom summary
+    for (let i = 0; i <= 3; i++) {
+      const k = state.kingdoms[i];
+      const count = tilesOwnedBy(i).length;
+      if (count === 0 && i > 0) continue;
+      const label = i === 0 ? T.green(k.name + ' (@)') : T.red(k.name + ' (' + k.name[0] + ')');
+      T.print('  ' + label + ': ' + count + ' tiles');
+    }
+
+    T.br();
+    T.print(T.dim('Enter coords "q,r" for tile info, or "q" for menu'));
+    T.prompt(function(input) {
+      if (input.toLowerCase() === 'q') { mainMenu(); return; }
+      const parts = input.split(',');
+      if (parts.length === 2) {
+        const q = parseInt(parts[0].trim());
+        const r = parseInt(parts[1].trim());
+        if (!isNaN(q) && !isNaN(r) && q >= 0 && q < GRID_SIZE && r >= 0 && r < GRID_SIZE) {
+          const tile = getTile(q, r);
+          T.br();
+          T.print(T.teal('Tile (' + q + ',' + r + ')'));
+          T.print('  Terrain:   ' + TERRAIN[tile.terrain].name + ' ' + TERRAIN[tile.terrain].sym);
+          const ownerName = tile.owner === null ? 'Unclaimed' : state.kingdoms[tile.owner].name;
+          T.print('  Owner:     ' + (tile.owner === 0 ? T.green(ownerName) : tile.owner !== null ? T.red(ownerName) : T.dim(ownerName)));
+          T.print('  Structure: ' + STRUCTURE_LABELS[tile.structure] + (tile.structure !== 'none' ? ' (+' + STRUCTURE_DEF[tile.structure] + ' def)' : ''));
+          T.print('  Garrison:  ' + tile.garrison);
+          T.br();
+          T.print(T.dim('Enter coords or "q" for menu'));
+          T.prompt(function(input2) {
+            if (input2.toLowerCase() === 'q') { mainMenu(); return; }
+            viewMap();
+          });
+          return;
+        }
+      }
+      viewMap();
+    });
+  }
+
+  // ── Claim Tile ──
+
+  function claimTile() {
+    T.clear();
+    T.print(T.gold('═══ CLAIM TILE ═══'));
+    T.print('Cost: ' + T.gold('10') + ' resources. Your resources: ' + T.gold(state.resources));
+    T.br();
+
+    if (state.resources < 10) {
+      T.print(T.red('Not enough resources!'));
+      T.br();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { mainMenu(); });
+      return;
+    }
+
+    // Show available tiles
+    const owned = tilesOwnedBy(0);
+    const available = [];
+    for (const tile of owned) {
+      for (const n of getNeighbors(tile.q, tile.r)) {
+        const target = getTile(n.q, n.r);
+        if (target.owner === null && target.terrain !== 'water') {
+          if (!available.find(a => a.q === target.q && a.r === target.r)) {
+            available.push(target);
+          }
+        }
+      }
+    }
+
+    if (available.length === 0) {
+      T.print(T.red('No adjacent unclaimed tiles available!'));
+      T.br();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { mainMenu(); });
+      return;
+    }
+
+    T.print('Available tiles:');
+    for (const t of available) {
+      T.print('  (' + t.q + ',' + t.r + ') ' + TERRAIN[t.terrain].name);
+    }
+    T.br();
+    T.print('Enter coords ' + T.teal('q,r') + ' to claim (or ' + T.dim('q') + ' to cancel):');
+
+    T.prompt(function(input) {
+      if (input.toLowerCase() === 'q') { mainMenu(); return; }
+      const parts = input.split(',');
+      if (parts.length !== 2) { claimTile(); return; }
+      const q = parseInt(parts[0].trim());
+      const r = parseInt(parts[1].trim());
+      const target = available.find(a => a.q === q && a.r === r);
+      if (!target) {
+        T.print(T.red('Invalid tile.'));
+        T.br();
+        T.print(T.dim('[press any key + enter]'));
+        T.prompt(function() { claimTile(); });
+        return;
+      }
+
+      target.owner = 0;
+      target.garrison = 5;
+      state.resources -= 10;
+      T.print(T.green('Claimed (' + q + ',' + r + ')!') + ' Garrison: 5');
+      endTurn();
+    });
+  }
+
+  // ── Build Structure ──
+
+  function buildStructure() {
+    T.clear();
+    T.print(T.gold('═══ BUILD STRUCTURE ═══'));
+    T.print('Resources: ' + T.gold(state.resources));
+    T.print(T.dim('Upgrades: none -> outpost(20) -> fortress(50) -> citadel(100)'));
+    T.br();
+
+    const owned = tilesOwnedBy(0);
+    const buildable = owned.filter(t => STRUCTURES.indexOf(t.structure) < STRUCTURES.length - 1);
+
+    if (buildable.length === 0) {
+      T.print(T.red('All tiles are max level!'));
+      T.br();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { mainMenu(); });
+      return;
+    }
+
+    T.print('Your tiles:');
+    for (const t of buildable) {
+      const nextIdx = STRUCTURES.indexOf(t.structure) + 1;
+      const next = STRUCTURES[nextIdx];
+      const cost = STRUCTURE_COST[next];
+      T.print('  (' + t.q + ',' + t.r + ') ' + STRUCTURE_LABELS[t.structure] + ' -> ' + T.teal(STRUCTURE_LABELS[next]) + ' [' + T.gold(cost) + ' res]');
+    }
+    T.br();
+    T.print('Enter coords ' + T.teal('q,r') + ' to build (or ' + T.dim('q') + ' to cancel):');
+
+    T.prompt(function(input) {
+      if (input.toLowerCase() === 'q') { mainMenu(); return; }
+      const parts = input.split(',');
+      if (parts.length !== 2) { buildStructure(); return; }
+      const q = parseInt(parts[0].trim());
+      const r = parseInt(parts[1].trim());
+      const target = buildable.find(t => t.q === q && t.r === r);
+      if (!target) {
+        T.print(T.red('Invalid tile.'));
+        T.br();
+        T.print(T.dim('[press any key + enter]'));
+        T.prompt(function() { buildStructure(); });
+        return;
+      }
+
+      const nextIdx = STRUCTURES.indexOf(target.structure) + 1;
+      const next = STRUCTURES[nextIdx];
+      const cost = STRUCTURE_COST[next];
+
+      if (state.resources < cost) {
+        T.print(T.red('Not enough resources! Need ' + cost + '.'));
+        T.br();
+        T.print(T.dim('[press any key + enter]'));
+        T.prompt(function() { mainMenu(); });
+        return;
+      }
+
+      target.structure = next;
+      state.resources -= cost;
+      T.print(T.green('Built ' + STRUCTURE_LABELS[next] + ' at (' + q + ',' + r + ')!') + ' (+' + STRUCTURE_DEF[next] + ' defense)');
+      endTurn();
+    });
+  }
+
+  // ── Attack ──
+
+  function attackTile() {
+    T.clear();
+    T.print(T.gold('═══ ATTACK ═══'));
+    T.br();
+
+    // Find player tiles adjacent to enemy tiles
+    const owned = tilesOwnedBy(0);
+    const attackOptions = [];
+
+    for (const tile of owned) {
+      if (tile.garrison < 2) continue; // Need at least 2 garrison to attack (leave 1 behind)
+      for (const n of getNeighbors(tile.q, tile.r)) {
+        const target = getTile(n.q, n.r);
+        if (target.owner !== null && target.owner !== 0) {
+          attackOptions.push({ from: tile, to: target });
+        }
+      }
+    }
+
+    if (attackOptions.length === 0) {
+      T.print(T.red('No adjacent enemy tiles to attack!'));
+      T.print(T.dim('(Need garrison >= 2 on tiles adjacent to enemies)'));
+      T.br();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { mainMenu(); });
+      return;
+    }
+
+    T.print('Attack options:');
+    for (let i = 0; i < attackOptions.length; i++) {
+      const opt = attackOptions[i];
+      const enemyName = state.kingdoms[opt.to.owner].name;
+      T.print('  ' + T.teal('[' + (i+1) + ']') + ' From (' + opt.from.q + ',' + opt.from.r + ') garrison:' + T.green(opt.from.garrison) + ' -> (' + opt.to.q + ',' + opt.to.r + ') ' + T.red(enemyName) + ' garrison:' + T.red(opt.to.garrison) + ' ' + T.dim(STRUCTURE_LABELS[opt.to.structure]));
+    }
+    T.br();
+    T.print('Choose attack # (or ' + T.dim('q') + ' to cancel):');
+
+    T.prompt(function(input) {
+      if (input.toLowerCase() === 'q') { mainMenu(); return; }
+      const idx = parseInt(input) - 1;
+      if (isNaN(idx) || idx < 0 || idx >= attackOptions.length) {
+        T.print(T.red('Invalid choice.'));
+        T.br();
+        T.print(T.dim('[press any key + enter]'));
+        T.prompt(function() { attackTile(); });
+        return;
+      }
+
+      const opt = attackOptions[idx];
+      const result = combat(opt.from, opt.to);
+
+      T.br();
+      T.print(T.bold('=== BATTLE ==='));
+      T.print('Your forces (' + result.atkGarrison + ' units) roll: ' + T.green(result.atkTotal));
+      T.print('Enemy forces (' + result.defGarrison + ' units + ' + result.defBonus + ' def) roll: ' + T.red(result.defTotal));
+      T.br();
+
+      if (result.attackerWins) {
+        opt.from.garrison -= result.losses;
+        if (opt.from.garrison < 1) opt.from.garrison = 1;
+        const transfer = Math.max(1, Math.floor(opt.from.garrison / 2));
+        opt.from.garrison -= transfer;
+        if (opt.from.garrison < 1) opt.from.garrison = 1;
+        opt.to.owner = 0;
+        opt.to.garrison = transfer;
+        opt.to.structure = 'none';
+        T.print(T.green('VICTORY!') + ' You captured (' + opt.to.q + ',' + opt.to.r + ')!');
+        T.print('Losses: ' + T.red(result.losses) + ' units. Garrison transferred: ' + transfer);
+      } else {
+        const lost = opt.from.garrison;
+        opt.from.garrison = Math.max(0, opt.from.garrison - result.losses);
+        if (opt.from.garrison <= 0) {
+          opt.from.owner = null;
+          opt.from.garrison = 0;
+          opt.from.structure = 'none';
+          T.print(T.red('DEFEAT!') + ' Your forces were destroyed! Tile (' + opt.from.q + ',' + opt.from.r + ') lost!');
+        } else {
+          T.print(T.red('DEFEAT!') + ' You lost ' + result.losses + ' units. Remaining garrison: ' + opt.from.garrison);
+        }
+      }
+
+      endTurn();
+    });
+  }
+
+  // ── Move Garrison ──
+
+  function moveGarrison() {
+    T.clear();
+    T.print(T.gold('═══ MOVE GARRISON ═══'));
+    T.br();
+
+    const owned = tilesOwnedBy(0).filter(t => t.garrison > 1);
+    if (owned.length === 0) {
+      T.print(T.red('No tiles with movable garrison (need > 1).'));
+      T.br();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { mainMenu(); });
+      return;
+    }
+
+    T.print('Your tiles with garrison > 1:');
+    for (const t of owned) {
+      T.print('  (' + t.q + ',' + t.r + ') garrison: ' + T.green(t.garrison) + ' ' + T.dim(STRUCTURE_LABELS[t.structure]));
+    }
+    T.br();
+    T.print('Move FROM coords ' + T.teal('q,r') + ' (or ' + T.dim('q') + ' to cancel):');
+
+    T.prompt(function(input) {
+      if (input.toLowerCase() === 'q') { mainMenu(); return; }
+      const parts = input.split(',');
+      if (parts.length !== 2) { moveGarrison(); return; }
+      const fq = parseInt(parts[0].trim());
+      const fr = parseInt(parts[1].trim());
+      const from = owned.find(t => t.q === fq && t.r === fr);
+      if (!from) {
+        T.print(T.red('Invalid source tile.'));
+        T.br();
+        T.print(T.dim('[press any key + enter]'));
+        T.prompt(function() { moveGarrison(); });
+        return;
+      }
+
+      // Show adjacent owned tiles
+      const targets = getNeighbors(fq, fr)
+        .map(n => getTile(n.q, n.r))
+        .filter(t => t.owner === 0);
+
+      if (targets.length === 0) {
+        T.print(T.red('No adjacent owned tiles to move to.'));
+        T.br();
+        T.print(T.dim('[press any key + enter]'));
+        T.prompt(function() { moveGarrison(); });
+        return;
+      }
+
+      T.print('Adjacent owned tiles:');
+      for (const t of targets) {
+        T.print('  (' + t.q + ',' + t.r + ') garrison: ' + T.green(t.garrison));
+      }
+      T.br();
+      T.print('Move TO coords ' + T.teal('q,r') + ':');
+
+      T.prompt(function(input2) {
+        const parts2 = input2.split(',');
+        if (parts2.length !== 2) { moveGarrison(); return; }
+        const tq = parseInt(parts2[0].trim());
+        const tr = parseInt(parts2[1].trim());
+        const to = targets.find(t => t.q === tq && t.r === tr);
+        if (!to) {
+          T.print(T.red('Invalid target.'));
+          T.br();
+          T.print(T.dim('[press any key + enter]'));
+          T.prompt(function() { moveGarrison(); });
+          return;
+        }
+
+        const maxMove = from.garrison - 1;
+        T.print('How many units to move? (1-' + maxMove + '):');
+
+        T.prompt(function(input3) {
+          const amount = parseInt(input3);
+          if (isNaN(amount) || amount < 1 || amount > maxMove) {
+            T.print(T.red('Invalid amount.'));
+            T.br();
+            T.print(T.dim('[press any key + enter]'));
+            T.prompt(function() { moveGarrison(); });
+            return;
+          }
+
+          from.garrison -= amount;
+          to.garrison += amount;
+          T.print(T.green('Moved ' + amount + ' units') + ' from (' + fq + ',' + fr + ') to (' + tq + ',' + tr + ')');
+          endTurn();
+        });
+      });
+    });
+  }
+
+  // ── Harvest ──
+
+  function harvestResources() {
+    T.clear();
+    T.print(T.gold('═══ HARVEST ═══'));
+    T.br();
+
+    const owned = tilesOwnedBy(0);
+    const turnsSince = state.turn - state.lastHarvest;
+
+    if (turnsSince === 0) {
+      T.print(T.red('Nothing to harvest yet! Take some actions first.'));
+      T.br();
+      T.print(T.dim('[press any key + enter]'));
+      T.prompt(function() { mainMenu(); });
+      return;
+    }
+
+    const perTile = 2 * turnsSince;
+    const total = owned.length * perTile;
+
+    T.print('Tiles owned: ' + T.green(owned.length));
+    T.print('Turns since last harvest: ' + T.teal(turnsSince));
+    T.print('Yield per tile: ' + T.gold(perTile));
+    T.print(T.bold('Total harvested: ' + T.gold(total)));
+    T.br();
+
+    state.resources += total;
+    state.lastHarvest = state.turn;
+
+    T.print('Resources now: ' + T.gold(state.resources));
+    endTurn();
+  }
+
+  // ── Stats ──
+
+  function showStats() {
+    T.clear();
+    T.print(T.gold('═══ KINGDOM STATS ═══'));
+    T.br();
+
+    for (let i = 0; i <= 3; i++) {
+      const k = state.kingdoms[i];
+      const tiles = tilesOwnedBy(i);
+      if (tiles.length === 0 && i > 0) {
+        T.print(T.dim(k.name + ' — ELIMINATED'));
+        continue;
+      }
+
+      const totalGarrison = tiles.reduce((s, t) => s + t.garrison, 0);
+      const structures = tiles.filter(t => t.structure !== 'none').length;
+      const label = i === 0 ? T.green(T.bold(k.name)) : T.red(k.name);
+
+      T.print(label);
+      T.print('  Tiles: ' + T.teal(tiles.length) + '  Garrison: ' + T.teal(totalGarrison) + '  Structures: ' + T.teal(structures));
+      if (i === 0) {
+        T.print('  Resources: ' + T.gold(state.resources));
+      }
+
+      // List structures
+      for (const t of tiles) {
+        if (t.structure !== 'none') {
+          T.print('    (' + t.q + ',' + t.r + ') ' + STRUCTURE_LABELS[t.structure] + ' gar:' + t.garrison);
+        }
+      }
+      T.br();
+    }
+
+    T.print(T.dim('Win condition: Control ' + WIN_TILES + '+ tiles or eliminate all AI kingdoms'));
+    T.br();
+    T.print(T.dim('[press any key + enter]'));
+    T.prompt(function() { mainMenu(); });
+  }
+
+  // ── Quit ──
+
+  function quitGame() {
+    T.clear();
+    T.print(T.teal('Game saved. Farewell, ruler of ' + T.gold(state.name) + '!'));
+    T.print(T.dim('Refresh the page to resume.'));
+    saveState();
+    T.hidePrompt();
+  }
+
+  // ── Boot ──
+
+  function boot() {
+    T.init();
+
+    // Check if KWP loaded
+    if (typeof KWP === 'undefined' || !KWP.rng || !KWP.rng.SeededRng) {
+      T.print(T.red('Error: KWP library not loaded.'));
+      T.print(T.dim('Check your network connection and refresh.'));
+      return;
+    }
+
+    showTitle();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    // Small delay to ensure KWP script has executed
+    setTimeout(boot, 100);
+  }
+
+})();
+</script>
+</body>
+</html>
