@@ -204,7 +204,7 @@ The deployment is phased:
 - vProgs repository public -- January 2026
 
 **Upcoming:**
-- **Covenants++ hard fork**: May 5, 2026 (mainnet activation of KIP-16, 17, 20, 21)
+- **Covenants++ hard fork**: TBD (mainnet activation of KIP-16, 17, 20, 21)
 - **Phase 1 (Standalone vProgs)**: following Covenants++ activation, dependent on DagKnight and remaining infrastructure
 - **Phase 2 (Full Synchronous Composability)**: after Phase 1 is stable, timeline TBD
 
@@ -255,7 +255,7 @@ As a general architectural heuristic emerging within the developer community: **
 
 ### What is the Covenants++ hard fork?
 
-Covenants++ is a consensus upgrade scheduled for May 5, 2026. It activates four KIPs:
+Covenants++ is a consensus upgrade (target date TBD) that prioritizes correctness and stability. It activates four KIPs:
 
 | KIP | What It Does |
 |-----|-------------|
