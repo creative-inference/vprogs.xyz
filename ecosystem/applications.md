@@ -35,7 +35,7 @@ This PoC represents **Milestone 3** completion. Michael Sutton described it as "
 
 ### Native Assets (Shipping with Covenants++)
 
-First-class token support on L1, activated with the May 5 hard fork:
+First-class token support on L1, activated with the upcoming Covenants++ hard fork:
 
 - ZK PoC demonstrated using SP1 by Ori Newman (January 6, 2026)
 - Intended as a stepping stone -- vProgs will eventually be the canonical token layer
