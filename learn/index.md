@@ -100,5 +100,5 @@ Once you have a solid understanding of vProgs, explore these areas for deeper te
 | **DagKnight** | Parameterless adaptive consensus providing precise ordering and instant finality |
 | **Prover Market** | Decentralized market of ZK proof generators enabling horizontal scaling |
 | **BlockDAG** | Parallel block structure where all valid blocks are included, not competing |
-| **Covenants++** | Hard fork (May 5, 2026) enabling ZK verification, covenant IDs, and lane sequencing |
+| **Covenants++** | Hard fork (target TBD) enabling ZK verification, covenant IDs, and lane sequencing |
 | **Silverscript** | High-level L1 covenant language -- the local-state complement to vProgs shared state |
