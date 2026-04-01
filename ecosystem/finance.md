@@ -115,7 +115,7 @@ This approach aligns with emerging regulatory frameworks:
 
 ## Programmable Financial Instruments
 
-The Covenants++ hard fork (May 5, 2026) introduces native assets on Kaspa L1. Combined with vProgs, this enables a new class of programmable financial instruments:
+The Covenants++ hard fork (target date TBD) introduces native assets on Kaspa L1. Combined with vProgs, this enables a new class of programmable financial instruments:
 
 ### Tokenized Securities
 
@@ -222,7 +222,7 @@ No existing platform combines all of: programmable L1, synchronous composability
 
 | Milestone | Target Date | Finance Capability Unlocked |
 |---|---|---|
-| **Covenants++ Hard Fork** | May 5, 2026 | Native assets, ZK verification on L1, basic programmable instruments |
+| **Covenants++ Hard Fork** | TBD | Native assets, ZK verification on L1, basic programmable instruments |
 | **vProgs Phase 1** | 2026 | Standalone financial protocols -- DEXs, lending, vaults |
 | **DagKnight** | 2026-2027 | Near-instant deterministic finality for settlement |
 | **vProgs Phase 2 (Syncompo)** | 2027+ | Atomic cross-protocol DeFi, institutional-grade composability |
