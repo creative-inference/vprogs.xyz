@@ -105,18 +105,6 @@ sections:
       - url: /build/chess/
         title: Kaspa Chess
         description: "A chess game built on Kaspa covenants as a developer showcase."
-      - url: /games/
-        title: "KWP Game Demos"
-        description: "Three playable games built on Kaspa World Protocol — cards, territory, crafting."
-      - url: /build/dag-cards/
-        title: "DAG Cards"
-        description: "Collectible card battler — cards as covenant UTXOs, verifiable RNG battles, peer-to-peer trading."
-      - url: /build/chain-kingdoms/
-        title: "Chain Kingdoms"
-        description: "Hex-grid territory control — spatial state on-chain, multi-entity ICC combat, resource generation via UTXO age."
-      - url: /build/proof-of-craft/
-        title: "Proof of Craft"
-        description: "Crafting economy — materials and items as UTXOs, recipe covenants, open order book marketplace."
       - url: /build/covenant-patterns/
         title: Covenant Patterns
         description: "Inter-Covenant Communication (ICC), Multi-Contract Flows (MCF), and Dynamic UTXO Selection for high-concurrency dApps."

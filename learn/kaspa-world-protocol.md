@@ -288,6 +288,14 @@ Every world shares one settlement layer. Every asset is natively interoperable �
 
 DAG Gate demonstrates at small scale what the full KWP stack enables at world scale. Same principles. Same architecture. More sovereign programs composing over the same chain.
 
+### More KWP Demos
+
+Three additional games built on KWP, each demonstrating different protocol capabilities:
+
+- [DAG Cards](/games/cards/) — Collectible card battler. Cards as covenant UTXOs, KWP-5 verifiable RNG battles, peer-to-peer atomic trades. Demonstrates **KWP-7 Collections**.
+- [Chain Kingdoms](/games/kingdoms/) — Hex territory control. Spatial state on-chain, multi-entity ICC combat, resource generation via UTXO age. Demonstrates **KWP-8 Spatial Schemas**.
+- [Proof of Craft](/games/craft/) — Crafting economy. Gather materials, craft items via recipe covenants, trade on an open marketplace. Demonstrates **KWP-9 Recipes**.
+
 ---
 
 ## Roadmap: Building Kaspa Worlds
