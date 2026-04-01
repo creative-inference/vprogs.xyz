@@ -19,7 +19,7 @@ The first covenant-enabling hard fork, activating KIP-9, KIP-10, KIP-13, and KIP
 - **KIP-15:** Recursive canonical transaction ordering commitment (seqcommit)
 - **KIP-9/13:** Network-level performance upgrades
 
-### Covenants++ (Targeting May 5, 2026)
+### Covenants++ (Targeting TBD)
 
 The second hard fork, announced by Yonatan Sompolinsky on December 14, 2025. Covenants++ delivers three pillars of L1 programmability:
 
