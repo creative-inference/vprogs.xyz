@@ -13,15 +13,25 @@
   PROOF OF CRAFT &mdash; KWP Demo &mdash; <a href="https://github.com/creative-inference/kwp">github.com/creative-inference/kwp</a>
 </div>
 
-<div id="terminal">
-  <div id="terminal-output"></div>
-  <div id="terminal-input" class="hidden">
-    <span class="prompt">&gt;</span>
-    <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+<div class="game-layout">
+  <div id="terminal">
+    <div id="terminal-output"></div>
+    <div id="terminal-input" class="hidden">
+      <span class="prompt">&gt;</span>
+      <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+  <div id="chain-panel">
+    <div class="cp-header">
+      <span class="cp-title">BlockDAG Activity</span>
+      <span id="chain-status"><span class="cd-off"></span> connecting...</span>
+    </div>
+    <div id="chain-feed"></div>
   </div>
 </div>
 
 <script src="../terminal.js"></script>
+<script src="../chain-panel.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/creative-inference/kwp@main/dist/kwp.browser.js"></script>
 <script>
 (function() {
@@ -379,6 +389,7 @@
     T.print(T.dim('You search the ' + mat.name + ' node...'));
     T.br();
     T.print(`  You gathered ${T.bold(qty + 'x')} ${T.gold(mat.name)} (${qualityStr(quality)} quality)`);
+    Chain.emitTx('Harvest', `${qty}x ${mat.name} — public Source covenant`);
 
     if (quality >= 4) {
       T.print(T.cyan('  ★ Exceptional find!'));
@@ -541,6 +552,7 @@
 
     const qStr = qualityStr(finalQuality);
     T.print(`  Crafted ${T.bold(item.name)} (${qStr}) — signed by ${T.gold(S.name)}`);
+    Chain.emitTx('Craft', `${item.name} — ICC: Materials + Recipe catalyst`);
 
     if (finalQuality > avgQuality) {
       T.print(T.cyan('  ★ Quality upgraded during crafting!'));
@@ -687,6 +699,7 @@
 
       T.clear();
       T.br();
+      Chain.emitTx('Sell', `${item.name} for ${price}g — ICC: Item + Order`);
       T.print(`Sold ${T.bold(item.name)} (${qualityStr(item.quality)}) for ${T.gold(price + 'g')}!`);
       T.print(`Gold: ${T.gold(S.gold + 'g')}`);
       T.br();

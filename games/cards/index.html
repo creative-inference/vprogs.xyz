@@ -14,15 +14,25 @@
 </head>
 <body class="game-page">
 <div class="game-banner">DAG CARDS &mdash; KWP Demo &mdash; <a href="https://github.com/creative-inference/kwp">github.com/creative-inference/kwp</a></div>
-<div id="terminal">
-  <div id="terminal-output"></div>
-  <div id="terminal-input" class="hidden">
-    <span class="prompt">&gt;</span>
-    <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+<div class="game-layout">
+  <div id="terminal">
+    <div id="terminal-output"></div>
+    <div id="terminal-input" class="hidden">
+      <span class="prompt">&gt;</span>
+      <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+  <div id="chain-panel">
+    <div class="cp-header">
+      <span class="cp-title">BlockDAG Activity</span>
+      <span id="chain-status"><span class="cd-off"></span> connecting...</span>
+    </div>
+    <div id="chain-feed"></div>
   </div>
 </div>
 
 <script src="../terminal.js"></script>
+<script src="../chain-panel.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/creative-inference/kwp@main/dist/kwp.browser.js"></script>
 <script>
 (function() {
@@ -308,6 +318,7 @@
         setTimeout(revealNext, 500);
       } else {
         save();
+        Chain.emitTx('Pack Open', '3 cards minted via KWP-5 RNG');
         T.print(T.green('3 new cards added to your collection!'));
         T.br();
         T.print(T.dim('[B]ack to menu  [O]pen another'));
@@ -429,6 +440,7 @@
 
       state.gold += goldReward;
       state.cards[cardIdx].xp += xpReward;
+      Chain.emitTx('Battle Won', `+${goldReward}g +${xpReward}XP — ICC: Player + Arena`);
 
       // Check level up
       const card = state.cards[cardIdx];
@@ -504,6 +516,7 @@
           state.gold -= offer.price;
           state.cards.push(offer.card);
           save();
+          Chain.emitTx('Trade', `Bought ${offer.card.name} — ICC: atomic swap`);
           T.br();
           T.print(T.green(`Bought ${T.bold(offer.card.name)} for ${offer.price}g!`));
           T.print(`Gold remaining: ${T.gold(state.gold)}`);

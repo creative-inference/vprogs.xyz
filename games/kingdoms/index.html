@@ -10,14 +10,24 @@
 </head>
 <body class="game-page">
 <div class="game-banner">CHAIN KINGDOMS — KWP Demo — <a href="https://github.com/creative-inference/kwp">github.com/creative-inference/kwp</a></div>
-<div id="terminal">
-  <div id="terminal-output"></div>
-  <div id="terminal-input" class="hidden">
-    <span class="prompt">&gt;</span>
-    <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+<div class="game-layout">
+  <div id="terminal">
+    <div id="terminal-output"></div>
+    <div id="terminal-input" class="hidden">
+      <span class="prompt">&gt;</span>
+      <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+  <div id="chain-panel">
+    <div class="cp-header">
+      <span class="cp-title">BlockDAG Activity</span>
+      <span id="chain-status"><span class="cd-off"></span> connecting...</span>
+    </div>
+    <div id="chain-feed"></div>
   </div>
 </div>
 <script src="../terminal.js"></script>
+<script src="../chain-panel.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/creative-inference/kwp@main/dist/kwp.browser.js"></script>
 <script>
 (function() {
@@ -628,6 +638,7 @@
       target.owner = 0;
       target.garrison = 5;
       state.resources -= 10;
+      Chain.emitTx('Claim Tile', `(${q},${r}) — ICC: Player + Tile`);
       T.print(T.green('Claimed (' + q + ',' + r + ')!') + ' Garrison: 5');
       endTurn();
     });
@@ -692,6 +703,7 @@
 
       target.structure = next;
       state.resources -= cost;
+      Chain.emitTx('Build', `${STRUCTURE_LABELS[next]} at (${q},${r}) — self-transition`);
       T.print(T.green('Built ' + STRUCTURE_LABELS[next] + ' at (' + q + ',' + r + ')!') + ' (+' + STRUCTURE_DEF[next] + ' defense)');
       endTurn();
     });
@@ -765,9 +777,11 @@
         opt.to.owner = 0;
         opt.to.garrison = transfer;
         opt.to.structure = 'none';
+        Chain.emitTx('Attack Won', `Captured (${opt.to.q},${opt.to.r}) — ICC: 3 tiles + battle`);
         T.print(T.green('VICTORY!') + ' You captured (' + opt.to.q + ',' + opt.to.r + ')!');
         T.print('Losses: ' + T.red(result.losses) + ' units. Garrison transferred: ' + transfer);
       } else {
+        Chain.emitTx('Attack Lost', `Failed at (${opt.to.q},${opt.to.r})`);
         const lost = opt.from.garrison;
         opt.from.garrison = Math.max(0, opt.from.garrison - result.losses);
         if (opt.from.garrison <= 0) {
@@ -906,6 +920,7 @@
     T.br();
 
     state.resources += total;
+    Chain.emitTx('Harvest', `+${total} resources from ${owned.length} tiles`);
     state.lastHarvest = state.turn;
 
     T.print('Resources now: ' + T.gold(state.resources));
