@@ -249,6 +249,10 @@ In a mature Kaspa ecosystem, most applications will use both:
 
 ---
 
+
+
+As a general architectural heuristic emerging within the developer community: **use vProgs for applications requiring frequent reads and writes to shared global state** (such as AMMs or lending pools), and **use native L1 Covenants for peer-to-peer (P2P) style interactions**. This distinction helps builders navigate Kaspa's programmability landscape and select the most efficient tool for their specific decentralized application.
+
 ### What is the Covenants++ hard fork?
 
 Covenants++ is a consensus upgrade scheduled for May 5, 2026. It activates four KIPs:
