@@ -96,6 +96,10 @@ Contributions welcome for:
 - Translations
 - Diagrams and visual explanations
 
+
+
+A broader community-led initiative is currently underway to consolidate and expand high-level documentation for Kaspa's programmability models. By bridging the learning curve between L1 Covenants (Silverscript) and off-chain vProgs, this collaborative effort aims to streamline developer onboarding and accelerate the creation of decentralized applications.
+
 ### Research
 
 The [Kaspa Research Forum](https://research.kas.pa/) is the venue for proposing and discussing research ideas. Active research areas include:
