@@ -286,3 +286,7 @@ Everything above KIP-21 in the stack (CD rules, composability, gas model, applic
 - [Execution Model](/architecture/execution-model) -- how provers use the two-anchor model
 - [KIP-21 specification](https://github.com/michaelsutton/kips/blob/kip21/kip-0021.md)
 - [vProgs Yellow Paper](https://github.com/kaspanet/research/blob/main/vProgs/vProgs_yellow_paper.pdf)
+
+## Implementation Pragmatism
+
+As the vProgs framework transitions from theory to code, developers are actively optimizing the KIP-21 implementation. Pragmatic engineering improvements—particularly storage-saving changes—are being prioritized over rigid adherence to the original KIP text. This flexible approach ensures the specification evolves organically alongside practical discoveries made during the build process.
