@@ -79,23 +79,17 @@
 
   // ── RNG helpers ──
 
-  function rngNext() {
-    state._rngAdvance++;
-    return rng.next();
-  }
-
   function rngInt(max) {
-    // Returns 0..max-1
-    return Math.floor(rngNext() * max);
+    state._rngAdvance++;
+    return rng.next(max);
   }
 
   function rngDie() {
-    // 1-6
     return rngInt(6) + 1;
   }
 
   function rngTerrain() {
-    const roll = rngNext() * 100;
+    const roll = rngInt(100);
     if (roll < 10) return 'water';
     if (roll < 25) return 'mountain';
     if (roll < 50) return 'forest';
@@ -117,7 +111,7 @@
         // Re-seed RNG from stored seed
         rng = new KWP.rng.SeededRng(state._seed);
         // Advance RNG to match saved advance count
-        for (let i = 0; i < state._rngAdvance; i++) rng.next();
+        for (let i = 0; i < state._rngAdvance; i++) rng.next(1000);
         return true;
       }
     } catch(e) { /* ignore */ }
