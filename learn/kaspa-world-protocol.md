@@ -9,7 +9,9 @@ Every attempt at persistent virtual worlds shares the same fatal flaw: a company
 
 A real shared reality requires something no company can provide: **a single source of truth that no one controls.**
 
-The Kaspa World Protocol (KWP) defines how to build persistent, trustless, globally participatory worlds on top of Kaspa's L1 — where the BlockDAG is the server, covenants are the physics, and anyone can bring their own eyes.
+The Kaspa World Protocol (KWP) is a **proposed open standard** for building persistent, trustless, globally participatory worlds on top of Kaspa's L1 — where the BlockDAG is the server, covenants are the physics, and anyone can bring their own eyes.
+
+KWP is built on the capabilities that vProgs, covenants, and DagKnight will deliver. It's a community proposal — not an official Kaspa specification — designed to explore what becomes possible when L1 programmability ships. The [reference implementation](https://github.com/creative-inference/kwp) is open source, with 9 draft standards and working code validated against live TN12 covenants.
 
 ---
 
@@ -298,6 +300,30 @@ Three additional games built on KWP, each demonstrating different protocol capab
 
 ---
 
+## Beyond Games
+
+KWP is a world protocol, not a game protocol. The same standards apply to any domain with structured on-chain state. The [KWP repo](https://github.com/creative-inference/kwp) includes schemas for:
+
+**DeFi** — A DEX order book where limit orders are covenant UTXOs that anyone can fill atomically. AMM pools enforce constant-product invariants on-chain. LP shares track proportional ownership. The same KWP-9 recipe pattern that crafts an Iron Sword also deposits collateral into a lending position.
+
+**Supply Chain** — Raw materials carry immutable supplier provenance (same `crafter` pattern from Proof of Craft). Manufacturing consumes inputs to produce products via KWP-9 recipes. Shipments track location via KWP-8 spatial coordinates. Certificates expire via `this.age` — protocol-native clock, no server.
+
+**Land Registry** — Parcels on a grid (KWP-8), just like Chain Kingdoms tiles. Ownership transfers update both parcel and deed atomically via ICC. Development permits are time-limited covenants. Zoning is an immutable constraint enforced by consensus.
+
+**Verifiable Credentials** — Credentials are covenant UTXOs with immutable issuer and subject fields. Time-limited via `this.age`. Revocable by issuer. Verification creates an on-chain record that anyone can audit. No credential database to hack.
+
+| Domain | KWP Pattern | Game Equivalent |
+|--------|------------|-----------------|
+| DEX order book | KWP-7 Collections + KWP-6 ICC fills | Proof of Craft marketplace |
+| Supply chain tracking | KWP-8 Spatial + KWP-9 Recipes | Chain Kingdoms tiles + Proof of Craft crafting |
+| Land registry | KWP-8 Spatial + KWP-4 Coordination | Chain Kingdoms territory |
+| Credentials | KWP-7 Collections + time-limited covenants | DAG Gate player registry |
+| IoT sensor networks | KWP-8 Spatial + self-transitions | Chain Kingdoms harvest (this.age) |
+
+The games stress-test the patterns. The enterprise schemas prove they generalize. Same protocol, different worlds.
+
+---
+
 ## Roadmap: Building Kaspa Worlds
 
 | Phase | Infrastructure | KWP Capability |
@@ -324,8 +350,16 @@ The Kaspa World Protocol inverts this entirely:
 - **The clients are open.** Anyone builds a frontend; everyone shares the world.
 - **Participation is permissionless.** No accounts to create, no platforms to join, no approval to seek.
 
-This is not a product announcement. It's a protocol pattern — one that emerges naturally from the infrastructure Kaspa is already building. Covenants give you enforceable rules. vProgs give you sovereign complexity. DagKnight gives you global finality. Kaspa gives you a single source of truth.
+This is not a product announcement. It's a **proposed protocol pattern** — one that emerges naturally from the infrastructure Kaspa is building. KWP is a community effort to explore what becomes possible when covenants, vProgs, and DagKnight ship. The standards are drafts. The schemas are proposals. The code is working.
+
+We're building this in the open because the best standards come from real usage, not committee design. [DAG Gate](https://dagknight.xyz) runs on KWP today. The [game demos](/games/cards/) validate new patterns. The [enterprise schemas](https://github.com/creative-inference/kwp) prove the standards generalize beyond games.
+
+Covenants give you enforceable rules. vProgs give you sovereign complexity. DagKnight gives you global finality. Kaspa gives you a single source of truth.
 
 The rest is just choosing what world to build.
 
 **Kaspa is the server. The covenants are the physics. The proofs are the trust. Bring your own eyes.**
+
+---
+
+*KWP is an open community proposal. Source: [github.com/creative-inference/kwp](https://github.com/creative-inference/kwp)*
