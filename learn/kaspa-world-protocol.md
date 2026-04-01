@@ -29,6 +29,32 @@ Every piece of this stack was designed for speed, decentralization, and verifiab
 
 ---
 
+## What KWP Is
+
+KWP is a **frontend abstraction layer** for Kaspa's covenant infrastructure. It sits between raw chain data and the applications built on top of it:
+
+```
+Any Frontend (3D client, terminal, mobile, bot)
+        ↕
+    KWP (abstraction layer)
+    ├── Entity schemas    — what entities exist and how to parse them
+    ├── State ABI         — encode/decode covenant fields
+    ├── Indexing           — find entities by type, owner, or location
+    ├── Transaction templates — build valid txs from intent
+    ├── Verifiable RNG    — deterministic randomness from PoW
+    └── Coordination      — multi-step interaction protocol
+        ↕
+Kaspa L1 (raw UTXOs, scripts, block hashes, PoW consensus)
+```
+
+Without this layer, building a Kaspa application means understanding hex offsets, OP_PUSH opcodes, sig_script construction, P2SH wrapping, and UTXO scanning by script pattern. That's covenant internals — every frontend would need to reimplement them perfectly.
+
+With KWP, a frontend developer calls `world.decodeFromScriptHex('player', scriptHex)` and gets structured data. Calls `world.encodeToScriptHex('player', template, newState)` and gets a valid script. The complexity is abstracted, not eliminated — it's still Kaspa underneath, still covenants, still UTXOs. But the interface is standard.
+
+This is what makes "bring your own frontend" practical instead of theoretical. The abstraction layer is the shared contract between chain and client. Without it, BYOF is a nice idea. With it, BYOF is an API call.
+
+---
+
 ## The KWP Stack
 
 ### Layer 0 — The BlockDAG (Consensus Reality)
