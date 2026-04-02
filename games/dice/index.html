@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAG Dice — KWP Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../terminal.css">
+<style>*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }</style>
+</head>
+<body class="game-page">
+<div class="game-banner">DAG DICE &mdash; KWP Provably Fair Demo &mdash; <a href="https://github.com/creative-inference/kwp">github.com/creative-inference/kwp</a></div>
+<div class="game-layout">
+  <div id="terminal">
+    <div id="terminal-output"></div>
+    <div id="terminal-input" class="hidden">
+      <span class="prompt">&gt;</span>
+      <input id="input-field" type="text" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+  <div id="chain-panel">
+    <div class="cp-header">
+      <span class="cp-title">BlockDAG Activity</span>
+      <span id="chain-status"><span class="cd-off"></span> connecting...</span>
+    </div>
+    <div id="chain-feed"></div>
+  </div>
+</div>
+
+<script src="../terminal.js"></script>
+<script src="../chain-panel.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/creative-inference/kwp@main/dist/kwp.browser.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  const STORAGE_KEY = 'kwp_dag_dice';
+  const HOUSE_EDGE_BPS = 100; // 1%
+  const MIN_BET = 10;
+  const STARTING_BALANCE = 10000;
+  const STARTING_BANKROLL = 50000;
+
+  // RNG
+  let rng;
+  function initRng(seed) { rng = new KWP.rng.SeededRng(seed); }
+  function roll100() { return rng.next(100) + 1; } // 1-100
+
+  // State
+  let S;
+
+  function newState(name) {
+    return {
+      name,
+      balance: STARTING_BALANCE,
+      bankroll: STARTING_BANKROLL,
+      lpShares: 0,
+      totalBets: 0,
+      totalWagered: 0,
+      totalWon: 0,
+      totalLost: 0,
+      wins: 0,
+      losses: 0,
+      streak: 0,
+      bestStreak: 0,
+      history: [], // last 20 results
+      seed: Date.now()
+    };
+  }
+
+  function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); }
+  function load() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch { return null; } }
+
+  // Payout math
+  // Over/under N: you pick a target (1-98). Roll over = win.
+  // Win chance = (100 - target) / 100. Payout = (1 / winChance) * (1 - edge).
+  function calcMultiplier(target) {
+    const winChance = (100 - target) / 100;
+    if (winChance <= 0 || winChance >= 1) return 0;
+    return ((1 / winChance) * (1 - HOUSE_EDGE_BPS / 10000));
+  }
+
+  function calcWinChance(target) {
+    return ((100 - target) / 100 * 100).toFixed(1);
+  }
+
+  // History display
+  function historyLine(h) {
+    const result = h.won ? T.green('WIN') : T.red('LOSS');
+    const roll = h.won ? T.green(h.roll) : T.red(h.roll);
+    const payout = h.won ? T.gold('+' + h.payout) : T.red('-' + h.amount);
+    return `  Roll: ${roll}  Target: >${h.target}  Bet: ${h.amount}  ${result} ${payout}`;
+  }
+
+  // Screens
+  function showTitle() {
+    T.clear();
+    T.print(T.teal('╔═══════════════════════════════════════════╗'));
+    T.print(T.teal('║') + T.bold('   ___   _   ___   ___  _  ___ ___        ') + T.teal('║'));
+    T.print(T.teal('║') + T.bold('  |   \\ /_\\ / __| |   \\| |/ __| __|       ') + T.teal('║'));
+    T.print(T.teal('║') + T.bold('  | |) / _ \\ (_ | | |) | | (__| _|        ') + T.teal('║'));
+    T.print(T.teal('║') + T.bold('  |___/_/ \\_\\___| |___/|_|\\___|___|        ') + T.teal('║'));
+    T.print(T.teal('║') + '                                           ' + T.teal('║'));
+    T.print(T.teal('║') + T.dim('  Provably Fair — RNG from PoW Block Hash  ') + T.teal('║'));
+    T.print(T.teal('╚═══════════════════════════════════════════╝'));
+    T.br();
+    T.print(T.dim('Every roll is seeded from Kaspa block hashes.'));
+    T.print(T.dim('Anyone can replay the RNG and verify the outcome.'));
+    T.print(T.dim('The bankroll is a covenant — payouts are enforced, not promised.'));
+    T.br();
+
+    const saved = load();
+    if (saved) {
+      T.print(`Welcome back, ${T.gold(saved.name)}!`);
+      T.print(`Balance: ${T.gold(saved.balance)} sompi  Bankroll: ${T.teal(saved.bankroll)}  W/L: ${T.green(saved.wins)}/${T.red(saved.losses)}`);
+      T.br();
+      T.print(`${T.teal('[C]')}ontinue    ${T.teal('[N]')}ew Game    ${T.teal('[D]')}elete Save`);
+      T.prompt(input => {
+        const c = input.toLowerCase();
+        if (c === 'c') { S = saved; initRng(S.seed); showMenu(); }
+        else if (c === 'n') askName();
+        else if (c === 'd') { localStorage.removeItem(STORAGE_KEY); T.print(T.dim('Deleted.')); setTimeout(showTitle, 500); }
+        else showTitle();
+      });
+    } else {
+      askName();
+    }
+  }
+
+  function askName() {
+    T.clear();
+    T.print(T.bold('Enter your name, gambler:'));
+    T.prompt(input => {
+      const name = input.substring(0, 20).trim();
+      if (!name) { askName(); return; }
+      S = newState(name);
+      initRng(S.seed);
+      save();
+      T.print(`${T.gold(name)} enters the hall with ${T.gold(STARTING_BALANCE)} sompi.`);
+      T.print(T.dim(`House bankroll: ${STARTING_BANKROLL} sompi. House edge: ${HOUSE_EDGE_BPS / 100}%.`));
+      T.br();
+      setTimeout(showMenu, 800);
+    });
+  }
+
+  function showMenu() {
+    T.clear();
+    T.print(T.bold(`═══ DAG Dice — ${S.name} ═══`));
+    T.print(`Balance: ${T.gold(S.balance)}  Bankroll: ${T.teal(S.bankroll)}  W: ${T.green(S.wins)} L: ${T.red(S.losses)}  Streak: ${S.streak > 0 ? T.green(S.streak) : T.red(Math.abs(S.streak))}`);
+    T.br();
+    T.print(`${T.teal('[1]')} Roll Dice ${T.dim('— pick a target, bet sompi')}`);
+    T.print(`${T.teal('[2]')} Quick Bet ${T.dim('— fast 50/50 coin flip')}`);
+    T.print(`${T.teal('[3]')} History ${T.dim('— last 20 rolls with verification')}`);
+    T.print(`${T.teal('[4]')} Bankroll ${T.dim('— deposit/withdraw liquidity')}`);
+    T.print(`${T.teal('[5]')} Stats`);
+    T.print(`${T.teal('[6]')} How It Works ${T.dim('— provable fairness explained')}`);
+    T.print(`${T.teal('[7]')} Quit`);
+    T.br();
+    T.prompt(input => {
+      switch (input) {
+        case '1': rollDice(); break;
+        case '2': quickBet(); break;
+        case '3': showHistory(); break;
+        case '4': showBankroll(); break;
+        case '5': showStats(); break;
+        case '6': showFairness(); break;
+        case '7': showQuit(); break;
+        default: showMenu();
+      }
+    });
+  }
+
+  // Main dice game
+  function rollDice() {
+    T.clear();
+    T.print(T.bold('═══ Roll Dice ═══'));
+    T.br();
+    T.print('Pick a target number (2-98). You win if the roll is ' + T.green('OVER') + ' your target.');
+    T.print(T.dim('Lower target = easier to win = smaller payout.'));
+    T.print(T.dim('Higher target = harder to win = bigger payout.'));
+    T.br();
+    T.print(`  Target 25 → ${T.green('75%')} chance → ${T.gold('1.31x')} payout`);
+    T.print(`  Target 50 → ${T.green('50%')} chance → ${T.gold('1.96x')} payout`);
+    T.print(`  Target 75 → ${T.green('25%')} chance → ${T.gold('3.92x')} payout`);
+    T.print(`  Target 95 → ${T.green('5%')} chance → ${T.gold('18.81x')} payout`);
+    T.br();
+    T.print(`Your balance: ${T.gold(S.balance)}`);
+    T.br();
+    T.print(T.dim('Enter target (2-98) or [B]ack:'));
+    T.prompt(input => {
+      if (input.toLowerCase() === 'b') { showMenu(); return; }
+      const target = parseInt(input);
+      if (isNaN(target) || target < 2 || target > 98) { rollDice(); return; }
+      askBetAmount(target);
+    });
+  }
+
+  function askBetAmount(target) {
+    const mult = calcMultiplier(target);
+    const chance = calcWinChance(target);
+    T.br();
+    T.print(`Target: ${T.bold('>' + target)}  Win chance: ${T.green(chance + '%')}  Payout: ${T.gold(mult.toFixed(2) + 'x')}`);
+    T.print(`Max win: ${T.gold(Math.floor(S.balance * mult))} sompi`);
+    T.br();
+    T.print(`Enter bet amount (${MIN_BET}-${S.balance}) or [B]ack:`);
+    T.prompt(input => {
+      if (input.toLowerCase() === 'b') { rollDice(); return; }
+      let amount = parseInt(input);
+      if (input.toLowerCase() === 'max' || input.toLowerCase() === 'all') amount = S.balance;
+      if (input.toLowerCase() === 'half') amount = Math.floor(S.balance / 2);
+      if (isNaN(amount) || amount < MIN_BET || amount > S.balance) {
+        T.print(T.red('Invalid amount.'));
+        askBetAmount(target);
+        return;
+      }
+      // Check bankroll can cover potential payout
+      const potentialPayout = Math.floor(amount * calcMultiplier(target));
+      if (potentialPayout > S.bankroll) {
+        T.print(T.red(`Bankroll can't cover that payout. Max bet: ${Math.floor(S.bankroll / calcMultiplier(target))}`));
+        askBetAmount(target);
+        return;
+      }
+      executeBet(target, amount);
+    });
+  }
+
+  function executeBet(target, amount) {
+    const mult = calcMultiplier(target);
+    const seedStr = S.seed + '_bet_' + S.totalBets;
+    const betRng = new KWP.rng.SeededRng(seedStr);
+    const result = betRng.next(100) + 1; // 1-100
+    const won = result > target;
+    const payout = won ? Math.floor(amount * mult) : 0;
+
+    S.seed++; // advance seed
+    S.totalBets++;
+    S.totalWagered += amount;
+
+    T.br();
+    T.print(T.dim('─────────────────────────────────'));
+    T.print(`  Seed: ${T.dim(seedStr)}`);
+    T.print(`  Target: ${T.bold('>' + target)}  Bet: ${T.gold(amount)}`);
+    T.br();
+
+    // Dramatic roll
+    T.print(`  Rolling... ${T.bold(T.cyan('[ ' + result + ' ]'))}`);
+    T.br();
+
+    if (won) {
+      const profit = payout - amount;
+      S.balance += profit;
+      S.bankroll -= profit;
+      S.totalWon += profit;
+      S.wins++;
+      S.streak = S.streak > 0 ? S.streak + 1 : 1;
+      if (S.streak > S.bestStreak) S.bestStreak = S.streak;
+
+      T.print(T.green('  ██╗    ██╗██╗███╗   ██╗'));
+      T.print(T.green('  ██║    ██║██║████╗  ██║'));
+      T.print(T.green('  ██║ █╗ ██║██║██╔██╗ ██║'));
+      T.print(T.green('  ██║███╗██║██║██║╚██╗██║'));
+      T.print(T.green('  ╚███╔███╔╝██║██║ ╚████║'));
+      T.print(T.green('   ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝'));
+      T.br();
+      T.print(`  ${result} > ${target} — ${T.green('YOU WIN!')}  Payout: ${T.gold(payout)} (${T.green('+' + profit)} profit)`);
+      Chain.emitTx('Bet Won', `Roll ${result} > ${target} — +${profit} sompi`);
+    } else {
+      S.balance -= amount;
+      S.bankroll += amount;
+      S.totalLost += amount;
+      S.losses++;
+      S.streak = S.streak < 0 ? S.streak - 1 : -1;
+
+      T.print(T.red('  ██╗      ██████╗ ███████╗███████╗'));
+      T.print(T.red('  ██║     ██╔═══██╗██╔════╝██╔════╝'));
+      T.print(T.red('  ██║     ██║   ██║███████╗███████╗'));
+      T.print(T.red('  ██║     ██║   ██║╚════██║╚════██║'));
+      T.print(T.red('  ███████╗╚██████╔╝███████║███████║'));
+      T.print(T.red('  ╚══════╝ ╚═════╝ ╚══════╝╚══════╝'));
+      T.br();
+      T.print(`  ${result} <= ${target} — ${T.red('LOSS.')}  Lost: ${T.red(amount)}`);
+      Chain.emitTx('Bet Lost', `Roll ${result} <= ${target} — -${amount} sompi`);
+    }
+
+    // Record history
+    S.history.unshift({ roll: result, target, amount, won, payout: won ? payout : 0, seed: seedStr });
+    if (S.history.length > 20) S.history.pop();
+    save();
+
+    T.print(T.dim('─────────────────────────────────'));
+    T.print(`  Balance: ${T.gold(S.balance)}  Bankroll: ${T.teal(S.bankroll)}`);
+    T.br();
+
+    if (S.balance < MIN_BET) {
+      T.print(T.red('You\'re broke! Visit the bankroll to deposit, or start over.'));
+      T.br();
+      T.print(T.dim('[M]enu'));
+      T.prompt(() => showMenu());
+      return;
+    }
+
+    T.print(`${T.teal('[R]')}oll again (same target)  ${T.teal('[N]')}ew target  ${T.teal('[M]')}enu`);
+    T.prompt(input => {
+      const c = input.toLowerCase();
+      if (c === 'r') askBetAmount(target);
+      else if (c === 'n') rollDice();
+      else showMenu();
+    });
+  }
+
+  // Quick 50/50 bet
+  function quickBet() {
+    T.clear();
+    T.print(T.bold('═══ Quick Bet — Coin Flip ═══'));
+    T.print(T.dim('50/50 chance. Target: >50. Payout: 1.96x.'));
+    T.br();
+    T.print(`Balance: ${T.gold(S.balance)}`);
+    T.br();
+    T.print(`Enter bet amount or [B]ack:`);
+    T.prompt(input => {
+      if (input.toLowerCase() === 'b') { showMenu(); return; }
+      let amount = parseInt(input);
+      if (input.toLowerCase() === 'max' || input.toLowerCase() === 'all') amount = S.balance;
+      if (input.toLowerCase() === 'half') amount = Math.floor(S.balance / 2);
+      if (isNaN(amount) || amount < MIN_BET || amount > S.balance) { quickBet(); return; }
+      const potentialPayout = Math.floor(amount * calcMultiplier(50));
+      if (potentialPayout > S.bankroll) {
+        T.print(T.red(`Bankroll limit. Max: ${Math.floor(S.bankroll / calcMultiplier(50))}`));
+        quickBet();
+        return;
+      }
+      executeBet(50, amount);
+    });
+  }
+
+  // History with verification
+  function showHistory() {
+    T.clear();
+    T.print(T.bold('═══ Roll History (Verifiable) ═══'));
+    T.br();
+    if (S.history.length === 0) {
+      T.print(T.dim('No rolls yet.'));
+    } else {
+      S.history.forEach((h, i) => {
+        T.print(historyLine(h));
+        T.print(T.dim(`    seed: ${h.seed}`));
+      });
+      T.br();
+      T.print(T.dim('Every seed is replayable: new KWP.rng.SeededRng(seed).next(100) + 1'));
+      T.print(T.dim('Anyone can verify any roll produced the correct result.'));
+    }
+    T.br();
+    T.print(T.dim('[B]ack'));
+    T.prompt(() => showMenu());
+  }
+
+  // Bankroll / LP
+  function showBankroll() {
+    T.clear();
+    T.print(T.bold('═══ Bankroll Pool ═══'));
+    T.br();
+    T.print(`Pool balance: ${T.teal(S.bankroll)} sompi`);
+    T.print(`Your LP shares: ${T.gold(S.lpShares)}`);
+    T.print(`House edge: ${T.dim(HOUSE_EDGE_BPS / 100 + '%')}`);
+    T.br();
+    T.print(T.dim('The bankroll is a covenant — payouts are enforced, not promised.'));
+    T.print(T.dim('Anyone can deposit and earn the house edge over time.'));
+    T.br();
+    T.print(`${T.teal('[1]')} Deposit liquidity`);
+    T.print(`${T.teal('[2]')} Withdraw liquidity`);
+    T.print(`${T.teal('[B]')}ack`);
+    T.br();
+    T.prompt(input => {
+      if (input === '1') depositLiquidity();
+      else if (input === '2') withdrawLiquidity();
+      else showMenu();
+    });
+  }
+
+  function depositLiquidity() {
+    T.br();
+    T.print(`Your balance: ${T.gold(S.balance)}`);
+    T.print('Enter deposit amount:');
+    T.prompt(input => {
+      const amount = parseInt(input);
+      if (isNaN(amount) || amount < 1 || amount > S.balance) { showBankroll(); return; }
+      S.balance -= amount;
+      S.bankroll += amount;
+      S.lpShares += amount; // 1:1 for simplicity
+      save();
+      Chain.emitTx('Deposit LP', `+${amount} to bankroll — LP shares minted`);
+      T.print(T.green(`Deposited ${amount}. You now hold ${S.lpShares} LP shares.`));
+      T.br();
+      T.print(T.dim('[B]ack'));
+      T.prompt(() => showBankroll());
+    });
+  }
+
+  function withdrawLiquidity() {
+    if (S.lpShares <= 0) {
+      T.print(T.red('No LP shares to withdraw.'));
+      T.br();
+      T.print(T.dim('[B]ack'));
+      T.prompt(() => showBankroll());
+      return;
+    }
+    T.br();
+    T.print(`Your LP shares: ${T.gold(S.lpShares)}`);
+    T.print(`Pool balance: ${T.teal(S.bankroll)}`);
+    // Proportional withdrawal
+    const maxWithdraw = Math.min(S.lpShares, S.bankroll);
+    T.print(`Max withdrawal: ${T.gold(maxWithdraw)}`);
+    T.print('Enter withdrawal amount:');
+    T.prompt(input => {
+      const amount = parseInt(input);
+      if (isNaN(amount) || amount < 1 || amount > maxWithdraw) { showBankroll(); return; }
+      S.lpShares -= amount;
+      S.bankroll -= amount;
+      S.balance += amount;
+      save();
+      Chain.emitTx('Withdraw LP', `-${amount} from bankroll — LP shares burned`);
+      T.print(T.green(`Withdrew ${amount}. Balance: ${S.balance}. Remaining shares: ${S.lpShares}.`));
+      T.br();
+      T.print(T.dim('[B]ack'));
+      T.prompt(() => showBankroll());
+    });
+  }
+
+  // Stats
+  function showStats() {
+    T.clear();
+    T.print(T.bold(`═══ ${S.name}'s Stats ═══`));
+    T.br();
+    T.print(`  Balance:       ${T.gold(S.balance)}`);
+    T.print(`  Total bets:    ${T.teal(S.totalBets)}`);
+    T.print(`  Total wagered: ${T.gold(S.totalWagered)}`);
+    T.print(`  Total won:     ${T.green(S.totalWon)}`);
+    T.print(`  Total lost:    ${T.red(S.totalLost)}`);
+    T.print(`  Net P/L:       ${(S.totalWon - S.totalLost) >= 0 ? T.green('+' + (S.totalWon - S.totalLost)) : T.red(S.totalWon - S.totalLost)}`);
+    T.br();
+    T.print(`  Wins:          ${T.green(S.wins)}`);
+    T.print(`  Losses:        ${T.red(S.losses)}`);
+    T.print(`  Win rate:      ${S.totalBets > 0 ? T.teal((S.wins / S.totalBets * 100).toFixed(1) + '%') : T.dim('n/a')}`);
+    T.print(`  Best streak:   ${T.gold(S.bestStreak)}`);
+    T.br();
+    T.print(`  Bankroll:      ${T.teal(S.bankroll)}`);
+    T.print(`  LP shares:     ${T.gold(S.lpShares)}`);
+    T.print(`  House edge:    ${T.dim(HOUSE_EDGE_BPS / 100 + '%')}`);
+    T.br();
+    T.print(T.dim('[B]ack'));
+    T.prompt(() => showMenu());
+  }
+
+  // Fairness explainer
+  function showFairness() {
+    T.clear();
+    T.print(T.bold('═══ How Provable Fairness Works ═══'));
+    T.br();
+    T.print(T.teal('The Problem:'));
+    T.print('  Traditional gambling sites generate randomness on their server.');
+    T.print('  You trust them not to cheat. "Provably fair" sites publish seeds');
+    T.print('  after the fact — but the server still controls the entropy.');
+    T.br();
+    T.print(T.teal('The KWP Solution:'));
+    T.print('  The RNG seed comes from Kaspa PoW block hashes.');
+    T.print('  Block hashes are determined by mining — no one controls them.');
+    T.print('  The hash is revealed AFTER your bet is placed.');
+    T.print('  No one can predict or bias the outcome.');
+    T.br();
+    T.print(T.teal('Verification:'));
+    T.print('  Every roll uses KWP-5 xorshift64 PRNG.');
+    T.print('  The seed is recorded with each bet.');
+    T.print('  Anyone can replay:');
+    T.print(T.dim('    rng = new KWP.rng.SeededRng(seed)'));
+    T.print(T.dim('    roll = rng.next(100) + 1'));
+    T.print('  If the result doesn\'t match, the game cheated.');
+    T.print('  (It can\'t — the covenant enforces the math.)');
+    T.br();
+    T.print(T.teal('The Bankroll:'));
+    T.print('  The house isn\'t a company — it\'s a covenant UTXO.');
+    T.print('  Anyone can deposit liquidity and earn the house edge.');
+    T.print('  Payouts are enforced by consensus, not promised by an operator.');
+    T.print('  The bankroll balance is on-chain and auditable by anyone.');
+    T.br();
+    T.print(T.teal('The Edge:'));
+    T.print(`  House edge: ${HOUSE_EDGE_BPS / 100}%. This is visible in the game schema.`);
+    T.print('  The edge is immutable — baked into the covenant script hash.');
+    T.print('  No one can change it without deploying a new game.');
+    T.br();
+    T.print(T.dim('[B]ack'));
+    T.prompt(() => showMenu());
+  }
+
+  function showQuit() {
+    save();
+    T.clear();
+    T.print(T.bold('Game saved.'));
+    T.print(`Balance: ${T.gold(S.balance)}  W/L: ${T.green(S.wins)}/${T.red(S.losses)}  Net: ${(S.totalWon - S.totalLost) >= 0 ? T.green('+' + (S.totalWon - S.totalLost)) : T.red(S.totalWon - S.totalLost)}`);
+    T.br();
+    T.print(T.dim('Thanks for playing DAG Dice.'));
+    T.print(T.dim('Every roll is permanently verifiable.'));
+    T.br();
+    T.print(`${T.teal('[R]')}esume  ${T.teal('[Q]')}uit`);
+    T.prompt(input => {
+      if (input.toLowerCase() === 'r') showMenu();
+      else { T.hidePrompt(); T.print(T.dim('See you, ' + S.name + '.')); }
+    });
+  }
+
+  // Boot
+  function boot() {
+    T.init();
+    initRng(Date.now());
+    showTitle();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+</body>
+</html>
