@@ -22,6 +22,10 @@ Community-driven testing recently identified and resolved a critical bug causing
 
 Recently, a major refactoring of the SilverScript codebase was completed (PR #91). This significant overhaul simplifies the architecture, paving the way for more stable and rapid future development of the language.
 
+
+
+Currently, an ecosystem consensus is forming to steer early development efforts toward Covenants. Because Silverscript offers a familiar, Solidity-like syntax, this strategy effectively lowers the barrier to entry, accelerating the deployment of smart contracts by providing a more accessible path than building low-level ZK-based vProgs directly.
+
 ## Opcode Refinement and Standardization
 
 The underlying native Kaspa Script is being continuously enhanced to support advanced applications. Recent developments include:
