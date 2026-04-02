@@ -197,6 +197,10 @@ Query metadata about a registered vProg.
 
 A recent enhancement to the `NotifyUtxosChanged` RPC call allows clients to synchronize UTXOs starting from a specific DAA score. This provides a critical performance and bandwidth optimization for dApps managing vProgs with vast amounts of UTXOs, such as DeFi liquidity pools.
 
+
+
+Building on this, developers are planning a major UTXO index enhancement to allow querying UTXOs by explicit DAA score ranges. This capability will further reduce bandwidth and compute requirements for dApps, making it significantly more efficient to build complex applications on Kaspa by preventing node memory overloads during state synchronization.
+
 ## Transaction Queries
 
 ### `get_transaction`
