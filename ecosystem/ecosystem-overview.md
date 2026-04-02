@@ -19,4 +19,6 @@ A thriving network requires strong connectivity and practical merchant adoption 
 - **Cross-Chain Bridges**: Igra Labs has proposed a permissionless bridge between Kaspa and Ethereum, aiming to create a decentralized alternative for moving KAS and improving exchange liquidity.
 - **Real-World Payments**: The Kasway POS (Point-of-Sale) terminal provides an open-source, Flutter-based solution designed for merchants to easily and securely accept Kaspa payments.
 
-- **Stablecoin Bridging**: Kasplex has enabled bridging for USDT and USDC from BNB Chain directly to Kaspa's L2, making it much easier to move stablecoins into the ecosystem and paving the way for future DeFi applications.
+- **Stablecoin Bridging & L2 Growth**: Kasplex has enabled bridging for USDT and USDC from BNB Chain directly to Kaspa's L2, making it much easier to move stablecoins into the ecosystem and paving the way for future DeFi applications. The Kasplex EVM L2 is seeing rapid growth, recording over 87,000 new transactions with a daily average of 2,824 txs in March.
+
+- **Ecosystem Expansion**: The Kaspa builder community is actively expanding with diverse projects building on the L1, including AppKaskad, interoperability solutions like Hyperlane, and hardware wallet integrations like Tangem.
