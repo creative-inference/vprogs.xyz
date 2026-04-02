@@ -428,6 +428,11 @@ See [ZK Verification](/architecture/zk-verification) for full details.
 
 ---
 
+
+
+**Proof System Debate:**
+An active architectural discussion is underway regarding the baseline zero-knowledge proof system. Developers are weighing whether to implement industry-standard Groth16 (G16) proofs immediately to accelerate ecosystem growth, or to prioritize Post-Quantum (PQ) cryptography from the outset to ensure long-term security. This decision is crucial for future-proofing Kaspa's smart contract capabilities.
+
 ## Testing: TN12
 
 Testnet-12 is the experimental testnet for the Covenants++ hard fork.
