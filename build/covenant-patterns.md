@@ -27,3 +27,7 @@ To provide a seamless user experience, developers are designing **Dynamic UTXO S
 *   **Miner Resolution:** Miners resolve these abstract inputs to the most recent, valid UTXOs during block template construction.
 
 This approach drastically simplifies the user experience and enables complex, high-concurrency applications like on-chain games and orderbook DEXs. To ensure network stability, Dynamic UTXO Selection is being introduced via a phased rollout, beginning with SDK-level support before moving to strict consensus-level changes.
+
+## DeFi Concurrency Solutions: Pool Splitting
+
+To address concurrency challenges inherent in the UTXO model, developers are designing application-level solutions for Decentralized Finance (DeFi) protocols. One emerging pattern is **Pool Splitting**, where a single liquidity pool (such as a DEX AMM) is distributed across multiple parallel rebalancing covenants. This allows concurrent users to trade against different UTXOs representing fractions of the same pool, minimizing state contention while background processes or arbitrageurs rebalance the fractional pools to maintain price parity.
