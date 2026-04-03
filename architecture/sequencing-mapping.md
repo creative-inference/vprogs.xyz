@@ -290,3 +290,7 @@ Everything above KIP-21 in the stack (CD rules, composability, gas model, applic
 ## Implementation Pragmatism
 
 As the vProgs framework transitions from theory to code, developers are actively optimizing the KIP-21 implementation. Pragmatic engineering improvements—particularly storage-saving changes—are being prioritized over rigid adherence to the original KIP text. This flexible approach ensures the specification evolves organically alongside practical discoveries made during the build process.
+
+## Implementation Progress
+
+A major technical milestone for Kaspa's virtual programmability layer has been reached with the opening of a pull request in `rusty-kaspa` by developer `@biryukovmaxim` for the implementation of KIP-21 (vProgs). This marks the first concrete code implementation of the partitioned sequencing commitment, transitioning the specification from theory into active node software.
