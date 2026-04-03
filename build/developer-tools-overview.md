@@ -47,3 +47,17 @@ SilverScript now officially supports source-level debugging and complex state-tr
 
 
 > **Note:** To accelerate the recent major codebase refactoring, the debugger recording feature was temporarily removed from the SilverScript compilation path. The development team plans to re-integrate this key developer tool soon as part of their iterative progress.
+
+## The Three-Layer Programmability Model
+
+To help developers navigate Kaspa's ecosystem, the community is framing programmability as a three-layer system:
+
+*   **Covenants:** Simple, L1-native local-state contracts (via Silverscript) for isolated actions and peer-to-peer flows.
+*   **ZK-Inline:** For verifying lightweight off-chain computations directly within a single transaction.
+*   **ZK-Based (vProgs):** Full off-chain execution with shared state for complex applications like rollups and heavy DeFi protocols.
+
+This mental model clarifies the developer's choice between on-chain versus off-chain logic based on specific application requirements.
+
+## Developer Experience (DevX)
+
+The Kaspa R&D community is placing a heavy emphasis on Developer Experience (DevX) for the upcoming programmability features. Dedicated contributors are actively focusing on post-covenants DevX, ensuring that the powerful tools being built—from Silverscript compilers to ZK proving pipelines—are accessible, well-documented, and ready for builders.
