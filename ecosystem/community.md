@@ -180,3 +180,6 @@ See [Repositories](/references/repos) for an annotated list of all key repos.
 
 The #KForce initiative is an organized, grassroots community effort recognized for its active contributions to growing and promoting the Kaspa ecosystem.
 
+
+### Kaspa Ecosystem Foundation (KEF)
+The Kaspa Ecosystem Foundation (KEF) actively highlights significant community-written articles, fostering a growing body of educational content that supports both newcomers and veteran ecosystem participants.
