@@ -372,6 +372,11 @@ The proving pipeline maximizes parallelism at both the execution and proof produ
 3. The **Batch Prover** collects all transaction proofs for a batch, pairs them with an SMT proof covering the batch's resources, and produces a single proof attesting to the batch's state root transition
 4. The batch proof is published as an artifact and submitted to L1
 
+
+
+
+**Early Performance Metrics:** Initial performance testing for ZK-based applications on Kaspa has yielded promising results, with developers reporting the ability to prove approximately 3,000 transactions in 4 minutes using GPU acceleration. More precise benchmarks are anticipated as the KIP-21 implementation matures.
+
 ### Guest Programming Model
 
 Guest programs use a **Solana-like API** with resources, instructions, and program contexts. The proposed framework uses a single hardcoded guest program. Once merged, upcoming milestones will add:
