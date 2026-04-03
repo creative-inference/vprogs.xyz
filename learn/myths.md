@@ -141,7 +141,7 @@ Key milestones already demonstrated:
 | Native asset ZK PoC (SP1) | **Complete** (Jan 2026) | Token issuance with ZK verification |
 | Noir inline covenant PoC | **Complete** | Sub-second proving on mobile |
 | Testnet 12 | **Live** | Covenant IDs, Blake3, ZK precompiles running |
-| Covenants++ hard fork | **Scheduled May 5, 2026** | Consensus-level foundation for vProgs |
+| Covenants++ hard fork | **Targeting ~June 2026 (Toccata hard fork)** | Consensus-level foundation for vProgs |
 
 The theoretical foundations (computation DAG, Erdos-Renyi scalability analysis, formal model) have been published and peer-reviewed on the Kaspa Research Forum. The code is open source.
 

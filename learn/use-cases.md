@@ -130,7 +130,7 @@ vProgs are being actively built. Here's what's real today and what's coming:
 | | Status |
 |---|---|
 | **Kaspa network (30k+ TPS)** | Live on mainnet |
-| **Basic programmability (Covenants++)** | Scheduled for May 5, 2026 |
+| **Basic programmability (Covenants++)** | Targeting ~June 2026 (Toccata hard fork) |
 | **Standalone vProgs (Phase 1)** | In active development |
 | **Cross-program composability (Phase 2)** | In research and design |
 

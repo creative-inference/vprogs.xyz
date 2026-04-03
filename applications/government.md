@@ -207,7 +207,7 @@ The common thread: automated service delivery where the coordination and payment
 | ZK voting | Technically feasible with vProgs infrastructure; no active deployment |
 | Central bank / wholesale CBDC | ECB Pontes Group application submitted by KII |
 | Smart city / DePIN | Architecture defined; awaits vProgs Phase 1 |
-| Kaspa Covenants++ (prerequisite) | Scheduled May 5, 2026 |
+| Kaspa Covenants++ (prerequisite) | Targeting ~June 2026 (Toccata hard fork) |
 | vProgs Phase 1 (prerequisite) | Active development |
 
 All government applications require the Covenants++ and vProgs infrastructure to be in production before deployment. The ECB Pontes engagement is the most advanced institutional interaction, representing regulatory-level evaluation rather than a production deployment.

@@ -115,7 +115,7 @@ This approach aligns with emerging regulatory frameworks:
 
 ## Programmable Financial Instruments
 
-The Covenants++ hard fork (target date TBD) introduces native assets on Kaspa L1. Combined with vProgs, this enables a new class of programmable financial instruments:
+The Covenants++ hard fork (the "Toccata" hard fork, targeting ~June 2026) introduces native assets on Kaspa L1. Combined with vProgs, this enables a new class of programmable financial instruments:
 
 ### Tokenized Securities
 

@@ -53,7 +53,7 @@ Michael Sutton (Kaspa Core) described this as "a highly mature canonical bridge 
 
 The PoC is documented: the [ZK Rollup PoC Book](https://biryukovmaxim.github.io/rusty-kaspa/ch01-introduction.html) and [source branch](https://github.com/biryukovmaxim/rusty-kaspa/tree/zk-rollup-covenant-example) are publicly available.
 
-### Native Assets (Shipping with Covenants++ on May 5, 2026)
+### Native Assets (Shipping with Toccata (Covenants++) ~June 2026)
 
 First-class token support activates with Covenants++. A ZK proof-of-concept using SP1 was demonstrated by Ori Newman on January 6, 2026. Native assets are explicitly positioned as a stepping stone -- vProgs will be the canonical token layer -- but they establish L1 liquidity that DeFi protocols can build on from day one.
 
@@ -231,7 +231,7 @@ The Ethereum L2 ecosystem has scale and existing deployment. vProgs has architec
 | ZK covenant rollup PoC (TN12) | Demonstrated February 2026 |
 | Native asset ZK PoC | Demonstrated January 2026 |
 | Inline ZK covenants (Noir) | Active development |
-| Native assets on L1 | Shipping May 5, 2026 (Covenants++) |
+| Native assets on L1 | Shipping ~June 2026 (Toccata) |
 | Standalone vProgs Phase 1 | Active development; no confirmed ship date |
 | Synchronous composability Phase 2 | Research and design phase |
 | Full prover market | Phase 2 |

@@ -200,7 +200,7 @@ This is more complex to deploy (it requires both parties to have vProgs on the s
 | Initiative | Status |
 |------------|--------|
 | OliveChain pilot | Named pilot; architecture defined; not live |
-| Kaspa Covenants++ (prerequisite) | Scheduled May 5, 2026 |
+| Kaspa Covenants++ (prerequisite) | Targeting ~June 2026 (Toccata hard fork) |
 | vProgs Phase 1 (required for enforcement logic) | Active development |
 | vProgs Phase 2 (cross-org composability) | Research and design |
 

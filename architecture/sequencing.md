@@ -5,7 +5,9 @@ description: "Learn how KIP-21 replaces monolithic sequencing with partitioned l
 section: architecture
 ---
 
-KIP-21 is a consensus-level proposal authored by Michael Sutton that specifies replacing Kaspa's monolithic per-chain-block sequencing commitment with a **partitioned lane-based commitment scheme**. It describes the foundational infrastructure that vProgs will plug into -- not the vProgs specification itself, but the consensus plumbing that makes vProgs possible.
+KIP-21 is a consensus-level proposal authored by Michael Sutton that replaces Kaspa's monolithic per-chain-block sequencing commitment with a **partitioned lane-based commitment scheme**. It is the foundational infrastructure that vProgs will plug into -- not the vProgs specification itself, but the consensus plumbing that makes vProgs possible.
+
+**Status (April 2026):** Fully implemented with strong performance by Maxim Biryukov, pending thorough review. Ships with the Toccata hard fork (~June 5–20, 2026). KIP-21 is already future-compatible with the CD commitment scheme that vProgs will require -- a key property ensuring that a ZK application only needs to prove work proportional to its own activity.
 
 ---
 

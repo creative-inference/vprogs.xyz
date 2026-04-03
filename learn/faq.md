@@ -204,11 +204,11 @@ The deployment is phased:
 - vProgs repository public -- January 2026
 
 **Upcoming:**
-- **Covenants++ hard fork**: TBD (mainnet activation of KIP-16, 17, 20, 21)
-- **Phase 1 (Standalone vProgs)**: following Covenants++ activation, dependent on DagKnight and remaining infrastructure
+- **Toccata hard fork (Covenants++)**: Feature freeze April 15, mainnet ~June 5–20, 2026 (KIP-16, 17, 20, 21)
+- **Phase 1 (Standalone vProgs)**: following Toccata activation
 - **Phase 2 (Full Synchronous Composability)**: after Phase 1 is stable, timeline TBD
 
-The Covenants++ hard fork is the critical near-term milestone. It activates the ZK verification opcodes, covenant IDs, lane-based sequencing, and other consensus primitives that vProgs build on.
+The Toccata hard fork is the critical near-term milestone. It activates the ZK verification opcodes, covenant IDs, lane-based sequencing, and other consensus primitives that vProgs build on.
 
 ---
 
@@ -253,9 +253,9 @@ In a mature Kaspa ecosystem, most applications will use both:
 
 As a general architectural heuristic emerging within the developer community: **use vProgs for applications requiring frequent reads and writes to shared global state** (such as AMMs or lending pools), and **use native L1 Covenants for peer-to-peer (P2P) style interactions**. This distinction helps builders navigate Kaspa's programmability landscape and select the most efficient tool for their specific decentralized application.
 
-### What is the Covenants++ hard fork?
+### What is the Toccata hard fork?
 
-Covenants++ is a consensus upgrade (target date TBD) that prioritizes correctness and stability. It activates four KIPs:
+Toccata (officially "Covenants++") is the upcoming consensus upgrade targeting ~June 5–20, 2026 (feature freeze April 15). Named in Kaspa's harmonic tradition, it activates four KIPs:
 
 | KIP | What It Does |
 |-----|-------------|

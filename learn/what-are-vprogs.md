@@ -179,7 +179,7 @@ vProgs do not exist in isolation. They build on a stack of consensus upgrades:
 | **Language** | Silverscript (L1 covenant contracts) | Experimental |
 | **Applications** | vProgs (sovereign programs) | Phase 1 active -- ZK proving pipeline in review |
 
-The **Covenants++ hard fork** (May 5, 2026) activates the foundational KIPs (16, 17, 20, 21) that make vProgs possible. Silverscript provides the complementary local-state covenant layer, handling UTXO-level rules while vProgs handle shared-state application logic.
+The **Toccata hard fork** (Covenants++, ~June 2026) activates the foundational KIPs (16, 17, 20, 21) that make vProgs possible. Silverscript provides the complementary local-state covenant layer, handling UTXO-level rules while vProgs handle shared-state application logic.
 
 ---
 

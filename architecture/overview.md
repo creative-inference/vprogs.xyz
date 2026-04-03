@@ -244,17 +244,33 @@ The BlockDAG's parallel block confirmation handles sequencing throughput. vProgs
 
 The vProgs rollout follows a deliberate phasing strategy:
 
-### Phase 1: Standalone vProgs
+### The Toccata Hard Fork (~June 5–20, 2026)
+
+The upcoming **Toccata** hard fork is a significant milestone on the road to vProgs. It brings two programmability paths: native L1 covenant programming via Silverscript, and based ZK applications via ZK verification opcodes and KIP-21's partitioned sequencing architecture. The current focus is on standalone based ZK applications, which communicate via L1 proof-based bridging rather than synchronous composition.
+
+### The Four Building Blocks
+
+Hans Moog (April 2026) outlined the four building blocks for the full vProgs vision:
+
+1. **Runtime** -- efficiently drive state transitions (**done**)
+2. **Proving** -- prove the activity of that runtime (**done**)
+3. **L1 Settlement** -- settle proofs on L1 using covenants (**in progress** -- Toccata)
+4. **Meta-program** -- orchestrate user-deployed guests for composability (**future**)
+
+Step 3 already enables programmability, but cross-app interactions go through L1. Each milestone has taken a few weeks so far.
+
+### Phase 1: Standalone vProgs (steps 1-3, Toccata era)
 
 - Each vProg operates as an independent sovereign program
 - Bridges to L1 via ZK proofs through the canonical bridge
 - L1 has no notion of accounts -- only aware of the overall vProg entity through its L1 covenant
-- The "degenerate" CD commit scheme groups activity by programs/subnets (not accounts)
-- Proving in O(program activity) time via KIP-21
+- KIP-21 enables proving in O(program activity) time -- already future-compatible with the CD commitment scheme vProgs will require
+- Apps interact through L1
 - **ZK proving pipeline proposed (March 2026, PRs in review):** Full pipeline from transaction execution through batch proof generation to state root verification, with RISC Zero as first backend and a Solana-like guest programming API
 
-### Phase 2: Full Synchronous Composability
+### Phase 2: Full Synchronous Composability (step 4, post-Toccata)
 
+- Meta-program that invokes and orchestrates user-deployed guests
 - Extended Computation DAG with per-account modeling
 - Cross-vProg atomic transactions via concise witnesses
 - Full CD with account-level state vertices
@@ -268,7 +284,7 @@ The vProgs rollout follows a deliberate phasing strategy:
 The vProgs architecture builds on two hard forks:
 
 - **Crescendo (activated):** KIP-9 (storage mass), KIP-10 (introspection opcodes), KIP-13 (transient mass), KIP-15 (sequencing commitments), plus 10 BPS
-- **Covenants++ (May 5, 2026):** KIP-16 (ZK verification), KIP-17 (covenant opcodes), KIP-20 (covenant IDs), KIP-21 (partitioned sequencing)
+- **Toccata (~June 5–20, 2026):** KIP-16 (ZK verification), KIP-17 (covenant opcodes), KIP-20 (covenant IDs), KIP-21 (partitioned sequencing)
 
 For the complete covenant infrastructure, see [Covenant Stack](/architecture/covenants).
 

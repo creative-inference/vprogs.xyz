@@ -106,7 +106,7 @@ All KII projects are being developed in anticipation of vProgs reaching producti
 | Milestone | Status |
 |-----------|--------|
 | Kaspa mainnet (30,000+ TPS target) | Live |
-| Covenants++ hard fork | Scheduled May 5, 2026 |
+| Covenants++ hard fork | Targeting ~June 2026 |
 | ZK covenant rollup PoC (TN12) | Completed February 2026 |
 | vProgs Phase 1 (standalone programs) | Active development |
 | vProgs Phase 2 (synchronous composability) | Research and design |

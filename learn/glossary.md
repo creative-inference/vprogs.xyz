@@ -64,7 +64,7 @@ A group of cooperating contracts that share a single KIP-20 Covenant ID but serv
 A native protocol-level identifier that tracks a covenant UTXO's lineage (introduced by KIP-20). Before covenant IDs, proving that a UTXO descended from a specific covenant required expensive recursive lineage proofs. Covenant IDs eliminate this overhead.
 
 ### Covenants++
-The upcoming Kaspa hard fork (target date TBD). It activates KIP-16 (ZK verification opcodes), KIP-17 (extended covenant opcodes), KIP-20 (covenant IDs), and KIP-21 (partitioned sequencing commitment). This is the foundational consensus upgrade that makes vProgs possible.
+The upcoming Kaspa hard fork (officially named "Toccata," targeting ~June 5–20, 2026). It activates KIP-16 (ZK verification opcodes), KIP-17 (extended covenant opcodes), KIP-20 (covenant IDs), and KIP-21 (partitioned sequencing commitment). This is the foundational consensus upgrade that makes vProgs possible.
 
 ### Crescendo
 The previous major Kaspa hard fork (KIP-14). Increased block production from 1 BPS to 10 BPS and activated foundational KIPs including KIP-9 (storage mass), KIP-10 (transaction introspection), KIP-13 (transient storage mass), and KIP-15 (sequencing commitments). Already activated on mainnet.

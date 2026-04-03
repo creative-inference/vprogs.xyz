@@ -20,7 +20,7 @@ Whether you are writing your first covenant in Silverscript or architecting a fu
 | Component | Status | Notes |
 |-----------|--------|-------|
 | Kaspa L1 BlockDAG (10 BPS) | **Live** | Mainnet, DagKnight consensus |
-| Covenants++ Hard Fork | **Scheduled May 5, 2026** | KIP-16, KIP-17, KIP-20, KIP-21 |
+| Covenants++ Hard Fork | **Targeting ~June 5–20, 2026 (Toccata)** | KIP-16, KIP-17, KIP-20, KIP-21 |
 | Silverscript | **Experimental (TN12)** | Compiles to native Kaspa Script |
 | vProgs Repo | **Public** | [github.com/kaspanet/vprogs](https://github.com/kaspanet/vprogs) |
 | Phase 1: Standalone vProgs | **In Development** | Sovereign programs, ZK bridge to L1 |

@@ -15,7 +15,7 @@ The KIPs listed here fall into two groups:
 
 1. **Crescendo KIPs** (KIP-9, KIP-10, KIP-13, KIP-14, KIP-15) -- activated in the Crescendo hard fork, providing the foundational primitives (transaction introspection, sequencing commitments, 10 BPS).
 
-2. **Covenants++ KIPs** (KIP-16, KIP-17, KIP-20, KIP-21) -- targeting the Covenants++ hard fork (May 5, 2026), adding ZK verification, covenant scripts, covenant identity, and partitioned sequencing for vProgs.
+2. **Covenants++ KIPs** (KIP-16, KIP-17, KIP-20, KIP-21) -- targeting the Covenants++ hard fork (~June 2026, "Toccata"), adding ZK verification, covenant scripts, covenant identity, and partitioned sequencing for vProgs.
 
 ---
 

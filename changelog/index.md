@@ -67,7 +67,7 @@ For deeper technical context, see the [R&D Channel Insights](/changelog/rnd-insi
 
 ## Upcoming
 
-### Covenants++ Hard Fork -- Targeting May 5, 2026
+### Covenants++ Hard Fork -- Targeting ~June 5–20, 2026 ("Toccata")
 
 The next major milestone. Activates covenants, ZK verification precompiles, RTD support, covenant IDs, native assets, and Silverscript. See the [Development Roadmap](/ecosystem/roadmap) for full details.
 

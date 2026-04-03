@@ -172,7 +172,7 @@ vProgs can encode multi-condition settlement: payment releases when signature fr
 | EigenFlow (market-making framework) | Whitepaper published on Zenodo |
 | KasUnion (credit union DeFi) | Described initiative; development underway |
 | K-MIF (mobility insurance) | Described initiative; development underway |
-| Kaspa Covenants++ (prerequisite) | Scheduled May 5, 2026 |
+| Kaspa Covenants++ (prerequisite) | Targeting ~June 2026 (Toccata hard fork) |
 | vProgs Phase 1 (prerequisite) | Active development |
 
 ---

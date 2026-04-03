@@ -2,10 +2,10 @@
 layout: page
 title: "Development Roadmap"
 section: ecosystem
-description: "Kaspa vProgs development roadmap from Crescendo through Covenants++ to full programmability. Phased rollout timeline with DagKnight and ZK milestones."
+description: "Kaspa vProgs development roadmap from Crescendo through the Toccata hard fork to full programmability. Phased rollout timeline with DagKnight and ZK milestones."
 ---
 
-Kaspa is evolving from a pure proof-of-work digital currency into a universal programmable settlement layer. Two major concurrent upgrades drive this transformation: **DagKnight** (consensus) and **vProgs** (programmability). This page tracks the phased rollout from foundational consensus changes through to a full application ecosystem.
+Kaspa is evolving from a pure proof-of-work digital currency into a universal programmable settlement layer. The upcoming **Toccata hard fork** brings two new programmability paths, while **DagKnight** provides the consensus foundation. This page tracks the phased rollout from foundational consensus changes through to a full application ecosystem.
 
 ---
 
@@ -13,29 +13,59 @@ Kaspa is evolving from a pure proof-of-work digital currency into a universal pr
 
 ### Crescendo (Activated)
 
-The first covenant-enabling hard fork, activating KIP-9, KIP-10, KIP-13, and KIP-15. Crescendo brought the 10 BPS upgrade and laid the groundwork for transaction introspection and sequencing commitments -- the primitives that Covenants++ and vProgs build upon.
+The first covenant-enabling hard fork, activating KIP-9, KIP-10, KIP-13, and KIP-15. Crescendo brought the 10 BPS upgrade and laid the groundwork for transaction introspection and sequencing commitments -- the primitives that Toccata and vProgs build upon.
 
 - **KIP-10:** Transaction introspection opcodes and 8-byte arithmetic
 - **KIP-15:** Recursive canonical transaction ordering commitment (seqcommit)
 - **KIP-9/13:** Network-level performance upgrades
 
-### Covenants++ (Targeting TBD)
+### Toccata (Covenants++) — Feature Freeze April 15, Mainnet ~June 5–20, 2026
 
-The second hard fork, announced by Yonatan Sompolinsky on December 14, 2025. Covenants++ delivers three pillars of L1 programmability:
+The second hard fork, officially named **"Toccata"** in keeping with Kaspa's harmonic tradition. Initiated by Ori Newman as an effort to introduce covenants, it has expanded into Kaspa's full dual programmability landscape. [Michael Sutton's Toccata outlook (April 3, 2026)](https://medium.com/@michaelsuttonil/kaspa-covenants-toccata-hard-fork-outlook-a4d81a40900c) details the scope and rollout plan.
+
+Toccata brings two programmability pillars:
 
 | Pillar | Description | Key KIPs |
 |--------|-------------|----------|
-| **Covenants** | Limited programmability framework for native assets, smart money management | KIP-17, KIP-20 |
-| **ZK Verifier** | On-chain verification of zero-knowledge proofs (Groth16 + RISC Zero) | KIP-16 |
-| **RTD Support** | Real-time data -- covenant type for inspecting and aggregating miner payloads | -- |
+| **Native L1 covenant programming** | Peer-to-peer applications including complex stateful multi-contract flows, grounded in local UTXO computation via [Silverscript](/architecture/silverscript) | KIP-17, KIP-20 |
+| **Based ZK applications** | ZK verification opcodes, sequencing commitment access, and partitioned sequencing architecture for based ZK apps including canonical bridging | KIP-16, KIP-21 |
 
-Additional features shipping with this fork:
+#### Already implemented (on TN12)
 
-- Covenant IDs (KIP-20)
-- Blake3-based sequencing commitment opcode
-- ZK verify precompiles and opcodes for Groth16 and RISC Zero
-- Native assets support (ZK PoC demonstrated using SP1 by Ori Newman)
-- Silverscript -- the L1 covenant language (announced Feb 10, 2026)
+- Extended script-engine opcode support -- the main covenants backbone (KIP-17)
+- Covenant IDs for lineage management as a consensus + engine feature (KIP-20)
+- ZK opcodes with zk-verifier precompile subsystem (KIP-16, by Alexander Safstrom):
+  - Flexible Groth16 verifier with arbitrary parameters and verification keys
+  - RISC Zero STARK verifier (activated on TN12; mainnet activation under decision)
+- Sequencing commitment access opcode -- enabling based applications that fully follow L1 sequencing
+- Silverscript -- the L1 covenant language (initiated by Ori Newman, Michael Sutton, IzioDev, and Manyfest)
+
+#### Being finalized (pre-freeze)
+
+- Final script-engine pricing policies (implemented; KIP pending)
+- KIP-21: fully implemented with strong performance, pending thorough review
+- Subnet and gas commitment support complementing KIP-21
+
+#### Key PoCs completed
+
+- Inline ZK covenants (by Maxim Biryukov)
+- Based ZK covenants with KAS canonical bridge -- full deposit-transfer-withdraw cycle (by Maxim Biryukov)
+- Native assets via ZK proof (SP1, by Ori Newman)
+
+#### Why the date moved from May 5
+
+The hard fork was originally targeted for May 5, 2026. Once ZK circuits and runtimes bind to the sequencing commitment hashing structure, later structural changes become breaking changes. The extra time ensures KIP-21's design is locked in correctly from the start.
+
+### Road from Feature Freeze to Mainnet
+
+| Step | Description |
+|------|-------------|
+| **1. Clean TN12 restart** | Restart dedicated testnet with all final features -- not simulating hard-fork activation, just a clean network with the full feature set |
+| **2. Merge to master** | Merge long-lived `covpp` branch into master -- final auditing, closing TODOs, perfecting activation logic, DB upgradability |
+| **3. TN10 test hard fork** | Simulate full mainnet-style transition on the long-term TN10 testnet -- the key rehearsal step |
+| **4. Mainnet activation** | Finalize date and hardcode once TN10 rehearsal succeeds |
+
+**Node impact:** Node requirements expected to stay roughly the same, with ~20–50% more disk space usage. Existing Kaspa APIs continue working without change.
 
 ### DagKnight (Active Development)
 
@@ -48,52 +78,62 @@ The evolution of the GHOSTDAG protocol into a parameterless adaptive consensus m
 
 ### vProgs (Phased Rollout)
 
-Native L1 programmability via off-chain execution with on-chain ZK verification. The vProgs repo went public on January 21, 2026.
+Toccata is a significant milestone on the road to vProgs, where the long-term destination is synchronously composable verifiable programs. The vProgs repo, primarily developed by Hans Moog, is already implementing the runtime layer -- a highly optimized, parallel-centric execution environment for based computation over Kaspa.
 
-- **Phase 1 -- Standalone vProgs:** Sovereign programs bridging to L1 via ZK proofs, operating independently. No cross-vProg composability. No L1 account model yet. **ZK proving pipeline proposed March 2026 (8 PRs in review)** -- full proof generation from transaction execution through batch aggregation to state root verification, with RISC Zero as the first backend and a Solana-like guest programming API.
-- **Phase 2 -- Synchronous Composability:** Cross-vProg atomic transactions, concise witness mechanism, prover market infrastructure, and the full computation DAG.
+Hans Moog outlined the four building blocks required for the full vision (April 2026):
+
+| # | Building Block | Status |
+|---|---------------|--------|
+| 1 | **Runtime** -- efficiently drive state transitions | Done |
+| 2 | **Proving** -- prove the activity of that runtime | Done |
+| 3 | **L1 Settlement** -- settle proofs on L1 using covenants | **In progress** (Toccata) |
+| 4 | **Meta-program** -- orchestrate user-deployed guests for composability | Future |
+
+Step 3 already enables programmability, but cross-app interactions must go through L1. Full synchronous composability requires step 4. Each milestone has taken a few weeks so far.
+
+- **Phase 1 -- Standalone vProgs (Toccata + steps 1-3):** Sovereign programs bridging to L1 via ZK proofs, operating independently. No cross-vProg composability yet -- apps interact through L1. KIP-21 enables proving in O(program activity) time. ZK proving pipeline proposed March 2026 (8 PRs in review) with RISC Zero as the first backend and a Solana-like guest programming API.
+- **Phase 2 -- Synchronous Composability (step 4):** Meta-program for orchestrating user-deployed guests, cross-vProg atomic transactions, concise witnesses, prover market, and the full computation DAG.
 
 ---
 
 ## Development Phases
 
-### Phase 1: Core Infrastructure
+### Phase 1: Toccata Hard Fork (~June 2026) — Building Block 3
 
-Focus: Consensus-level prerequisites.
+Focus: L1 covenant settlement for ZK proofs.
 
-- DagKnight consensus implementation
-- Enhanced block ordering and sequencing
-- Network stability and performance testing
-- TN12 testnet deployment and iteration
+- Covenants++ consensus infrastructure (KIP-16, KIP-17, KIP-20)
+- Silverscript L1 covenant language
+- ZK verification opcodes and precompiles
+- KIP-21 partitioned sequencing commitments (lane-based, enabling O(activity) proving)
+- L1 covenant settlement enabling standalone based ZK applications
 
-**Status:** Active. TN12 launched January 5, 2026; reset with new features February 9, 2026.
-
-
+**Status:** Feature freeze April 15, 2026. KIP-21 fully implemented. ZK Covenant Rollup PoC completed February 19, 2026. Building blocks 1 (runtime) and 2 (proving) already done.
 
 Additionally, a new custom UDP-based block relay protocol for latency reduction is undergoing community testing. Early results from a transatlantic relay show the new protocol handling up to 50% of block propagation, demonstrating major performance gains over standard TCP relay.
 
-### Phase 2: vProgs Foundation
+### Phase 2: Standalone vProgs (post-Toccata) — Building Blocks 1-3 Complete
 
-Focus: L1 primitives for verifiable programs.
+Focus: Programmable apps that settle on L1.
 
-- Account model implementation
-- ZK proof verification on L1 (Groth16 + RISC Zero precompiles)
-- State commitment mechanism (Merkle tree structure)
-- Basic vProg deployment framework
-- L1 bridge implementation
-- KIP-21 partitioned sequencing commitments (lane-based, enabling O(activity) proving)
+- vProgs parallel-centric execution environment for based computation
+- ZK proving pipeline (RISC Zero backend, Solana-like guest API)
+- Per-app proving in O(app activity) time via KIP-21 lanes
+- SDKs and developer tooling for both programmability paths
+- Apps are programmable but interact through L1
 
-**Status:** Active. ZK Covenant Rollup PoC completed February 19, 2026 (full deposit-transfer-withdraw cycle). KIP-21 published February 24, 2026. **ZK proving pipeline proposed March 2026** -- 8 PRs in review introducing the full framework for proving arbitrary computation, with RISC Zero as the first backend.
+**Status:** Active. Runtime and proving layers done. ZK proving pipeline proposed March 2026 (8 PRs in review). vProgs repo public since January 21, 2026.
 
-### Phase 3: Composability
+### Phase 3: Synchronous Composability — Building Block 4
 
-Focus: Cross-program interaction and economic infrastructure.
+Focus: Meta-program for cross-app orchestration.
 
-- Cross-vProg atomic transactions
-- Concise witness mechanism
+- Meta-program that invokes and orchestrates user-deployed guests
+- Extended Computation DAG with per-account modeling
+- Cross-vProg atomic transactions via concise witnesses
+- Full syncompo CD commitment scheme
 - Prover market infrastructure
 - Gas model and resource management
-- Full computation DAG (the "syncompo CD" scheme)
 
 **Status:** Design phase. Depends on Phase 2 maturity.
 
@@ -101,7 +141,7 @@ Focus: Cross-program interaction and economic infrastructure.
 
 Focus: Developer tools and application layer.
 
-- Developer tools and SDKs
+- Developer tools and SDKs (ongoing, not gated on hard fork)
 - DeFi primitives (DEX, lending, vaults)
 - Enterprise integration features
 - Compliance and audit tooling
@@ -117,12 +157,13 @@ The dependency chain determines what can ship and when:
 ```
 GHOSTDAG
   --> DagKnight (ordering precision, near-instant finality)
-        --> vProgs L1 Integration (sequencing + ZK verification)
-              --> Synchronous Composability (cross-vProg atomicity)
-                    --> Application Layer (DeFi, DAOs, enterprise)
+        --> Toccata Hard Fork (covenants, ZK opcodes, KIP-21)
+              --> Standalone Based ZK Apps (vProgs runtime, canonical bridge)
+                    --> Synchronous Composability (cross-vProg atomicity)
+                          --> Application Layer (DeFi, DAOs, enterprise)
 ```
 
-Within the Covenants++ fork, dependencies include:
+Within the Toccata fork, dependencies include:
 
 - **KIP-10** (transaction introspection) enables **KIP-17** (covenant scripts)
 - **KIP-15** (seqcommit) enables **KIP-21** (partitioned seqcommit for vProgs)
@@ -137,10 +178,10 @@ Within the Covenants++ fork, dependencies include:
 |-----------|--------|------------|
 | Throughput | 30,000+ TPS | DagKnight + vProgs |
 | Finality | Near-instant | DagKnight |
-| Composability | Synchronous, atomic | vProgs Phase 2 |
-| Security | Pure PoW + ZK proofs | Covenants++ |
+| Composability | Synchronous, atomic | vProgs Phase 3 |
+| Security | Pure PoW + ZK proofs | Toccata |
 | Liquidity | Unified L1 | Native assets + vProgs |
-| Programmability | Native vProgs | vProgs Phase 1+ |
+| Programmability | Dual: Silverscript (L1) + vProgs (ZK) | Toccata + Phase 2 |
 
 ---
 
@@ -162,3 +203,4 @@ The roadmap explicitly targets institutional adoption:
 - [KIP Index](/references/kips) -- detailed status of each proposal
 - [Changelog](/changelog/) -- reverse-chronological development updates
 - [Sources & Links](/references/sources) -- primary research and official resources
+- [Toccata Hard-Fork Outlook -- Michael Sutton](https://medium.com/@michaelsuttonil/kaspa-covenants-toccata-hard-fork-outlook-a4d81a40900c)

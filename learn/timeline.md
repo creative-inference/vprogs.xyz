@@ -27,38 +27,62 @@ The full deposit-transfer-withdraw cycle for a ZK covenant rollup was demonstrat
 
 ---
 
-## The Next Major Milestone: Covenants++ Hard Fork
+## The Next Major Milestone: Toccata Hard Fork (Covenants++)
 
-**Target: May 5, 2026**
+**Feature freeze: April 15, 2026**
+**Mainnet target: ~June 5–20, 2026**
 
-This is the mainnet hard fork that enables L1 programmability. Announced by Yonatan Sompolinsky on December 14, 2025, Covenants++ delivers three pillars:
+The Covenants++ upgrade has been officially named **"Toccata"** — in keeping with Kaspa's harmonic naming tradition. Announced by Yonatan Sompolinsky on December 14, 2025 and detailed in [Michael Sutton's Toccata outlook (April 3, 2026)](https://medium.com/@michaelsuttonil/kaspa-covenants-toccata-hard-fork-outlook-a4d81a40900c), Toccata brings two programmability pillars:
 
 | Pillar | What It Enables |
 |--------|-----------------|
-| **Covenants** | Programmable spending conditions, native assets, smart money management |
-| **ZK Verifier** | On-chain verification of zero-knowledge proofs |
-| **RTD Support** | Real-time data — covenants that inspect miner payloads |
+| **Native L1 covenant programming** | Peer-to-peer applications via Silverscript, including complex stateful multi-contract flows |
+| **Based ZK applications** | ZK verification opcodes, sequencing commitment access, and KIP-21's partitioned architecture for based ZK apps and canonical bridging |
 
-After this fork activates, developers can deploy covenants and ZK-verified applications on Kaspa mainnet. This is the inflection point — the moment Kaspa goes from "fast PoW currency" to "programmable settlement layer."
+After Toccata activates, developers can deploy covenants and ZK-verified applications on Kaspa mainnet. This is the inflection point — the moment Kaspa goes from "fast PoW currency" to "programmable settlement layer."
 
-### What ships with the fork:
+### What ships with Toccata:
 
-- Transaction introspection opcodes (proposed in KIP-10, KIP-17)
-- Covenant identity system (proposed in KIP-20)
-- ZK verification opcodes for Groth16 and RISC Zero (proposed in KIP-16)
-- Blake3-based sequencing commitment
+- Extended script-engine opcode support (KIP-17)
+- Covenant identity system (KIP-20)
+- ZK verification opcodes for Groth16 and RISC Zero (KIP-16, by Alexander Safstrom)
+- KIP-21 partitioned sequencing commitment (fully implemented)
+- Blake3-based sequencing commitment opcode
 - Silverscript language and compiler
 - Native asset support
+- Script-engine pricing policies
 
 ---
 
-## After Covenants++: The vProgs Phases
+### Road from feature freeze to mainnet:
 
-### Phase 1: Standalone vProgs
+| Step | Description |
+|------|-------------|
+| Clean TN12 restart | All final features on a fresh network |
+| Merge to master | Final auditing, activation logic, DB upgradability |
+| TN10 test hard fork | Full mainnet-style transition rehearsal |
+| Mainnet activation | Date finalized after successful TN10 rehearsal |
 
-**Timeline: Following Covenants++ activation**
+Node requirements stay roughly the same, with ~20–50% more disk space usage. Existing Kaspa APIs continue working without change.
 
-Individual programs that execute off-chain and verify on L1. Each vProg operates independently with its own state.
+---
+
+## After Toccata: The vProgs Phases
+
+Hans Moog (April 2026) laid out the four building blocks for the full vProgs vision:
+
+1. **Runtime** — efficiently drive state transitions (**done**)
+2. **Proving** — prove the activity of that runtime (**done**)
+3. **L1 Settlement** — settle proofs on L1 using covenants (**in progress** — Toccata)
+4. **Meta-program** — orchestrate user-deployed guests for composability (**future**)
+
+Step 3 already enables programmability. Each milestone has taken a few weeks so far, suggesting continued rapid progress.
+
+### Phase 1: Standalone vProgs (steps 1-3 complete)
+
+**Timeline: Following Toccata activation**
+
+Individual programs that execute off-chain and verify on L1. Each vProg operates independently with its own state. Cross-app interactions go through L1.
 
 What you can build:
 - ZK covenant rollups (the pattern already proven on TN12)
@@ -68,15 +92,15 @@ What you can build:
 - Any application that needs verifiable off-chain computation
 
 What's not yet available:
-- Cross-vProg atomic transactions
+- Cross-vProg atomic transactions (requires step 4)
 - Shared state between programs
 - The full prover market
 
-### Phase 2: Synchronous Composability
+### Phase 2: Synchronous Composability (step 4)
 
 **Timeline: After Phase 1 matures**
 
-This is the full vision — multiple vProgs interacting atomically in a single transaction, with unified liquidity across the entire network.
+This is the full vision — a meta-program that invokes and orchestrates user-deployed guests, enabling multiple vProgs to interact atomically in a single transaction with unified liquidity.
 
 What it unlocks:
 - Flash loan from lending vProg, swap on DEX vProg, stake on yield vProg — all in one atomic transaction
@@ -84,6 +108,7 @@ What it unlocks:
 - A composable DeFi stack rivaling Ethereum's, but at 30,000+ TPS with instant finality
 
 Key infrastructure still in design:
+- Meta-program for guest orchestration and constraint enforcement
 - Concise witness mechanism for cross-vProg reads
 - Continuous Account Dependency (CAD) for parallel execution
 - Parallelism-aware gas model
@@ -114,7 +139,7 @@ Understanding what depends on what explains why this is phased:
 Crescendo (done)
   |
   v
-Covenants++ hard fork (May 5, 2026)
+Toccata hard fork (~June 5-20, 2026)
   |
   v
 DagKnight consensus (active development)
@@ -159,8 +184,8 @@ Shipping in phases is a deliberate choice, not a delay:
 
 ## The Bottom Line
 
-Covenants++ is shipping to mainnet around May 2026. That's the real starting line -- the moment developers can deploy ZK-verified applications on Kaspa L1. Phase 1 standalone vProgs follow, with the full composable ecosystem building from there.
+Toccata is shipping to mainnet around June 2026. That's the real starting line -- the moment developers can deploy ZK-verified applications on Kaspa L1. Phase 1 standalone vProgs follow, with the full composable ecosystem building from there.
 
 The architecture is not theoretical. The ZK proof verification works. The covenant rollup works. The testnet is live. What remains is hardening, auditing, and activating on mainnet.
 
-If you want to build, start now. The [quickstart guide](/build/quickstart) and [tutorials](/build/tutorials/) are ready. Everything you prototype on TN12 today will translate directly to mainnet after Covenants++ activates.
+If you want to build, start now. The [quickstart guide](/build/quickstart) and [tutorials](/build/tutorials/) are ready. Everything you prototype on TN12 today will translate directly to mainnet after Toccata activates.

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Covenant Stack"
-description: "Understand Kaspa's covenant KIP stack from Crescendo through Covenants++ hard fork -- UTXO spending conditions that underpin Silverscript and vProgs."
+description: "Understand Kaspa's covenant KIP stack from Crescendo through the Toccata hard fork -- UTXO spending conditions that underpin Silverscript and vProgs."
 section: architecture
 ---
 
@@ -9,7 +9,7 @@ section: architecture
 
 Covenants are spending conditions that UTXOs carry forward. Instead of only checking *who* can spend a coin (via signature), a covenant enforces *how* the coin must be spent -- where funds go next, when they can move, and what the next transaction must look like. In Kaspa, covenants are the consensus layer that both [Silverscript](/architecture/silverscript) (local-state contracts) and vProgs (shared-state programs) build on top of.
 
-This page covers the full KIP stack from the Crescendo foundation through the Covenants++ hard fork, the five milestones toward vProgs, and the current testing status on TN12.
+This page covers the full KIP stack from the Crescendo foundation through the Toccata hard fork (Covenants++), the five milestones toward vProgs, and the current testing status on TN12.
 
 ---
 
@@ -19,7 +19,7 @@ Kaspa's covenant infrastructure is built across multiple KIPs, activated in two 
 
 ```
 +-------------------------------------------------------------------+
-|              COVENANTS++ HARD FORK -- May 5, 2026                  |
+|              TOCCATA HARD FORK -- ~June 5-20, 2026                 |
 |   +------------+-------------+------------+--------------------+   |
 |   | KIP-16     | KIP-17      | KIP-20     | KIP-21             |   |
 |   | ZK verify  | Auth/Cov    | Covenant   | Lane SeqCommit     |   |
@@ -109,9 +109,9 @@ OP_ENDIF
 
 ---
 
-## Phase 2: Covenants++ Hard Fork -- May 5, 2026
+## Phase 2: Toccata Hard Fork (Covenants++) — ~June 5–20, 2026
 
-The upcoming hard fork extends covenants with four major KIPs:
+The upcoming hard fork, officially named **"Toccata,"** extends covenants with four major KIPs. Feature freeze is April 15, 2026.
 
 ### KIP-16: ZK Verification Opcodes
 
@@ -392,7 +392,7 @@ Reduces proving from O(global activity) to O(vProg activity):
 +-------------------------------------------------------------------+
                               |
 +-------------------------------------------------------------------+
-|   Milestone 5: Optimal SeqCommit (KIP-21)            [SPECIFIED]   |
+|   Milestone 5: Optimal SeqCommit (KIP-21)            [IMPLEMENTED] |
 |   (O(vProg activity) proving via lane partitions)                  |
 +-------------------------------------------------------------------+
                               |
@@ -443,7 +443,10 @@ Testnet-12 is the experimental testnet for the Covenants++ hard fork.
 |-------|------|
 | TN12 launch | January 5, 2026 |
 | TN12 reset (with new features) | February 9, 2026 |
-| Covenants++ mainnet activation | May 5, 2026 |
+| Feature freeze | April 15, 2026 |
+| Clean TN12 restart (all final features) | After feature freeze |
+| TN10 test hard fork (mainnet rehearsal) | Before mainnet |
+| Toccata mainnet activation | ~June 5–20, 2026 |
 
 ### Features on TN12
 
@@ -482,7 +485,7 @@ The complete architecture from base layer to application:
 |    Milestone 1: Inline ZK Covenant                                 |
 |    (User submits proof + action as one unit)                       |
 +-------------------------------------------------------------------+
-|                COVENANTS++ HARD FORK -- May 5, 2026                |
+|                TOCCATA HARD FORK -- ~June 2026                     |
 |   +------------+-------------+------------+--------------------+   |
 |   | KIP-16     | KIP-17      | KIP-20     | KIP-21             |   |
 |   | ZK verify  | Auth/Cov    | Covenant   | Lane SeqCommit     |   |

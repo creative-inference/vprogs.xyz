@@ -209,7 +209,7 @@ For a working ZK covenant example, see the [ZK Covenant Rollup PoC](https://biry
 | Milestone | Target |
 |-----------|--------|
 | TN12 active (covenant testing) | Now |
-| Covenants++ hard fork (mainnet) | May 5, 2026 |
+| Covenants++ hard fork (mainnet) | ~June 5–20, 2026 (Toccata) |
 | Silverscript mainnet readiness | May 2026+ |
 | vProgs Phase 1 (standalone) | TBD |
 | vProgs Phase 2 (syncompo) | TBD |

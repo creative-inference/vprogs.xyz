@@ -41,10 +41,10 @@ Silverscript and vProgs are **not competing** -- they occupy complementary roles
 |     covenants -- ACTIVE)         |     via vProgs -- FUTURE)       |
 +-------------------------------------------------------------------+
 |           KIP-21: Partitioned Sequencing Commitment                |
-|           (Lane-based commitments -- SPECIFIED)                    |
+|           (Lane-based commitments -- IMPLEMENTED)                  |
 +-------------------------------------------------------------------+
-|        Covenants++ (KIP-16, KIP-17, KIP-20)                       |
-|        (Covenant IDs, opcodes -- ON TN12)                          |
+|        Toccata / Covenants++ (KIP-16, KIP-17, KIP-20)             |
+|        (Covenant IDs, opcodes -- mainnet ~June 2026)               |
 +-------------------------------------------------------------------+
 |           Kaspa L1 BlockDAG + DagKnight Consensus                  |
 +-------------------------------------------------------------------+
@@ -312,7 +312,7 @@ See [Multi-Contract Flows](/architecture/covenants#multi-contract-flows-mcf) for
 
 ## The Covenant Foundation
 
-Silverscript is built on top of Kaspa's [Covenants++](/architecture/covenants) hard fork, the same consensus infrastructure that KIP-21 extends for vProgs:
+Silverscript is built on top of Kaspa's [Toccata](/architecture/covenants) hard fork (Covenants++), the same consensus infrastructure that KIP-21 extends for vProgs:
 
 ```
 Silverscript Source Code
@@ -393,10 +393,11 @@ These covenant-level primitives will become the **infrastructure layer** that vP
 | Milestone | Status | Date |
 |-----------|--------|------|
 | Silverscript experimental release | Live on TN12 | February 2026 |
-| Covenants++ hard fork (mainnet) | Scheduled | May 5, 2026 |
-| Silverscript mainnet readiness | Depends on hard fork | May 2026+ |
+| Toccata feature freeze | Approaching | April 15, 2026 |
+| Toccata hard fork (mainnet) | Targeted | ~June 5–20, 2026 |
+| Silverscript mainnet readiness | Ships with Toccata | ~June 2026 |
 | WASM compilation support | Planned | TBD |
-| vProgs CD specification | In progress | TBD |
+| vProgs CD specification | In progress | Post-Toccata |
 
 ---
 

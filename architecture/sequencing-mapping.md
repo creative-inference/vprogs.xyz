@@ -15,42 +15,42 @@ KIP-21 specifies the consensus plumbing that vProgs will plug into. This page ma
 
 | vProgs Concept | KIP-21 Implementation | Status |
 |---|---|---|
-| State commitment `C_p^t` (hierarchical Merkle root) | `ActiveLanesRoot(B)` -- 256-depth SMT over active lane tips | **Specified** |
-| Per-vProg state roots | Lane tip hash (`lane_tip_hash`) chained recursively per lane | **Specified** |
-| Global sequencing of operations `T` | `SeqCommit(B)` chained through selected-parent ancestry | **Specified** |
-| State finalized with instant DAG finality | `SeqCommit(B)` stored in `accepted_id_merkle_root` header field | **Specified** |
+| State commitment `C_p^t` (hierarchical Merkle root) | `ActiveLanesRoot(B)` -- 256-depth SMT over active lane tips | **Implemented** |
+| Per-vProg state roots | Lane tip hash (`lane_tip_hash`) chained recursively per lane | **Implemented** |
+| Global sequencing of operations `T` | `SeqCommit(B)` chained through selected-parent ancestry | **Implemented** |
+| State finalized with instant DAG finality | `SeqCommit(B)` stored in `accepted_id_merkle_root` header field | **Implemented** |
 
 ### Concise Witnesses
 
 | vProgs Concept | KIP-21 Implementation | Status |
 |---|---|---|
-| Concise witnesses (compact Merkle inclusion proofs) | SMT inclusion/non-inclusion proofs under `ActiveLanesRoot` | **Specified** |
-| Cross-vProg state verification | Two-anchor lane proof model | **Specified** |
-| Intermediate state provability | Lane-local compressed tip transition between anchors | **Specified** |
+| Concise witnesses (compact Merkle inclusion proofs) | SMT inclusion/non-inclusion proofs under `ActiveLanesRoot` | **Implemented** |
+| Cross-vProg state verification | Two-anchor lane proof model | **Implemented** |
+| Intermediate state provability | Lane-local compressed tip transition between anchors | **Implemented** |
 
 ### L1 Sequencing Layer
 
 | vProgs Concept | KIP-21 Implementation | Status |
 |---|---|---|
-| L1 as "traffic controller" / immutable sequencing | `SeqCommit(B)` recurrence through selected-parent chain | **Specified** |
+| L1 as "traffic controller" / immutable sequencing | `SeqCommit(B)` recurrence through selected-parent chain | **Implemented** |
 | Transactions pre-declare read/write sets | Lane extraction from `tx.subnetwork_id` (future: vProg lane families) | **Partial** |
-| Parallel processing via BlockDAG | Lanes are independent; per-lane proving is O(activity) | **Specified** |
+| Parallel processing via BlockDAG | Lanes are independent; per-lane proving is O(activity) | **Implemented** |
 
 ### Sovereign State Management
 
 | vProgs Concept | KIP-21 Implementation | Status |
 |---|---|---|
 | Each vProg owns exclusive accounts `S_p` | Each lane has its own recursive tip hash and state | **Specified** (as lanes) |
-| Mutual trustlessness between vProgs | Lanes are isolated; SMT keys are domain-separated per lane | **Specified** |
+| Mutual trustlessness between vProgs | Lanes are isolated; SMT keys are domain-separated per lane | **Implemented** |
 | STORM constants / resource regulation | Inactivity purge after threshold `F` blue-score units | **Partial** |
 
 ### Off-Chain Computation
 
 | vProgs Concept | KIP-21 Implementation | Status |
 |---|---|---|
-| ZK proof `z_p^i` attesting to state transitions | Two-anchor lane proof model consumes `SeqCommit` anchors | **Framework specified** |
-| Proof object contains state commitment | Lane tip hash chains activity digests with `MergesetContextHash` | **Specified** |
-| Prover market (permissionless provers) | Optional persistent witness store for historical SMT access | **Infrastructure specified** |
+| ZK proof `z_p^i` attesting to state transitions | Two-anchor lane proof model consumes `SeqCommit` anchors | **Implemented** |
+| Proof object contains state commitment | Lane tip hash chains activity digests with `MergesetContextHash` | **Implemented** |
+| Prover market (permissionless provers) | Optional persistent witness store for historical SMT access | **Implemented** |
 | Proof stitching (combined proofs) | Not in KIP-21 scope -- depends on CD-specific lane update rules | **Future** |
 
 ### Synchronous Composability
@@ -58,7 +58,7 @@ KIP-21 specifies the consensus plumbing that vProgs will plug into. This page ma
 | vProgs Concept | KIP-21 Implementation | Status |
 |---|---|---|
 | Cross-vProg atomic transactions | Not in KIP-21 scope -- requires CD layer | **Future** |
-| Concise witnesses for cross-vProg reads | SMT proofs provide the mechanism; CD rules define usage | **Infrastructure ready** |
+| Concise witnesses for cross-vProg reads | SMT proofs provide the mechanism; CD rules define usage | **Implemented (infrastructure)** |
 | CAD (Continuous Account Dependency) | Not in KIP-21 scope | **Future** |
 | Weighted Area gas functions | Not in KIP-21 scope | **Future** |
 
@@ -72,7 +72,7 @@ KIP-21 specifies the consensus plumbing that vProgs will plug into. This page ma
 +------------------+------------------------------------------+
 |                  | SeqCommit(B) recurrence                  |
 |                  | ActiveLanesRoot (SMT)                    |
-|   SPECIFIED      | Lane tip hash chaining                   |
+|   IMPLEMENTED    | Lane tip hash chaining                   |
 |                  | Two-anchor proof model                   |
 |                  | MergesetContextHash                      |
 |                  | MinerPayloadRoot                         |
@@ -254,7 +254,7 @@ When vProgs arrive, only the lane-local update rules change. The `SeqCommit` cha
 |                         |                                          |
 |              SeqCommit(B) = H_seq(parent, state)                  |
 +-------------------------------------------------------------------+
-|        Covenants++ (KIP-16, KIP-17, KIP-20, TN12)                |
+|        Toccata / Covenants++ (KIP-16, KIP-17, KIP-20)            |
 +-------------------------------------------------------------------+
 |           Kaspa L1 BlockDAG + DagKnight Consensus                 |
 +-------------------------------------------------------------------+

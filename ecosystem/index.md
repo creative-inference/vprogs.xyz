@@ -50,7 +50,7 @@ Where the Kaspa community gathers, how to get involved, and resources for develo
 | Area | Status | Key Link |
 |------|--------|----------|
 | DagKnight Consensus | Active development | [Roadmap](/ecosystem/roadmap) |
-| Covenants++ Hard Fork | Targeting May 5, 2026 | [Roadmap](/ecosystem/roadmap) |
+| Covenants++ Hard Fork | Targeting ~June 5–20, 2026 (Toccata) | [Roadmap](/ecosystem/roadmap) |
 | vProgs Runtime | Public repo, active PRs | [Applications](/ecosystem/applications) |
 | Silverscript | Announced Feb 2026 | [Applications](/ecosystem/applications) |
 | ZK Covenant Rollup PoC | Milestone 3 complete | [Applications](/ecosystem/applications) |

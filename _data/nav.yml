@@ -25,7 +25,7 @@ sections:
       - url: /learn/timeline/
         title: When Going Live?
         footer_title: When Are vProgs Going Live?
-        description: "Timeline for vProgs shipping — Covenants++ hard fork, Phase 1 standalone programs, and Phase 2 synchronous composability."
+        description: "Timeline for vProgs shipping — Toccata hard fork (~June 2026), Phase 1 standalone programs, and Phase 2 synchronous composability."
       - url: /learn/defi/
         title: Revolutionary for DeFi
         description: "How vProgs transform DeFi with unified L1 liquidity, synchronous composability, and ZK-verified settlement."

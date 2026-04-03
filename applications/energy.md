@@ -155,8 +155,8 @@ The energy applications on Kaspa are not generic blockchain applications built b
 | ZET-EX (decentralized energy exchange) | In development; Dubai summit demo November 2025 |
 | GigaWatt Coin (fractional kWh tokenization) | In development |
 | EigenFlow (market-making framework) | Whitepaper published on Zenodo |
-| RTD covenants (native L1 data feeds) | Shipping with Covenants++ May 5, 2026 |
-| Kaspa Covenants++ (infrastructure prerequisite) | Scheduled May 5, 2026 |
+| RTD covenants (native L1 data feeds) | Shipping with Covenants++ ~June 2026 |
+| Kaspa Covenants++ (infrastructure prerequisite) | Scheduled ~June 2026 |
 | vProgs Phase 1 (exchange infrastructure) | Active development |
 
 ---
