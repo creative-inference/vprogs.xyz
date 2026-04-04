@@ -201,6 +201,10 @@ A recent enhancement to the `NotifyUtxosChanged` RPC call allows clients to sync
 
 Building on this, developers are planning a major UTXO index enhancement to allow querying UTXOs by explicit DAA score ranges. This capability will further reduce bandwidth and compute requirements for dApps, making it significantly more efficient to build complex applications on Kaspa by preventing node memory overloads during state synchronization.
 
+
+
+To complement real-time event subscriptions, developers are architecting a "pull-based" flow for dApps to reliably rebuild their state upon restart. A proposed solution involves implementing a new UTXO index keyed by Covenant ID. This index will serve as a vital feature for robust dApp development on vProgs, allowing applications to seamlessly synchronize specific covenant states.
+
 ## Transaction Queries
 
 ### `get_transaction`
