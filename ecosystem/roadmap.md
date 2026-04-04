@@ -65,7 +65,7 @@ The hard fork was originally targeted for May 5, 2026. Once ZK circuits and runt
 | **3. TN10 test hard fork** | Simulate full mainnet-style transition on the long-term TN10 testnet -- the key rehearsal step |
 | **4. Mainnet activation** | Finalize date and hardcode once TN10 rehearsal succeeds |
 
-**Node impact:** Node requirements expected to stay roughly the same, with ~20–50% more disk space usage. Existing Kaspa APIs continue working without change.
+**Node impact:** Node requirements are expected to stay roughly the same, with a projected ~20–50% increase in disk space usage. Core developers have clarified this is a worst-case estimate tied specifically to active subnets and STARK enablement, highlighting proactive resource management. Existing Kaspa APIs will continue working without change.
 
 ### DagKnight (Active Development)
 
