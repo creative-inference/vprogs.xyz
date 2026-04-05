@@ -204,3 +204,9 @@ The roadmap explicitly targets institutional adoption:
 - [Changelog](/changelog/) -- reverse-chronological development updates
 - [Sources & Links](/references/sources) -- primary research and official resources
 - [Toccata Hard-Fork Outlook -- Michael Sutton](https://medium.com/@michaelsuttonil/kaspa-covenants-toccata-hard-fork-outlook-a4d81a40900c)
+
+## Deployment Strategy and "r0" Milestone
+
+The development team has reached a major technical milestone with the completion of a foundational vProgs implementation, referred to as "r0". This achievement transitions vProgs from a theoretical design phase into practical code.
+
+Despite this progress, core developers are actively debating the exact timeline for including full vProgs capabilities in upcoming hard forks. The primary focus remains on security; there is a strong consensus to avoid rushing complex programmability features that could introduce vulnerabilities and force a rapid, emergency follow-up hard fork. This measured approach ensures that protocol stability is maintained as the network evolves.
