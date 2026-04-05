@@ -31,3 +31,6 @@ This approach drastically simplifies the user experience and enables complex, hi
 ## DeFi Concurrency Solutions: Pool Splitting
 
 To address concurrency challenges inherent in the UTXO model, developers are designing application-level solutions for Decentralized Finance (DeFi) protocols. One emerging pattern is **Pool Splitting**, where a single liquidity pool (such as a DEX AMM) is distributed across multiple parallel rebalancing covenants. This allows concurrent users to trade against different UTXOs representing fractions of the same pool, minimizing state contention while background processes or arbitrageurs rebalance the fractional pools to maintain price parity.
+
+
+Building on this, developers are prototyping novel DeFi models that feature mergeable and splittable liquidity pools. By leveraging Kaspa's parallelism and the fact that UTXO state is known in advance, these models aim to enable trades with zero slippage. To further solve the challenge of liquidity fragmentation across these split pools, developers are exploring advanced features like **signatures over covenant IDs** to virtually aggregate disparate liquidity pools for larger trades. To manage complexity and preserve consensus stability, these virtual aggregation features are being built directly into the SDK rather than the core protocol.
