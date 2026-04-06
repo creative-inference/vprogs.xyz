@@ -326,3 +326,7 @@ enum ZkBackend {
 - **[Testnet Guide](/build/testnet)** -- Connect to TN12 and test the API
 - **[Developer Tools](/build/tools)** -- CLI tools for interacting with the API
 - **[Your First vProg](/build/tutorials/first-vprog)** -- End-to-end tutorial using the API
+
+## Node Operator Configuration
+
+For API-only services and infrastructure backing vProgs applications, Kaspa node operators can utilize the newly implemented `--disable-relay-tx` flag. This flag allows nodes to opt out of P2P transaction relay, significantly reducing bandwidth and mempool overhead for nodes that only need to serve API requests rather than participate in transaction gossip.
