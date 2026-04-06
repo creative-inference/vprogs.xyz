@@ -294,3 +294,6 @@ As the vProgs framework transitions from theory to code, developers are actively
 ## Implementation Progress
 
 A major technical milestone for Kaspa's virtual programmability layer has been reached with the opening of a pull request in `rusty-kaspa` by developer `@biryukovmaxim` for the implementation of KIP-21 (vProgs). This marks the first concrete code implementation of the partitioned sequencing commitment, transitioning the specification from theory into active node software.
+
+
+To ensure stability and reviewability for the upcoming hard fork, developers are proposing a phased rollout strategy for the KIP-21 mempool. The initial implementation will feature simple, conservative selection logic for a limited number of lanes, with more advanced optimizations planned for post-hard-fork releases. Additionally, the lane-limited block selection algorithm is being designed to handle a high number of concurrent lanes. The emerging consensus favors a purely fee-market-driven approach over enforced fairness, preventing gaming and maintaining economic efficiency.
