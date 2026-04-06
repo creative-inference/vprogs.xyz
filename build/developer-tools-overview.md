@@ -36,6 +36,9 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 *   **Flexible Number Encoding:** The requirement for minimally encoded numbers in scripts has been removed from `rusty-kaspa`. This protocol simplification liberalizes integer encoding rules, offering greater flexibility for vProg developers and tooling.
 *   **Advanced Authentication:** The integration of new signature-checking opcodes (`checkDataSig` / `checkSigFromStack`) into both `rusty-kaspa` and the SilverScript compiler provides a fundamental building block for enabling complex authentication logic.
 
+
+*   **Cross-Chain Opcode Research:** Developers are actively analyzing use cases for BCH's `OP_CHECKDATASIG` (typically used for oracle price verification) to evaluate proven patterns for on-chain data validation. Concurrently, discussions around `OpCheckSigFromStack` highlight its potential to enable concurrent payments and state validation without requiring consensus changes, effectively decoupling actions from specific UTXOs.
+
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
@@ -61,3 +64,7 @@ This mental model clarifies the developer's choice between on-chain versus off-c
 ## Developer Experience (DevX)
 
 The Kaspa R&D community is placing a heavy emphasis on Developer Experience (DevX) for the upcoming programmability features. Dedicated contributors are actively focusing on post-covenants DevX, ensuring that the powerful tools being built—from Silverscript compilers to ZK proving pipelines—are accessible, well-documented, and ready for builders.
+
+## Core Test Suite Hardening
+
+Maintaining a robust testing environment is critical for developer velocity and the stability of future protocol upgrades. Recent infrastructure work (such as PR #944 in Rusty-Kaspa) focuses on fixing non-deterministic tests and race conditions, ensuring that the core codebase remains reliable as complex vProgs capabilities are integrated.
