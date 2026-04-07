@@ -375,7 +375,7 @@ The proving pipeline maximizes parallelism at both the execution and proof produ
 
 
 
-**Early Performance Metrics:** Initial performance testing for ZK-based applications on Kaspa has yielded promising results, with developers reporting the ability to prove approximately 3,000 transactions in 4 minutes using GPU acceleration. More precise benchmarks are anticipated as the KIP-21 implementation matures.
+**Early Performance Metrics:** Initial performance testing for ZK-based applications on Kaspa has yielded promising results, with developers reporting the ability to prove approximately 3,000 transactions in 4 minutes using GPU acceleration. Additionally, early benchmarks for a KIP-21 guest have demonstrated STARK proof generation times as low as 4 seconds on an NVIDIA RTX 5080 GPU, marking a major milestone for high-speed verifiable computation.
 
 ### Guest Programming Model
 
