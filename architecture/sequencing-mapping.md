@@ -177,6 +177,10 @@ Committed in both `SeqStateRoot(B)` and inside each touched lane-tip update.
 
 The KIP-21 Initial Block Download (IBD) implementation (PR #933 in Rusty-Kaspa) ensures that new nodes can properly sync and validate the chain history containing smart contract data, serving as a foundational requirement for vProgs.
 
+
+
+To further bolster sync performance, a significant optimization was recently merged into Rusty-Kaspa to batch UTXO writes during IBD. This drastically reduces sync times and strengthens the core protocol in preparation for the increased data demands of vProgs.
+
 ## What Is Still Coming (Post-KIP-21)
 
 | Feature | Description | Dependency |
@@ -297,3 +301,6 @@ A major technical milestone for Kaspa's virtual programmability layer has been r
 
 
 To ensure stability and reviewability for the upcoming hard fork, developers are proposing a phased rollout strategy for the KIP-21 mempool. The initial implementation will feature simple, conservative selection logic for a limited number of lanes, with more advanced optimizations planned for post-hard-fork releases. Additionally, the lane-limited block selection algorithm is being designed to handle a high number of concurrent lanes. The emerging consensus favors a purely fee-market-driven approach over enforced fairness, preventing gaming and maintaining economic efficiency.
+
+
+Active development on vProgs tooling also shows significant progress in scaling infrastructure for the KIP-21 mempool rollout. This ongoing work is critical for smoothly integrating verifiable programs into the main Kaspa network and efficiently handling the new lane-based transaction types.
