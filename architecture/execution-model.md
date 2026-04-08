@@ -410,6 +410,12 @@ A notable property in the PoW context: the block hash provides an unpredictable,
 
 ---
 
+
+
+
+**Performance & Optimization:**
+Recent updates to the vProgs repository have introduced dedicated performance benchmarks and detailed Initial Block Download (IBD) optimizations. This active measurement and tuning signals a shift towards refining the implementation for real-world efficiency and scalability as the codebase matures.
+
 ## Further Reading
 
 - [Account Model & State](/architecture/account-model) -- the account structure that execution operates on
