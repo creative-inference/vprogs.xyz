@@ -181,6 +181,11 @@ The KIP-21 Initial Block Download (IBD) implementation (PR #933 in Rusty-Kaspa) 
 
 To further bolster sync performance, a significant optimization was recently merged into Rusty-Kaspa to batch UTXO writes during IBD. This drastically reduces sync times and strengthens the core protocol in preparation for the increased data demands of vProgs.
 
+
+
+
+Complementing the node-level IBD improvements in Rusty-Kaspa, the vProgs repository has recently introduced its own performance benchmarks and details on vProgs-specific IBD optimizations. This active measurement signals a shift toward refining the verifiable programs implementation for real-world efficiency and scalability.
+
 ## What Is Still Coming (Post-KIP-21)
 
 | Feature | Description | Dependency |
