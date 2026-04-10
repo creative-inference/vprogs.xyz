@@ -330,3 +330,6 @@ enum ZkBackend {
 ## Node Operator Configuration
 
 For API-only services and infrastructure backing vProgs applications, Kaspa node operators can utilize the newly implemented `--disable-relay-tx` flag. This flag allows nodes to opt out of P2P transaction relay, significantly reducing bandwidth and mempool overhead for nodes that only need to serve API requests rather than participate in transaction gossip.
+
+
+To further improve infrastructure reliability, pending updates to Rusty Kaspa introduce a streamlined one-click launch feature for both the node and the bridge. This update includes critical safety mechanisms, such as automatically halting the bridge if the underlying node loses network synchronization.
