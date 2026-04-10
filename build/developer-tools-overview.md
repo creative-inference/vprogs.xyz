@@ -26,6 +26,10 @@ Recently, a major refactoring of the SilverScript codebase was completed (PR #91
 
 Currently, an ecosystem consensus is forming to steer early development efforts toward Covenants. Because Silverscript offers a familiar, Solidity-like syntax, this strategy effectively lowers the barrier to entry, accelerating the deployment of smart contracts by providing a more accessible path than building low-level ZK-based vProgs directly.
 
+
+
+Ongoing development continues to advance Silverscript's core capabilities. Recent pull requests (such as PRs #95 and #96) iteratively build out the scripting functionality required for Kaspa's next-generation smart contract layer.
+
 ## Opcode Refinement and Standardization
 
 The underlying native Kaspa Script is being continuously enhanced to support advanced applications. Recent developments include:
@@ -68,3 +72,6 @@ The Kaspa R&D community is placing a heavy emphasis on Developer Experience (Dev
 ## Core Test Suite Hardening
 
 Maintaining a robust testing environment is critical for developer velocity and the stability of future protocol upgrades. Recent infrastructure work (such as PR #944 in Rusty-Kaspa) focuses on fixing non-deterministic tests and race conditions, ensuring that the core codebase remains reliable as complex vProgs capabilities are integrated.
+
+
+Continuous iterative refinement of the core Rust implementation is ongoing, with recent codebase merges (such as PR #945 in Rusty Kaspa) reflecting a steady commitment to stabilizing the foundation before deploying complex programmability features.
