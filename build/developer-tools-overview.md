@@ -55,6 +55,11 @@ SilverScript now officially supports source-level debugging and complex state-tr
 
 > **Note:** To accelerate the recent major codebase refactoring, the debugger recording feature was temporarily removed from the SilverScript compilation path. The development team plans to re-integrate this key developer tool soon as part of their iterative progress.
 
+
+
+
+Recent updates to the WASM SDK (such as PR #951) have refined how mempool data is requested, representing tangible progress in improving the developer toolchain for Kaspa smart contracts.
+
 ## The Three-Layer Programmability Model
 
 To help developers navigate Kaspa's ecosystem, the community is framing programmability as a three-layer system:
@@ -68,6 +73,11 @@ This mental model clarifies the developer's choice between on-chain versus off-c
 ## Developer Experience (DevX)
 
 The Kaspa R&D community is placing a heavy emphasis on Developer Experience (DevX) for the upcoming programmability features. Dedicated contributors are actively focusing on post-covenants DevX, ensuring that the powerful tools being built—from Silverscript compilers to ZK proving pipelines—are accessible, well-documented, and ready for builders.
+
+
+
+
+To further assist builders ahead of the vProgs (KIP-21) release, new practical "how-to" documentation has been released, signaling a strong push to streamline developer onboarding and improve the overall development experience.
 
 ## Core Test Suite Hardening
 
