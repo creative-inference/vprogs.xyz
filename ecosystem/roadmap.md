@@ -46,6 +46,11 @@ Toccata brings two programmability pillars:
 - KIP-21: fully implemented with strong performance, pending thorough review
 - Subnet and gas commitment support complementing KIP-21
 
+
+
+
+Crucially, a major pull request (PR #884) introducing the new script pricing mechanism has been approved in Rusty-Kaspa. This lays the necessary economic groundwork for smart contract execution on vProgs and serves as a major technical prerequisite for the launch.
+
 #### Key PoCs completed
 
 - Inline ZK covenants (by Maxim Biryukov)
