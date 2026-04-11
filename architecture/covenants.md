@@ -463,6 +463,11 @@ Opcode numbers agreed January 17, 2026: `0xcf-0xd3` for covenant ID ops, `0xd4` 
 
 ---
 
+
+
+
+As the vProgs feature set stabilizes and moves closer to a formal testing phase, core developers are discussing officially renaming the next iteration of the testnet to "Toccata", aligning it directly with the upcoming hard fork.
+
 ## How the Stack Fits Together
 
 The complete architecture from base layer to application:
