@@ -85,3 +85,7 @@ Maintaining a robust testing environment is critical for developer velocity and 
 
 
 Continuous iterative refinement of the core Rust implementation is ongoing, with recent codebase merges (such as PR #945 in Rusty Kaspa) reflecting a steady commitment to stabilizing the foundation before deploying complex programmability features.
+
+## ZK SDK Integration
+
+To dramatically lower the barrier to entry for building private and zero-knowledge dApps, developers have proposed a new ZK SDK (PR #953). This SDK simplifies the process of converting standard ZK proofs, such as Groth16, directly into native Kaspa scripts, streamlining the deployment of verifiable programs and private applications.
