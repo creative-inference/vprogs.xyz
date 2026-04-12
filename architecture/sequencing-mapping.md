@@ -309,3 +309,7 @@ To ensure stability and reviewability for the upcoming hard fork, developers are
 
 
 Active development on vProgs tooling also shows significant progress in scaling infrastructure for the KIP-21 mempool rollout. This ongoing work is critical for smoothly integrating verifiable programs into the main Kaspa network and efficiently handling the new lane-based transaction types.
+
+
+
+Active development on the vProgs-enabled testnet (TN12) is driving the deep re-engineering efforts necessary to activate the partitioned sequencing commitment (KIP-21, also referred to as Coven-PoV). Recently, a core protocol change was implemented that modified the hash of v1 transactions, underscoring the technical complexity of integrating the new sequence data into the consensus layer.
