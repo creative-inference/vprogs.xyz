@@ -177,6 +177,11 @@ The hard fork also introduces:
 
 ---
 
+
+
+
+Preparation for the Toccata activation is actively underway at the protocol level. A recent update (PR #952) introduces a specific consensus rule change to set the coinbase transaction version to 1. This foundational adjustment ensures the block structure is ready to support the new data requirements for vProgs and Covenants++.
+
 ## KIP-15 + KIP-21: Sequencing Commitment Evolution
 
 The sequencing commitment has evolved across both hard forks:
