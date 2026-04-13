@@ -43,6 +43,10 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 *   **Cross-Chain Opcode Research:** Developers are actively analyzing use cases for BCH's `OP_CHECKDATASIG` (typically used for oracle price verification) to evaluate proven patterns for on-chain data validation. Concurrently, discussions around `OpCheckSigFromStack` highlight its potential to enable concurrent payments and state validation without requiring consensus changes, effectively decoupling actions from specific UTXOs.
 
+
+
+*   **Resource Metering & Tx v1+ Hardening:** The txscript engine has been refactored to introduce a versioned `RuntimeResourceMeter`, unifying legacy `Sigops` and the new `ScriptUnits` for computational cost. To enforce robust script pricing for vProgs, transactions that mix old and new input mass accounting are now rejected, mandating the use of the new `compute_budget` field.
+
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
@@ -78,6 +82,10 @@ The Kaspa R&D community is placing a heavy emphasis on Developer Experience (Dev
 
 
 To further assist builders ahead of the vProgs (KIP-21) release, new practical "how-to" documentation has been released, signaling a strong push to streamline developer onboarding and improve the overall development experience.
+
+
+
+To simplify the creation of vProgs applications, developer discussions highlight that future SDKs will abstract away transaction version complexity from end-users. This will enable developers to work directly with high-level covenant bindings rather than manually managing low-level transaction structures.
 
 ## Core Test Suite Hardening
 
