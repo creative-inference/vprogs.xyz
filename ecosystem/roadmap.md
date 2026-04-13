@@ -51,6 +51,10 @@ Toccata brings two programmability pillars:
 
 Crucially, a major pull request (PR #884) introducing the new script pricing mechanism has been approved in Rusty-Kaspa. This lays the necessary economic groundwork for smart contract execution on vProgs and serves as a major technical prerequisite for the launch.
 
+
+
+As part of hardening the new script pricing mechanisms, the txscript engine now utilizes a `RuntimeResourceMeter` to track `ScriptUnits`. Transactions mixing old and new input mass accounting are rejected to strictly enforce the new `compute_budget` field, ensuring the KIP-21 execution environment is robustly metered.
+
 #### Key PoCs completed
 
 - Inline ZK covenants (by Maxim Biryukov)
