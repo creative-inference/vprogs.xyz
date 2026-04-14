@@ -313,3 +313,7 @@ Active development on vProgs tooling also shows significant progress in scaling 
 
 
 Active development on the vProgs-enabled testnet (TN12) is driving the deep re-engineering efforts necessary to activate the partitioned sequencing commitment (KIP-21, also referred to as Coven-PoV). Recently, a core protocol change was implemented that modified the hash of v1 transactions, underscoring the technical complexity of integrating the new sequence data into the consensus layer.
+
+
+
+Furthermore, the covenant code for KIP-21 is undergoing rigorous open community review. This transparent auditing process has facilitated collaborative problem-solving, recently leading to the confirmation of minor bug fixes and important clarifications regarding consensus-path code prior to deployment.
