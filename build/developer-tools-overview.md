@@ -87,6 +87,11 @@ To further assist builders ahead of the vProgs (KIP-21) release, new practical "
 
 To simplify the creation of vProgs applications, developer discussions highlight that future SDKs will abstract away transaction version complexity from end-users. This will enable developers to work directly with high-level covenant bindings rather than manually managing low-level transaction structures.
 
+
+
+
+The broader community is also actively contributing to the tooling ecosystem. Recently, developers released the `igra-sc-sdk`, an early-stage SDK tailored for modeling financial assets using Silverscript. This marks one of the first public community efforts to construct dedicated DeFi tooling for Kaspa's emerging smart contract layer.
+
 ## Core Test Suite Hardening
 
 Maintaining a robust testing environment is critical for developer velocity and the stability of future protocol upgrades. Recent infrastructure work (such as PR #944 in Rusty-Kaspa) focuses on fixing non-deterministic tests and race conditions, ensuring that the core codebase remains reliable as complex vProgs capabilities are integrated.
