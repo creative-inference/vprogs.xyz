@@ -203,7 +203,7 @@ Building on this, developers are planning a major UTXO index enhancement to allo
 
 
 
-To complement real-time event subscriptions, developers are architecting a "pull-based" flow for dApps to reliably rebuild their state upon restart. A proposed solution involves implementing a new UTXO index keyed by Covenant ID. This index will serve as a vital feature for robust dApp development on vProgs, allowing applications to seamlessly synchronize specific covenant states.
+To complement real-time event subscriptions, a technical proposal has been introduced to extend Kaspa's core UTXO index to allow querying by `covenant_id`. This enables dApps and indexers to efficiently find all UTXOs belonging to a specific smart contract directly from the node. A key use case for this index is enabling trustless dApp operation: users can query their own node for a contract's UTXOs and then use external indexers strictly for state data, effectively separating UTXO validity from state interpretation for enhanced security.
 
 ## Transaction Queries
 
