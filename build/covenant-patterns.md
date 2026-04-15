@@ -34,3 +34,12 @@ To address concurrency challenges inherent in the UTXO model, developers are des
 
 
 Building on this, developers are prototyping novel DeFi models that feature mergeable and splittable liquidity pools. By leveraging Kaspa's parallelism and the fact that UTXO state is known in advance, these models aim to enable trades with zero slippage. To further solve the challenge of liquidity fragmentation across these split pools, developers are exploring advanced features like **signatures over covenant IDs** to virtually aggregate disparate liquidity pools for larger trades. To manage complexity and preserve consensus stability, these virtual aggregation features are being built directly into the SDK rather than the core protocol.
+
+## vProgs Operational Modes
+
+As developers refine the execution of vProgs and covenant contracts, an active debate is underway regarding the trade-offs between two primary state operational modes: **Verification Mode** and **Transition Mode**.
+
+- **Verification Mode:** The script verifies state changes that were computed off-chain or externally.
+- **Transition Mode:** The script actively computes the new state on-chain.
+
+Currently, **Transition Mode** is favored in many designs for its potential to improve on-chain efficiency. By computing the new state directly, this mode reduces transaction mass and eliminates redundant checks, optimizing the overall footprint of smart contract executions on the BlockDAG.
