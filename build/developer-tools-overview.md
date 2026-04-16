@@ -57,7 +57,7 @@ To further streamline integration, recent architecture refinements (such as PR #
 SilverScript now officially supports source-level debugging and complex state-transition test scenarios. This represents a major leap in developer experience, drastically simplifying the process of building and testing sophisticated smart contracts.
 
 
-> **Note:** To accelerate the recent major codebase refactoring, the debugger recording feature was temporarily removed from the SilverScript compilation path. The development team plans to re-integrate this key developer tool soon as part of their iterative progress.
+> **Update:** Debugging support for covenants in SilverScript has been successfully rebuilt. The new implementation introduces a much leaner architecture by separating debugging logic from the core compiler. Developers can now debug covenants by defining transaction context directly in a test file and injecting it at the session layer, streamlining the process while preventing compiler bloat.
 
 
 
