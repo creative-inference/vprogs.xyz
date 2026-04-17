@@ -320,3 +320,9 @@ Furthermore, the covenant code for KIP-21 is undergoing rigorous open community 
 
 
 Core developer Michael Sutton is actively reviewing the main pull request for KIP-21 (vProgs) by Maxim Biryukov. This signals that the foundational code for smart contracts on Kaspa is a top priority and is advancing steadily towards completion.
+
+
+
+Kaspa is currently approaching a consensus feature freeze for the vProgs (KIP-21) upgrade. The main implementation pull request (PR #943) is nearly ready to merge, locking in essential features such as ZK opcodes and gas commitments for the upcoming release.
+
+Simultaneously, the node's communication layer has been hardened; a bug affecting the GRPC deserialization of transactions was identified and quickly resolved (PR #958), improving the reliability of core RPC services.
