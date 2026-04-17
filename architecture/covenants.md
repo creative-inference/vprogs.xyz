@@ -124,6 +124,11 @@ KIP-16 bridges covenants and vProgs:
 
 See [ZK Verification](/architecture/zk-verification) for the full ZK stack architecture.
 
+
+
+
+To ensure the absolute integrity of these zero-knowledge proofs leading into the vProgs feature freeze, a critical, consensus-breaking fix for the ZK opcode (PR #957) is currently being integrated from upstream RISC Zero.
+
 ### KIP-17: Extended Covenant Opcodes
 
 KIP-17 adds the auth and covenant binding system that [Silverscript's](/architecture/silverscript) declaration macros compile to:
