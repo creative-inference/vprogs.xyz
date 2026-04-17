@@ -31,6 +31,11 @@ Default ports:
 
 ---
 
+
+
+
+> **RPC Reliability Update:** A recent node update (PR #958) resolved a GRPC deserialization bug affecting transactions. Ensure your node software is fully up to date to maintain reliable RPC interactions when working with vProgs features.
+
 ## Proof Submission
 
 ### `submit_proof`
