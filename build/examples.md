@@ -381,6 +381,29 @@ contract ChessMux(
     bytes32 worker_templates[6], // Template selectors: one per piece type
     bytes32 board_state          // Current board hash
 ) {
+
+
+
+---
+
+## 7. ZK Rollup Covenant (KIP-21)
+
+A complete end-to-end example of a ZK rollup covenant built on the KIP-21 partitioned sequencing commitment. It demonstrates the full lifecycle from L1 transactions to rollup execution and L1 exits, serving as a powerful starting point for building with vProgs.
+
+**Architecture:**
+
+- **vProg:** Executes L2 transfers and state updates off-chain.
+- **Covenants:** Manages the canonical bridge, verifying ZK proofs for deposits and withdrawals.
+- **ZK Backend:** RISC Zero (STARK) and Groth16.
+- **Performance Target:** Demonstrates up to 1,000 transactions per second (TPS) on L2.
+
+**Key features:**
+
+- Full deposit-transfer-withdraw cycle
+- Sparse Merkle Tree for L2 account state
+- Blake3 hashing for high-performance sequencing commitments
+- Forward compatibility: efficiently filters legacy transactions by checking the transaction version in the KIP-21 commitment
+
     #[covenant.singleton(mode = transition)]
     entrypoint function makeMove(
         int pieceType,           // Selector: which worker to route to
