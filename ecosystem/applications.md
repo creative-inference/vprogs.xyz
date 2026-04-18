@@ -33,6 +33,11 @@ This PoC represents **Milestone 3** completion. Michael Sutton described it as "
 - [ZK Rollup PoC Book](https://biryukovmaxim.github.io/rusty-kaspa/ch01-introduction.html)
 - [Source branch](https://github.com/biryukovmaxim/rusty-kaspa/tree/zk-rollup-covenant-example)
 
+
+
+
+A complete end-to-end example of a ZK rollup covenant built on KIP-21 is now available for developers. This proof-of-concept demonstrates the full lifecycle from L1 transactions to rollup execution and L1 exits, aiming to process up to 1,000 transactions per second (TPS) to showcase the massive performance potential for Kaspa L2s.
+
 ### Native Assets (Shipping with Covenants++)
 
 First-class token support on L1, activated with the upcoming Covenants++ hard fork:
