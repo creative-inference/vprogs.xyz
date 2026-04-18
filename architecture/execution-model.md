@@ -386,6 +386,11 @@ Guest programs use a **Solana-like API** with resources, instructions, and progr
 - **L1 asset bridging:** Moving assets between L1 and the vProg execution environment
 - **Framework-managed authentication:** Guests currently handle their own access auth (e.g., signature checks); the framework will manage this automatically
 
+
+
+
+Guest programs also benefit from key efficiency optimizations in KIP-21. Because KIP-21 sequencing commitments standardize on Blake3 hashing and explicitly prove the transaction version, vProgs can efficiently filter and ignore legacy transactions. This prevents guest programs from wasting computational resources parsing older formats, while also ensuring they can safely ignore future protocol upgrades they don't understand, securing long-term L2 stability.
+
 ### PoW Randomness
 
 A notable property in the PoW context: the block hash provides an unpredictable, unbiasable random input that is revealed after transaction sequencing. This gives guest programs native access to on-chain randomness without oracles or additional infrastructure -- something traditionally hard to achieve in smart contract platforms.
