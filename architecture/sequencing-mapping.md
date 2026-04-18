@@ -186,6 +186,13 @@ To further bolster sync performance, a significant optimization was recently mer
 
 Complementing the node-level IBD improvements in Rusty-Kaspa, the vProgs repository has recently introduced its own performance benchmarks and details on vProgs-specific IBD optimizations. This active measurement signals a shift toward refining the verifiable programs implementation for real-world efficiency and scalability.
 
+
+
+
+### 8. Transaction Versioning and Forward Compatibility
+
+KIP-21's sequencing commitment design explicitly builds in forward compatibility by standardizing on the modern Blake3 hashing algorithm and committing to the transaction version. This optimization allows vProgs to efficiently filter and ignore legacy transactions without wasting guest program resources parsing older formats. By committing to the version, vProgs can also securely and easily ignore transactions from future protocol upgrades they do not understand, ensuring long-term L2 stability.
+
 ## What Is Still Coming (Post-KIP-21)
 
 | Feature | Description | Dependency |
