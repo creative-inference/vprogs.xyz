@@ -347,6 +347,10 @@ Dependencies flow downward only. The ZK proving layers were proposed in March 20
 | `zk-vm` | Implements the `Processor` trait with ZK support; hooks into lifecycle events (batch creation, commit, shutdown, rollback) to feed provers. Proving is configurable: disabled, transaction-only, or full batch pipeline |
 | `zk-backend-risc0` | First concrete backend implementing both transaction and batch `Backend` traits, with pre-compiled guest programs and end-to-end integration tests |
 
+
+
+**ZK-VM Cryptographic Alignment:** Recent merges to the vProgs implementation have introduced crucial validation tests for the ZK-VM. Additionally, core proof-generation functions (such as `seal`) have been refactored to utilize `BabyBearElem`. This aligns the engine with modern ZK-STARK cryptographic standards, matching the primitives used by systems like RISC Zero.
+
 ### ZK Proving Pipeline
 
 The proving pipeline maximizes parallelism at both the execution and proof production stages:
