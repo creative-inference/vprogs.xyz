@@ -221,6 +221,10 @@ Transactions requiring permanent storage must compensate per the vProg's defined
 ### Base Network Fee Proposal
 In anticipation of the advanced capabilities introduced by vProgs, developers are actively discussing a 100x increase to the standard minimum network fee. This proposed change is designed to better secure the network against spam by making it significantly more expensive for attackers to flood blocks with low-value or arbitrary transactions.
 
+
+
+Core developers are actively debating this minimum fee policy to balance micropayment viability with network abuse prevention. The current proposal is viewed as a temporary measure against spam rather than a long-term fee solution, and importantly, it can be adjusted by miners without requiring a hardfork.
+
 ## Phase 1 vs. Phase 2 Account Model
 
 ### Phase 1: Standalone (Current Target)
