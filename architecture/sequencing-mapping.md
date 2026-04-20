@@ -326,7 +326,7 @@ Active development on the vProgs-enabled testnet (TN12) is driving the deep re-e
 Furthermore, the covenant code for KIP-21 is undergoing rigorous open community review. This transparent auditing process has facilitated collaborative problem-solving, recently leading to the confirmation of minor bug fixes and important clarifications regarding consensus-path code prior to deployment.
 
 
-Core developer Michael Sutton is actively reviewing the main pull request for KIP-21 (vProgs) by Maxim Biryukov. This signals that the foundational code for smart contracts on Kaspa is a top priority and is advancing steadily towards completion.
+Core developer Michael Sutton has announced that the technical review for the main KIP-21 (vProgs) pull request by Maxim Biryukov is almost complete. This critical milestone signals that Kaspa's programmability layer is moving closer to the final stages before implementation.
 
 
 
