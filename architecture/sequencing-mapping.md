@@ -330,6 +330,6 @@ Core developer Michael Sutton has announced that the technical review for the ma
 
 
 
-Kaspa is currently approaching a consensus feature freeze for the vProgs (KIP-21) upgrade. The main implementation pull request (PR #943) is nearly ready to merge, locking in essential features such as ZK opcodes and gas commitments for the upcoming release.
+Kaspa is rapidly approaching the consensus feature freeze for the vProgs (KIP-21) upgrade. The core implementation has now been successfully merged into the `covpp-reset2` development branch, officially finalizing the sequence commitment hashing mechanism and locking in essential features like ZK opcodes and gas commitments.
 
 Simultaneously, the node's communication layer has been hardened; a bug affecting the GRPC deserialization of transactions was identified and quickly resolved (PR #958), improving the reliability of core RPC services.
