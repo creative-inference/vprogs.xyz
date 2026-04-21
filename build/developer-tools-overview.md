@@ -64,6 +64,11 @@ SilverScript now officially supports source-level debugging and complex state-tr
 
 Recent updates to the WASM SDK (such as PR #951) have refined how mempool data is requested, representing tangible progress in improving the developer toolchain for Kaspa smart contracts.
 
+
+
+
+To further enhance portability, several core Rusty-Kaspa crates—including `kaspa_hashes`—have recently been updated to be `no-std` compatible. This crucial upgrade enables Kaspa's core cryptographic logic to run seamlessly in constrained environments like WebAssembly (WASM) and embedded systems, vastly expanding the possibilities for lightweight client-side tooling.
+
 ## The Three-Layer Programmability Model
 
 To help developers navigate Kaspa's ecosystem, the community is framing programmability as a three-layer system:
