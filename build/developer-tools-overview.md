@@ -30,6 +30,11 @@ Currently, an ecosystem consensus is forming to steer early development efforts 
 
 Ongoing development continues to advance Silverscript's core capabilities. Recent pull requests (such as PRs #95 and #96) iteratively build out the scripting functionality required for Kaspa's next-generation smart contract layer.
 
+
+
+
+Silverscript's syntax and paradigms are continually refined to reflect its secure on-chain environment. For example, array handling is shifting from the mutable `x.push(a)` method to an immutable `x = x.append(a)` function. This enforces an immutable execution model, a key principle for writing secure and predictable smart contract logic.
+
 ## Opcode Refinement and Standardization
 
 The underlying native Kaspa Script is being continuously enhanced to support advanced applications. Recent developments include:
@@ -69,6 +74,11 @@ Recent updates to the WASM SDK (such as PR #951) have refined how mempool data i
 
 To further enhance portability, several core Rusty-Kaspa crates—including `kaspa_hashes`—have recently been updated to be `no-std` compatible. This crucial upgrade enables Kaspa's core cryptographic logic to run seamlessly in constrained environments like WebAssembly (WASM) and embedded systems, vastly expanding the possibilities for lightweight client-side tooling.
 
+
+
+
+The Silverscript debugger (`sdb`) is undergoing rapid, iterative development to support the complexities of vProgs. Developers are pragmatically shipping incremental upgrades (such as PR #104) while actively addressing known edge cases, including current limitations where the debugger fails to access individual fields of a struct within an array.
+
 ## The Three-Layer Programmability Model
 
 To help developers navigate Kaspa's ecosystem, the community is framing programmability as a three-layer system:
@@ -107,3 +117,7 @@ Continuous iterative refinement of the core Rust implementation is ongoing, with
 ## ZK SDK Integration
 
 To dramatically lower the barrier to entry for building private and zero-knowledge dApps, developers have proposed a new ZK SDK (PR #953). This SDK simplifies the process of converting standard ZK proofs, such as Groth16, directly into native Kaspa scripts, streamlining the deployment of verifiable programs and private applications.
+
+## Ecosystem Performance Tooling
+
+As the Kaspa network prepares for the integration of complex vProgs and smart contract features, maintaining peak performance is critical. The developer ecosystem relies on continuously updated performance monitoring tools, such as the recently released `workflow-perf-monitor-rs v0.0.3`, to ensure the node software and application layers remain fast and highly efficient under load.
