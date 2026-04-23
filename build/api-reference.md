@@ -173,6 +173,10 @@ Retrieve the KIP-21 lane proof for a specific vProg, enabling efficient ZK provi
 
 ---
 
+
+
+> **Light Client Verification:** This RPC call is crucial for enabling light wallets and dApps to securely verify vProg data and KIP-21 lane states cryptographically without needing to run a full node.
+
 ### `get_program_info`
 
 Query metadata about a registered vProg.
@@ -209,6 +213,11 @@ Building on this, developers are planning a major UTXO index enhancement to allo
 
 
 To complement real-time event subscriptions, a technical proposal has been introduced to extend Kaspa's core UTXO index to allow querying by `covenant_id`. This enables dApps and indexers to efficiently find all UTXOs belonging to a specific smart contract directly from the node. A key use case for this index is enabling trustless dApp operation: users can query their own node for a contract's UTXOs and then use external indexers strictly for state data, effectively separating UTXO validity from state interpretation for enhanced security.
+
+
+
+
+Additionally, a recent minor fix ensures that subscriptions to UTXO change notifications are handled correctly even when the UTXO index is disabled, providing a smoother experience for node operators and developers using these RPC services.
 
 ## Transaction Queries
 
