@@ -333,3 +333,7 @@ Core developer Michael Sutton has announced that the technical review for the ma
 Kaspa is rapidly approaching the consensus feature freeze for the vProgs (KIP-21) upgrade. The core implementation has now been successfully merged into the `covpp-reset2` development branch, officially finalizing the sequence commitment hashing mechanism and locking in essential features like ZK opcodes and gas commitments.
 
 Simultaneously, the node's communication layer has been hardened; a bug affecting the GRPC deserialization of transactions was identified and quickly resolved (PR #958), improving the reliability of core RPC services.
+
+
+
+A major pull request in Rusty Kaspa has introduced Toccata lane and gas limits directly into the consensus rules. This is a foundational step for KIP-21, defining the economic and capacity constraints for vProgs on the Kaspa L1. Alongside these consensus rules, dedicated mempool policies for vProgs are being implemented to ensure transactions are validated for lane and gas limits before being considered for a block, drastically improving network efficiency and security.
