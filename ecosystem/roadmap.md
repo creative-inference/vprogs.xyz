@@ -55,6 +55,10 @@ Crucially, a major pull request (PR #884) introducing the new script pricing mec
 
 As part of hardening the new script pricing mechanisms, the txscript engine now utilizes a `RuntimeResourceMeter` to track `ScriptUnits`. Transactions mixing old and new input mass accounting are rejected to strictly enforce the new `compute_budget` field, ensuring the KIP-21 execution environment is robustly metered.
 
+
+
+- **Consensus & Mempool Policies:** Toccata lane and gas limits are being integrated into the core consensus rules, alongside strict mempool validation policies to ensure network efficiency before transactions are block-eligible.
+
 #### Key PoCs completed
 
 - Inline ZK covenants (by Maxim Biryukov)
