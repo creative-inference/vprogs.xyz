@@ -219,6 +219,10 @@ To complement real-time event subscriptions, a technical proposal has been intro
 
 Additionally, a recent minor fix ensures that subscriptions to UTXO change notifications are handled correctly even when the UTXO index is disabled, providing a smoother experience for node operators and developers using these RPC services.
 
+
+
+To further support the demands of future features like vProgs, core developers rapidly reviewed and merged a fix (PR #964) for memory pre-allocation in the UTXO index, highlighting the ongoing optimization of Rusty Kaspa's core components.
+
 ## Transaction Queries
 
 ### `get_transaction`
