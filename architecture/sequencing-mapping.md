@@ -337,3 +337,6 @@ Simultaneously, the node's communication layer has been hardened; a bug affectin
 
 
 A major pull request in Rusty Kaspa has introduced Toccata lane and gas limits directly into the consensus rules. This is a foundational step for KIP-21, defining the economic and capacity constraints for vProgs on the Kaspa L1. Alongside these consensus rules, dedicated mempool policies for vProgs are being implemented to ensure transactions are validated for lane and gas limits before being considered for a block, drastically improving network efficiency and security.
+
+
+Building on these mempool policies, a new pull request (PR #963) introduces a foundational, minimum-viable solution for a combinatoric challenge in mempool transaction selection. This lays the groundwork for future policy optimizations essential for handling the complex transactions vProgs will enable.
