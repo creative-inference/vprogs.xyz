@@ -478,6 +478,10 @@ Opcode numbers agreed January 17, 2026: `0xcf-0xd3` for covenant ID ops, `0xd4` 
 
 The `covpp-reset2` development branch currently serves as the official staging ground for the upcoming TN12 testnet reset. As the vProgs feature set stabilizes, developers plan to officially rename this branch to "toccata", aligning the codebase directly with the next major hard fork.
 
+
+
+Developers are actively planning a reset of Testnet 12 (TN12) to deploy the latest vProgs-enabled node software, marking a new phase of public testing for KIP-21.
+
 ## How the Stack Fits Together
 
 The complete architecture from base layer to application:
