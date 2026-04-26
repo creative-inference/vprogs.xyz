@@ -118,6 +118,15 @@ Continuous iterative refinement of the core Rust implementation is ongoing, with
 
 To dramatically lower the barrier to entry for building private and zero-knowledge dApps, developers have proposed a new ZK SDK (PR #953). This SDK simplifies the process of converting standard ZK proofs, such as Groth16, directly into native Kaspa scripts, streamlining the deployment of verifiable programs and private applications.
 
+
+
+
+Active collaboration on this ZK SDK pull request marks a major technical milestone. Establishing a robust ZK SDK is considered a foundational component for enabling advanced privacy and computational features natively within the vProgs (KIP-21) framework.
+
 ## Ecosystem Performance Tooling
 
 As the Kaspa network prepares for the integration of complex vProgs and smart contract features, maintaining peak performance is critical. The developer ecosystem relies on continuously updated performance monitoring tools, such as the recently released `workflow-perf-monitor-rs v0.0.3`, to ensure the node software and application layers remain fast and highly efficient under load.
+
+
+
+To avoid delays before the upcoming Toccata hard fork, developers have taken pragmatic steps such as internally forking a key performance monitoring dependency (PR #965). This unblocks the use of updated tools and highlights the team's focus on meeting the hard fork deadline without sacrificing essential network monitoring capabilities.
