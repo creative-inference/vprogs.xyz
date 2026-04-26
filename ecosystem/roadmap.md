@@ -57,7 +57,7 @@ As part of hardening the new script pricing mechanisms, the txscript engine now 
 
 
 
-- **Consensus & Mempool Policies:** Toccata lane and gas limits are being integrated into the core consensus rules, alongside strict mempool validation policies to ensure network efficiency before transactions are block-eligible.
+- **Consensus & Mempool Policies:** Toccata lane and gas limits are being integrated into the core consensus rules. Developers are actively finalizing how the protocol differentiates system versus user subnets and validates gas usage, ensuring strict mempool validation policies for the security and stability of vProgs before transactions are block-eligible.
 
 #### Key PoCs completed
 
