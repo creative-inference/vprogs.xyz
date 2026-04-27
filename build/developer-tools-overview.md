@@ -35,6 +35,10 @@ Ongoing development continues to advance Silverscript's core capabilities. Recen
 
 Silverscript's syntax and paradigms are continually refined to reflect its secure on-chain environment. For example, array handling is shifting from the mutable `x.push(a)` method to an immutable `x = x.append(a)` function. This enforces an immutable execution model, a key principle for writing secure and predictable smart contract logic.
 
+
+
+To support the creation of standard assets, a recent pull request (PR #111) was merged into the SilverScript repository featuring successful tests against a KCC20 token example. This marks tangible progress in building the foundational tooling required for token standards on Kaspa's upcoming smart contract platform.
+
 ## Opcode Refinement and Standardization
 
 The underlying native Kaspa Script is being continuously enhanced to support advanced applications. Recent developments include:
@@ -78,6 +82,10 @@ To further enhance portability, several core Rusty-Kaspa crates—including `kas
 
 
 The Silverscript debugger (`sdb`) is undergoing rapid, iterative development to support the complexities of vProgs. Developers are pragmatically shipping incremental upgrades (such as PR #104) while actively addressing known edge cases, including current limitations where the debugger fails to access individual fields of a struct within an array.
+
+
+
+To further streamline smart contract creation, development is set to resume on the SilverScript VS Code debugger extension. This renewed focus on improving the developer experience (DevEx) is essential for providing builders with the integrated IDE tools they need to confidently construct and test verifiable programs.
 
 ## The Three-Layer Programmability Model
 
