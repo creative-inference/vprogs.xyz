@@ -180,6 +180,10 @@ A DAP (Debug Adapter Protocol) debugger for Silverscript is in active developmen
 
 SilverScript tooling has recently seen major leaps in developer experience, now supporting source-level debugging and complex state-transition test scenarios natively, making it drastically easier to build and test sophisticated contracts.
 
+
+
+Development is set to resume on the SilverScript VS Code debugger extension, reinforcing the ecosystem's focus on providing a premium developer experience (DevEx) for smart contract builders.
+
 ## Local Testnet Configuration
 
 ### Connecting to TN12
