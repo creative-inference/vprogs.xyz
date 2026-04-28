@@ -351,3 +351,7 @@ For API-only services and infrastructure backing vProgs applications, Kaspa node
 
 
 To further improve infrastructure reliability, pending updates to Rusty Kaspa introduce a streamlined one-click launch feature for both the node and the bridge. This update includes critical safety mechanisms, such as automatically halting the bridge if the underlying node loses network synchronization.
+
+## Advanced Filtering and Activity Tracking
+
+As the vProgs ecosystem matures, developers are actively expanding the API to support more complex data retrieval. A recent addition includes the design and implementation of a `lane_key` filter, which allows applications to efficiently query and track specific on-chain activities scoped to individual lanes. A key pull request (PR #961) enabling this capability for rollup examples has been merged and is currently undergoing testing on the internal devnet.
