@@ -340,3 +340,7 @@ A major pull request in Rusty Kaspa has introduced Toccata lane and gas limits d
 
 
 Building on these mempool policies, a new pull request (PR #963) introduces a foundational, minimum-viable solution for a combinatoric challenge in mempool transaction selection. This lays the groundwork for future policy optimizations essential for handling the complex transactions vProgs will enable.
+
+
+
+Rigorous testing of the vProgs framework on an internal devnet recently revealed several Sparse Merkle Tree (SMT) issues, prompting developers to introduce a minor release delay to prioritize essential stability fixes. Highlighting this commitment to robustness, a critical bug fix addressing incorrect blue score calculations during Initial Block Download (IBD) has been successfully merged. This patch serves as a crucial stabilization step for the core KIP-21 (vProgs) implementation in Rusty Kaspa.
