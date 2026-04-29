@@ -87,6 +87,11 @@ The Silverscript debugger (`sdb`) is undergoing rapid, iterative development to 
 
 To further streamline smart contract creation, development is set to resume on the SilverScript VS Code debugger extension. This renewed focus on improving the developer experience (DevEx) is essential for providing builders with the integrated IDE tools they need to confidently construct and test verifiable programs.
 
+
+
+
+As a positive side-effect of dependency cleanup for the vProgs codebase—specifically the removal of the `intertrait` crate—Rusty-Kaspa has successfully gained support for the Android target. This expanded platform support paves the way for advanced mobile ecosystem development and native mobile client integrations.
+
 ## The Three-Layer Programmability Model
 
 To help developers navigate Kaspa's ecosystem, the community is framing programmability as a three-layer system:
