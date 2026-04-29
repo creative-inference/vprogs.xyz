@@ -480,7 +480,7 @@ Developers have clarified that the `covpp-reset2` development branch is where th
 
 
 
-Developers are actively planning a reset of Testnet 12 (TN12) to deploy the latest vProgs-enabled node software, marking a new phase of public testing for KIP-21.
+Following successful bug fixes and the stabilization of the internal devnet, developers are preparing to reset Testnet 12 (TN12) to deploy the latest vProgs-enabled node software. This major milestone signals the start of the next phase of public testing for the KIP-21 upgrade.
 
 ## How the Stack Fits Together
 
