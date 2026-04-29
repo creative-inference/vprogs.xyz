@@ -344,3 +344,8 @@ Building on these mempool policies, a new pull request (PR #963) introduces a fo
 
 
 Rigorous testing of the vProgs framework on an internal devnet recently revealed several Sparse Merkle Tree (SMT) issues, prompting developers to introduce a minor release delay to prioritize essential stability fixes. Highlighting this commitment to robustness, a critical bug fix addressing incorrect blue score calculations during Initial Block Download (IBD) has been successfully merged. This patch serves as a crucial stabilization step for the core KIP-21 (vProgs) implementation in Rusty Kaspa.
+
+
+To ensure the security and stability of the upcoming vProgs release, developers have proactively hardened the Rusty Kaspa codebase by merging a significant pull request (PR #970) that addresses security vulnerabilities and replaces unmaintained dependencies.
+
+Simultaneously, deep technical work is underway on the storage engine, where a core developer is refining the database access layer API to better support secondary indexes. This refinement is fundamental for efficiently managing vProgs state and data.
