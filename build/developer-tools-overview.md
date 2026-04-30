@@ -56,6 +56,10 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 *   **Resource Metering & Tx v1+ Hardening:** The txscript engine has been refactored to introduce a versioned `RuntimeResourceMeter`, unifying legacy `Sigops` and the new `ScriptUnits` for computational cost. To enforce robust script pricing for vProgs, transactions that mix old and new input mass accounting are now rejected, mandating the use of the new `compute_budget` field.
 
+
+
+*   **Script Pricing Benchmarks:** Recent benchmarks for Kaspa's script engine revealed that hashing opcodes required price adjustments for the new compute-budget model. A recent proposal (PR #971) updates these costs based on performance, ensuring gas fees accurately reflect computational work.
+
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
