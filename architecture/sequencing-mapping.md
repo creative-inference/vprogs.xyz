@@ -349,3 +349,7 @@ Rigorous testing of the vProgs framework on an internal devnet recently revealed
 To ensure the security and stability of the upcoming vProgs release, developers have proactively hardened the Rusty Kaspa codebase by merging a significant pull request (PR #970) that addresses security vulnerabilities and replaces unmaintained dependencies.
 
 Simultaneously, deep technical work is underway on the storage engine, where a core developer is refining the database access layer API to better support secondary indexes. This refinement is fundamental for efficiently managing vProgs state and data.
+
+
+
+Further enhancing state management, developers introduced a vital optimization for the Sparse Merkle Tree (SMT) via PR #972. By bounding prune branch deletions per block, this update prevents potential resource exhaustion, significantly improving the performance and robustness of vProgs data structures.
