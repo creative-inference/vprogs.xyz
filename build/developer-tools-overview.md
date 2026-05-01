@@ -60,6 +60,10 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 *   **Script Pricing Benchmarks:** Recent benchmarks for Kaspa's script engine revealed that hashing opcodes required price adjustments for the new compute-budget model. A recent proposal (PR #971) updates these costs based on performance, ensuring gas fees accurately reflect computational work.
 
+
+
+*   **Finalized Script Limits & Benchmarks:** A major pull request has recently been merged into Rusty Kaspa that finalizes transaction script limits, tunes execution benchmarks, and resolves legacy codebase TODOs. This represents a significant step in stabilizing the vProgs (KIP-21) implementation for both security and performance.
+
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
@@ -147,3 +151,7 @@ As the Kaspa network prepares for the integration of complex vProgs and smart co
 
 
 To avoid delays before the upcoming Toccata hard fork, developers have taken pragmatic steps such as internally forking a key performance monitoring dependency (PR #965). This unblocks the use of updated tools and highlights the team's focus on meeting the hard fork deadline without sacrificing essential network monitoring capabilities.
+
+## Standalone Indexing Infrastructure
+
+To address key adoption barriers and streamline integration for developers, new standalone indexing tools like **go-kaspabook** are being created. Utilizing RocksDB, this indexer aims to provide a simple REST API for Kaspa data, making it easier for services and dApps to interface with the network without the overhead of running and maintaining a full node.
