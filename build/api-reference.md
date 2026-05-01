@@ -223,6 +223,10 @@ Additionally, a recent minor fix ensures that subscriptions to UTXO change notif
 
 To further support the demands of future features like vProgs, core developers rapidly reviewed and merged a fix (PR #964) for memory pre-allocation in the UTXO index, highlighting the ongoing optimization of Rusty Kaspa's core components.
 
+
+
+Core developers are actively working to finalize these advanced UTXO indexing methods—including explicit indexing by DAA score—to support efficient, large-scale data querying. Furthermore, the need for paginated UTXO query results in the node's RPC has been identified and acknowledged by developers as a necessary upcoming improvement. These enhancements are vital infrastructure for wallets and dApps handling massive UTXO sets within the vProgs ecosystem.
+
 ## Transaction Queries
 
 ### `get_transaction`
