@@ -355,4 +355,4 @@ Simultaneously, deep technical work is underway on the storage engine, where a c
 Further enhancing state management, developers introduced a vital optimization for the Sparse Merkle Tree (SMT) via PR #972. By bounding prune branch deletions per block, this update prevents potential resource exhaustion, significantly improving the performance and robustness of vProgs data structures.
 
 
-Coordination for the Testnet 12 (TN12) reset with an updated genesis block is actively underway, marking a critical step to begin large-scale testing of the nearly finalized vProgs and smart contract features.
+Kaspa's developer testnet, TN12, has been successfully relaunched with an updated genesis block and major updates from the Toccata branch. It now natively supports KIP-21 sequence commitments, marking a critical step that allows developers to begin large-scale testing of vProgs and smart contract features.
