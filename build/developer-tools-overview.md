@@ -144,6 +144,10 @@ To dramatically lower the barrier to entry for building private and zero-knowled
 
 Active collaboration on this ZK SDK pull request marks a major technical milestone. Establishing a robust ZK SDK is considered a foundational component for enabling advanced privacy and computational features natively within the vProgs (KIP-21) framework.
 
+
+
+Furthermore, the Arkworks cryptography library—a key dependency for zero-knowledge proofs—has been updated in the Toccata development branch. This critical maintenance ensures robust support for future ZK-based applications enabled by vProgs.
+
 ## Ecosystem Performance Tooling
 
 As the Kaspa network prepares for the integration of complex vProgs and smart contract features, maintaining peak performance is critical. The developer ecosystem relies on continuously updated performance monitoring tools, such as the recently released `workflow-perf-monitor-rs v0.0.3`, to ensure the node software and application layers remain fast and highly efficient under load.
