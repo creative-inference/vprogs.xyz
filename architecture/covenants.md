@@ -480,7 +480,7 @@ Developers have clarified that the `covpp-reset2` development branch is where th
 
 
 
-Following successful bug fixes and the stabilization of the internal devnet, developers are preparing to reset Testnet 12 (TN12) to deploy the latest vProgs-enabled node software. This major milestone signals the start of the next phase of public testing for the KIP-21 upgrade.
+Following successful bug fixes and the stabilization of the internal devnet, Kaspa's developer testnet, TN12, has been relaunched with major updates. This reset natively supports KIP-21 sequence commitments and integrates key features from the Toccata development branch, allowing developers to begin testing Layer 2 solutions and covenant-based applications.
 
 
 
