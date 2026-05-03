@@ -356,3 +356,9 @@ Further enhancing state management, developers introduced a vital optimization f
 
 
 Kaspa's developer testnet, TN12, has been successfully relaunched with an updated genesis block and major updates from the Toccata branch. It now natively supports KIP-21 sequence commitments, marking a critical step that allows developers to begin large-scale testing of vProgs and smart contract features.
+
+
+
+Rothschild, the virtual state machine processor for vProgs (KIP-21), is now running stably on Testnet 12, achieving approximately 74.5 transactions per second. This serves as a major milestone, demonstrating the tangible performance capabilities of the vProgs implementation ahead of mainnet.
+
+In tandem, developers are actively hardening the vProgs testnet (TN12) by addressing critical node crash errors, such as `InsufficientDaaWindowSize`. Furthermore, continuous core protocol hardening in Rusty-Kaspa has resolved a genesis-related edge case with the pruning point, ensuring a rock-solid foundation for upcoming vProgs features.
