@@ -100,6 +100,11 @@ To further streamline smart contract creation, development is set to resume on t
 
 As a positive side-effect of dependency cleanup for the vProgs codebase—specifically the removal of the `intertrait` crate—Rusty-Kaspa has successfully gained support for the Android target. This expanded platform support paves the way for advanced mobile ecosystem development and native mobile client integrations.
 
+
+
+
+Expanding the multi-language developer ecosystem, the Kaspa Python SDK now includes full wallet support. By leveraging the same native Rusty-Kaspa components as the WASM SDK, this update brings critical feature parity and significantly improves the toolkit for developers building cross-platform applications on Kaspa.
+
 ## The Three-Layer Programmability Model
 
 To help developers navigate Kaspa's ecosystem, the community is framing programmability as a three-layer system:
@@ -159,3 +164,7 @@ To avoid delays before the upcoming Toccata hard fork, developers have taken pra
 ## Standalone Indexing Infrastructure
 
 To address key adoption barriers and streamline integration for developers, new standalone indexing tools like **go-kaspabook** are being created. Utilizing RocksDB, this indexer aims to provide a simple REST API for Kaspa data, making it easier for services and dApps to interface with the network without the overhead of running and maintaining a full node.
+
+
+
+An early version of `go-kaspabook` has recently been released by a community developer. By utilizing RocksDB and protobuf for efficient data storage, this release marks a tangible step forward in providing robust, community-driven tooling for the ecosystem.
