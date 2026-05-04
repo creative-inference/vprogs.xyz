@@ -487,6 +487,11 @@ Following successful bug fixes and the stabilization of the internal devnet, Kas
 
 Developers are currently finalizing parameters for the next Testnet 12 reset, which will mirror planned mainnet hardfork settings. Key adjustments include increasing the gas limit per lane to 1 billion and establishing a new genesis block. Strategically, the finalization of these new network constants has been separated from the hardfork activation logic—allowing the network to test mainnet-ready parameters first before implementing the consensus activation mechanism in a subsequent step.
 
+
+
+
+To ensure network stability during the upcoming hard fork, developers have introduced configurable P2P user-agent rules (PR #981 in Rusty Kaspa), allowing nodes to filter peers by software version. Testnet 12 (TN12) is expanding to utilize these new rules, deploying a new DNS seeder pre-configured to filter for compatible clients. Meanwhile, rigorous testing and active debugging on TN12—including fixes for node shutdown regressions—continue to refine the node software for a stable mainnet release.
+
 ## How the Stack Fits Together
 
 The complete architecture from base layer to application:
