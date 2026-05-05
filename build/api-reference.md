@@ -177,6 +177,11 @@ Retrieve the KIP-21 lane proof for a specific vProg, enabling efficient ZK provi
 
 > **Light Client Verification:** This RPC call is crucial for enabling light wallets and dApps to securely verify vProg data and KIP-21 lane states cryptographically without needing to run a full node.
 
+
+
+
+Developers are solving a key vProgs usability challenge with a new PR that allows for retrieving proof of inclusion for a single data 'lane'. This makes light client verification of vProg data trivial without requiring the client to reconstruct the entire state.
+
 ### `get_program_info`
 
 Query metadata about a registered vProg.
