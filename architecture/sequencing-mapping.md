@@ -362,3 +362,7 @@ Kaspa's developer testnet, TN12, has been successfully relaunched with an update
 Rothschild, the virtual state machine processor for vProgs (KIP-21), is now running stably on Testnet 12, achieving approximately 74.5 transactions per second. This serves as a major milestone, demonstrating the tangible performance capabilities of the vProgs implementation ahead of mainnet.
 
 In tandem, developers are actively hardening the vProgs testnet (TN12) by addressing critical node crash errors, such as `InsufficientDaaWindowSize`. Furthermore, continuous core protocol hardening in Rusty-Kaspa has resolved a genesis-related edge case with the pruning point, ensuring a rock-solid foundation for upcoming vProgs features.
+
+
+
+As the implementation matures, the formal specification for KIP-21 is being restructured for enhanced clarity and precision. The new approach involves maintaining a more abstract formal specification, supplemented by a separate document detailing the specific implementation within Rusty-Kaspa.
