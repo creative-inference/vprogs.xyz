@@ -153,6 +153,11 @@ Active collaboration on this ZK SDK pull request marks a major technical milesto
 
 Furthermore, the Arkworks cryptography library—a key dependency for zero-knowledge proofs—has been updated in the Toccata development branch. This critical maintenance ensures robust support for future ZK-based applications enabled by vProgs.
 
+
+
+
+Building on this, a significant architectural milestone was recently reached by making the Groth16 verifier generic over the `arkworks` library. This enhances the flexibility of the ZK-proof system, making it more modular and forward-compatible with future cryptographic schemes.
+
 ## Ecosystem Performance Tooling
 
 As the Kaspa network prepares for the integration of complex vProgs and smart contract features, maintaining peak performance is critical. The developer ecosystem relies on continuously updated performance monitoring tools, such as the recently released `workflow-perf-monitor-rs v0.0.3`, to ensure the node software and application layers remain fast and highly efficient under load.
