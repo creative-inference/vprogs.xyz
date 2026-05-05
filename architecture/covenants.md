@@ -492,6 +492,11 @@ Developers are currently finalizing parameters for the next Testnet 12 reset, wh
 
 To ensure network stability during the upcoming hard fork, developers have introduced configurable P2P user-agent rules (PR #981 in Rusty Kaspa), allowing nodes to filter peers by software version. Testnet 12 (TN12) is expanding to utilize these new rules, deploying a new DNS seeder pre-configured to filter for compatible clients. Meanwhile, rigorous testing and active debugging on TN12—including fixes for node shutdown regressions—continue to refine the node software for a stable mainnet release.
 
+
+
+
+In a further stability upgrade for the Toccata testnet (TN12), node operators can now automatically reject connections from outdated clients via a new CLI argument. This is a key step in preparing a stable network environment for testing advanced features like vProgs.
+
 ## How the Stack Fits Together
 
 The complete architecture from base layer to application:
