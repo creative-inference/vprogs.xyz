@@ -54,7 +54,7 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 
 
-*   **Resource Metering & Tx v1+ Hardening:** The txscript engine has been refactored to introduce a versioned `RuntimeResourceMeter`, unifying legacy `Sigops` and the new `ScriptUnits` for computational cost. To enforce robust script pricing for vProgs, transactions that mix old and new input mass accounting are now rejected, mandating the use of the new `compute_budget` field.
+*   **Resource Metering & Execution Cost Model:** The txscript engine has been refactored to introduce a versioned `RuntimeResourceMeter`, unifying legacy `Sigops` and the new `ScriptUnits` for computational cost. The vProgs execution cost model (or 'gas' model) calculates script units based specifically on signature units, pushed bytes, and hashed bytes (such as Blake3 and Blake2b). To enforce robust script pricing for vProgs, transactions that mix old and new input mass accounting are now rejected, mandating the use of the new `compute_budget` field.
 
 
 
@@ -157,6 +157,11 @@ Furthermore, the Arkworks cryptography library—a key dependency for zero-knowl
 
 
 Building on this, a significant architectural milestone was recently reached by making the Groth16 verifier generic over the `arkworks` library. This enhances the flexibility of the ZK-proof system, making it more modular and forward-compatible with future cryptographic schemes.
+
+
+
+
+Testing on these environments is actively pushing the engine's computational boundaries. For instance, developers implementing Groth16 ZK-proof verification on Kaspa's devnet have successfully stress-tested the new script unit limits. This real-world battle-testing ensures the execution cost model is properly calibrated for advanced cryptographic primitives before mainnet deployment.
 
 ## Ecosystem Performance Tooling
 
