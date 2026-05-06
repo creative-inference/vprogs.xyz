@@ -114,6 +114,10 @@ The sparse Merkle tree is fully specified:
 
 Build inclusion and non-inclusion proof generators now. The proof structure is fixed-shape, making it suitable for ZK-circuit integration.
 
+
+
+The addressing scheme for the SMT uses the Blake3 hash of the lane ID as the lane key. This hashing ensures a pseudo-random leaf distribution within the tree, which is a fundamental architectural detail for maximizing SMT performance and cryptographic security.
+
 ### 2. Lane Proof Systems
 
 The two-anchor proof model is well-defined:
@@ -366,3 +370,7 @@ In tandem, developers are actively hardening the vProgs testnet (TN12) by addres
 
 
 As the implementation matures, the formal specification for KIP-21 is being restructured for enhanced clarity and precision. The new approach involves maintaining a more abstract formal specification, supplemented by a separate document detailing the specific implementation within Rusty-Kaspa.
+
+## External Verification and Data Availability
+
+When external systems or L2 rollups need to verify a complete view of all vProgs lanes to guarantee Data Availability (DA), developers have determined that it is computationally more efficient to rebuild the entire SMT directly from its leaves rather than processing individual inclusion proofs for each lane. This architectural decision optimizes how rollups will synchronize and verify global L1 state.
