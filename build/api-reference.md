@@ -230,7 +230,7 @@ To further support the demands of future features like vProgs, core developers r
 
 
 
-Core developers are actively working to finalize these advanced UTXO indexing methods—including explicit indexing by DAA score—to support efficient, large-scale data querying. Furthermore, the need for paginated UTXO query results in the node's RPC has been identified and acknowledged by developers as a necessary upcoming improvement. These enhancements are vital infrastructure for wallets and dApps handling massive UTXO sets within the vProgs ecosystem.
+Core developers have successfully addressed the need for advanced UTXO indexing. A major change (PR #991) reworks the UTXO index to be keyed by DAA score, enabling efficient, paginated queries via a new RPC. This foundational upgrade ensures future vProgs-based dApps can retrieve blockchain state efficiently without overloading node memory, serving as vital infrastructure for the ecosystem.
 
 ## Transaction Queries
 
