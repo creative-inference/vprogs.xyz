@@ -551,3 +551,8 @@ The complete architecture from base layer to application:
 - [KIP-14: Crescendo Hardfork](https://github.com/kaspanet/kips/blob/master/kip-0014.md)
 - [KIP-10: Transaction Introspection](https://github.com/kaspanet/kips/blob/master/kip-0010.md)
 - [ZK Rollup PoC (Biryukov)](https://github.com/biryukovmaxim/rusty-kaspa/tree/zk-rollup-covenant-example)
+
+## Implementation Progress
+
+
+Additionally, work is underway (PR #987) to add activation logic for new script engine constants, providing the necessary operational foundation for enabling advanced scripting features and the eventual vProgs hard fork.
