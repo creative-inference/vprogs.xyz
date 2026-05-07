@@ -64,6 +64,11 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 *   **Finalized Script Limits & Benchmarks:** A major pull request has recently been merged into Rusty Kaspa that finalizes transaction script limits, tunes execution benchmarks, and resolves legacy codebase TODOs. This represents a significant step in stabilizing the vProgs (KIP-21) implementation for both security and performance.
 
+
+
+*   **Script Engine Activation:** Work is underway (PR #987) to add activation logic for new script engine constants. This direct step toward enabling advanced scripting features paves the way for the vProgs hard fork.
+*   **Script Pricing Model:** Kaspa developers are planning an upcoming KIP to formalize script execution pricing. Defining this robust cost model is essential for the long-term security and sustainability of the smart contract system.
+
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
@@ -170,6 +175,10 @@ As the Kaspa network prepares for the integration of complex vProgs and smart co
 
 
 To avoid delays before the upcoming Toccata hard fork, developers have taken pragmatic steps such as internally forking a key performance monitoring dependency (PR #965). This unblocks the use of updated tools and highlights the team's focus on meeting the hard fork deadline without sacrificing essential network monitoring capabilities.
+
+
+
+To support the integrity of the state machine, a new SMT prune scanner (PR #990) has been introduced for inspecting the consensus database. This developer tool is critical for verifying and debugging the Sparse Merkle Tree, the core data structure underpinning vProgs.
 
 ## Standalone Indexing Infrastructure
 
