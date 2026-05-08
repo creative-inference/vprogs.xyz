@@ -66,8 +66,12 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 
 
-*   **Script Engine Activation:** Work is underway (PR #987) to add activation logic for new script engine constants. This direct step toward enabling advanced scripting features paves the way for the vProgs hard fork.
+*   **Script Engine Activation & Fork-Awareness:** A crucial PR (#987) has been merged, making the codebase "fork-aware" and adding activation logic for new script engine constants. Developers can now build scripts for either pre- or post-Toccata rules using `ScriptBuilder::with_flags`, ensuring a smooth transition to advanced scripting features and the eventual vProgs hard fork.
 *   **Script Pricing Model:** Kaspa developers are planning an upcoming KIP to formalize script execution pricing. Defining this robust cost model is essential for the long-term security and sustainability of the smart contract system.
+
+
+
+*   **Script Engine Hardening:** To ensure robustness ahead of activation, developers are actively analyzing script execution edge cases, particularly the interactions and limits between maximum element sizes and maximum script sizes.
 
 ## Enhanced Debugger Capabilities & WebAssembly
 
@@ -109,6 +113,10 @@ As a positive side-effect of dependency cleanup for the vProgs codebase—specif
 
 
 Expanding the multi-language developer ecosystem, the Kaspa Python SDK now includes full wallet support. By leveraging the same native Rusty-Kaspa components as the WASM SDK, this update brings critical feature parity and significantly improves the toolkit for developers building cross-platform applications on Kaspa.
+
+
+
+While the Toccata branch is now fork-aware, it is a known gap that the WASM APIs for web-based apps do not yet fully support the new scripting flags. This presents an opportunity for ecosystem developers to help align the web tooling with the upcoming protocol rules.
 
 ## The Three-Layer Programmability Model
 
@@ -167,6 +175,10 @@ Building on this, a significant architectural milestone was recently reached by 
 
 
 Testing on these environments is actively pushing the engine's computational boundaries. For instance, developers implementing Groth16 ZK-proof verification on Kaspa's devnet have successfully stress-tested the new script unit limits. This real-world battle-testing ensures the execution cost model is properly calibrated for advanced cryptographic primitives before mainnet deployment.
+
+
+
+To further assist builders, new JavaScript examples are now available demonstrating how to construct Groth16 and other ZK-proof transactions on Kaspa using the new SDK builder. This provides a concrete developer pathway for implementing advanced privacy and scaling solutions.
 
 ## Ecosystem Performance Tooling
 
