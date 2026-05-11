@@ -118,6 +118,11 @@ Build inclusion and non-inclusion proof generators now. The proof structure is f
 
 The addressing scheme for the SMT uses the Blake3 hash of the lane ID as the lane key. This hashing ensures a pseudo-random leaf distribution within the tree, which is a fundamental architectural detail for maximizing SMT performance and cryptographic security.
 
+
+
+
+**Stateless Validation:** Developers have clarified that validating vProg state transitions (KIP-21) will not require maintaining a full, stateful Sparse Merkle Tree (SMT). Instead, validation can be performed statelessly by providing proofs exclusively for the changed data. This design optimization is crucial for maximizing light client efficiency.
+
 ### 2. Lane Proof Systems
 
 The two-anchor proof model is well-defined:
