@@ -232,6 +232,17 @@ To further support the demands of future features like vProgs, core developers r
 
 Core developers have successfully addressed the need for advanced UTXO indexing. A major change (PR #991) reworks the UTXO index to be keyed by DAA score, enabling efficient, paginated queries via a new RPC. This foundational upgrade ensures future vProgs-based dApps can retrieve blockchain state efficiently without overloading node memory, serving as vital infrastructure for the ecosystem.
 
+
+
+
+### `get_headers`
+
+The `get_headers` RPC endpoint is now implemented in `rusty-kaspa`. This allows applications to traverse the selected parent chain, a core infrastructure improvement that enhances how nodes and wallets interact with the network's sequencing layer.
+
+### State Discovery and UTXO Querying (Ongoing Design)
+
+A key architectural debate is currently underway regarding state discovery: whether users should be able to find a rollup's state (or vProg UTXOs) by its covenant ID alone, or if they must always know the full script public key. The outcome of this decision will directly shape future API patterns and determine how seamlessly dApps can discover and sync with on-chain states.
+
 ## Transaction Queries
 
 ### `get_transaction`
