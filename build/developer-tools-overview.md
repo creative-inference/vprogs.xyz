@@ -39,6 +39,11 @@ Silverscript's syntax and paradigms are continually refined to reflect its secur
 
 To support the creation of standard assets, a recent pull request (PR #111) was merged into the SilverScript repository featuring successful tests against a KCC20 token example. This marks tangible progress in building the foundational tooling required for token standards on Kaspa's upcoming smart contract platform.
 
+
+
+
+To further modernize the language, recent updates have expanded SilverScript's syntax capabilities by adding support for the ternary operator and allowing tuples to be returned from functions. These enhancements streamline contract code and significantly improve the developer experience for building on Kaspa.
+
 ## Opcode Refinement and Standardization
 
 The underlying native Kaspa Script is being continuously enhanced to support advanced applications. Recent developments include:
