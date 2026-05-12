@@ -78,6 +78,11 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 *   **Script Engine Hardening:** To ensure robustness ahead of activation, developers are actively analyzing script execution edge cases, particularly the interactions and limits between maximum element sizes and maximum script sizes.
 
+
+
+*   **KIP-17 and opBlake3:** KIP-17 is being updated to formally document new opcodes like `opBlake3`, which are already active on the Toccata testnet. This process of standardizing powerful cryptographic primitives is a key step in preparing the developer toolset for the vProgs launch.
+*   **KIP-21 Script Units Alignment:** The vProgs proposal (KIP-21) is being actively updated to reflect the latest protocol design, specifically adjusting consensus parameters to align with the recently introduced 'script units' KIP to ensure the formal specification matches the final implementation.
+
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
