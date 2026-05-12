@@ -283,6 +283,12 @@ An open design question is the storage convention for witnesses:
 
 ---
 
+
+
+### Multi-Leaf Proofs
+
+A developer discussion has confirmed that the vProgs implementation includes support for multi-leaf proofs, a new capability not present in the current Rust-Kaspa node. This feature will enable more efficient and complex state verification within the new virtual machine.
+
 ## Scalability Analysis
 
 ### Erdos-Renyi Model
