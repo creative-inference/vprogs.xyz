@@ -153,6 +153,10 @@ These opcodes make stateful UTXO contracts possible -- a covenant can carry stat
 
 Recent progress in the covenant infrastructure includes the solidifying of serialized covenant binding integration, a cornerstone feature for managing state within Kaspa's upcoming smart contract capabilities.
 
+
+
+Additionally, KIP-17 is being updated to formally document new opcodes like `opBlake3` that are already active on the Toccata testnet, standardizing powerful cryptographic primitives to prepare the developer toolset for the vProgs launch.
+
 ### KIP-20: Covenant IDs (Native Lineage)
 
 Before KIP-20, proving that a UTXO descended from a specific covenant required recursive lineage proofs -- expensive and complex. KIP-20 introduces native covenant IDs at the protocol level:
