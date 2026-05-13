@@ -381,6 +381,11 @@ As the implementation matures, the formal specification for KIP-21 is being rest
 
 The vProgs proposal (KIP-21) is also being actively updated to reflect the latest protocol design, specifically adjusting consensus parameters to align with the recently introduced 'script units' KIP. This meticulous process ensures the formal specification precisely matches the final implementation, demonstrating careful integration between different protocol upgrades.
 
+
+
+
+As the Toccata activation approaches, developers are polishing the mempool logic by separating template-fit checks from standardness rules, making vProgs transaction validation more explicit and robust. The rollout includes a delayed mempool policy to ensure a safe, conservative transition around the activation boundary. Furthermore, Kaspa's mempool has been upgraded to solve an advanced multi-dimensional knapsack problem, optimizing block templates across standard mass, gas, transient mass, and lane limits. This is supported by architectural decisions that split block limits into independent types, enabling easier non-consensus refinements. Following testnet discussions, developers also plan to remove the `TRANSIENT_BYTE_TO_MASS_FACTOR` post-fork to simplify mass calculations and provide greater flexibility for adjusting transient data limits.
+
 ## External Verification and Data Availability
 
 When external systems or L2 rollups need to verify a complete view of all vProgs lanes to guarantee Data Availability (DA), developers have determined that it is computationally more efficient to rebuild the entire SMT directly from its leaves rather than processing individual inclusion proofs for each lane. This architectural decision optimizes how rollups will synchronize and verify global L1 state.
