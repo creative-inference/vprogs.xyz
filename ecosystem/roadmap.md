@@ -59,6 +59,10 @@ As part of hardening the new script pricing mechanisms, the txscript engine now 
 
 - **Consensus & Mempool Policies:** Toccata lane and gas limits are being integrated into the core consensus rules. Developers are actively finalizing how the protocol differentiates system versus user subnets and validates gas usage, ensuring strict mempool validation policies for the security and stability of vProgs before transactions are block-eligible.
 
+
+
+- **Mempool & Transient Mass Policies:** Toccata activation includes a delayed mempool policy for safe transitions around the activation boundary. The mempool now optimizes block templates via an advanced multi-dimensional knapsack problem (standard mass, gas, transient mass, lane limits), and developers plan to remove the `TRANSIENT_BYTE_TO_MASS_FACTOR` post-fork for simplified mass calculations and greater flexibility.
+
 #### Key PoCs completed
 
 - Inline ZK covenants (by Maxim Biryukov)
