@@ -63,6 +63,10 @@ As part of hardening the new script pricing mechanisms, the txscript engine now 
 
 - **Mempool & Transient Mass Policies:** Toccata activation includes a delayed mempool policy for safe transitions around the activation boundary. The mempool now optimizes block templates via an advanced multi-dimensional knapsack problem (standard mass, gas, transient mass, lane limits), and developers plan to remove the `TRANSIENT_BYTE_TO_MASS_FACTOR` post-fork for simplified mass calculations and greater flexibility.
 
+
+
+- **Transient Mass Fee Stability:** A key update (PR #995) has been approved to ensure stable fee pricing for vProg transient mass. This future-proofs the calculation and prevents fee volatility during the Toccata upgrade, marking a solid step toward a smooth activation.
+
 #### Key PoCs completed
 
 - Inline ZK covenants (by Maxim Biryukov)
