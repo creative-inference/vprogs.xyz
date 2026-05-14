@@ -157,6 +157,11 @@ Recent progress in the covenant infrastructure includes the solidifying of seria
 
 Additionally, KIP-17 is being updated to formally document new opcodes like `opBlake3` that are already active on the Toccata testnet, standardizing powerful cryptographic primitives to prepare the developer toolset for the vProgs launch.
 
+
+
+
+Furthermore, work is underway to optimize the Kaspa txscript engine by relaxing minimal encoding rules for stack data. This low-level enhancement, organized under KIP-17, provides foundational flexibility for a more powerful and efficient vProgs implementation.
+
 ### KIP-20: Covenant IDs (Native Lineage)
 
 Before KIP-20, proving that a UTXO descended from a specific covenant required recursive lineage proofs -- expensive and complex. KIP-20 introduces native covenant IDs at the protocol level:
@@ -560,3 +565,7 @@ The complete architecture from base layer to application:
 
 
 Additionally, work is underway (PR #987) to add activation logic for new script engine constants, providing the necessary operational foundation for enabling advanced scripting features and the eventual vProgs hard fork.
+
+
+
+Additionally, developers have decided to bump the block header version for the Toccata fork. This crucial protocol upgrade changes how the sequence commitment field is validated for vProgs, allowing clients and services to validate new blocks more efficiently and robustly without requiring full-chain context.
