@@ -386,6 +386,11 @@ The vProgs proposal (KIP-21) is also being actively updated to reflect the lates
 
 As the Toccata activation approaches, developers are polishing the mempool logic by separating template-fit checks from standardness rules, making vProgs transaction validation more explicit and robust. The rollout includes a delayed mempool policy to ensure a safe, conservative transition around the activation boundary. Furthermore, Kaspa's mempool has been upgraded to solve an advanced multi-dimensional knapsack problem, optimizing block templates across standard mass, gas, transient mass, and lane limits. This is supported by architectural decisions that split block limits into independent types, enabling easier non-consensus refinements. Following testnet discussions, developers also plan to remove the `TRANSIENT_BYTE_TO_MASS_FACTOR` post-fork to simplify mass calculations and provide greater flexibility for adjusting transient data limits.
 
+
+
+
+As the vProgs framework approaches maturity, developers are preparing to merge the dedicated `toccata` branch into `master`. This major integration consolidates a vast array of features and fixes, serving as a key prerequisite to unblock further core protocol advancement. The scale of this engineering effort was recently highlighted when the `rusty-kaspa` repository reached its 1,000th pull request—a critical, complex codebase change that necessitated a non-squash merge to preserve its detailed commit history. Simultaneously, developers maintain an intense focus on core protocol hardening, successfully rebasing and merging a rapid succession of pull requests (including PRs #995, #997, #998, and #1003) to secure core logic and bolster CI stability ahead of the upcoming hard fork.
+
 ## External Verification and Data Availability
 
 When external systems or L2 rollups need to verify a complete view of all vProgs lanes to guarantee Data Availability (DA), developers have determined that it is computationally more efficient to rebuild the entire SMT directly from its leaves rather than processing individual inclusion proofs for each lane. This architectural decision optimizes how rollups will synchronize and verify global L1 state.
