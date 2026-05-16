@@ -569,3 +569,8 @@ Additionally, work is underway (PR #987) to add activation logic for new script 
 
 
 Additionally, developers have decided to bump the block header version for the Toccata fork. This crucial protocol upgrade changes how the sequence commitment field is validated for vProgs, allowing clients and services to validate new blocks more efficiently and robustly without requiring full-chain context.
+
+
+In preparation for the Toccata hard fork, developers are bumping the consensus database version in Rusty-Kaspa. This essential maintenance ensures a seamless network upgrade and database compatibility for nodes.
+
+Simultaneously, Kaspa is activating the "Toccata" hard fork on testnet-10 (TN10). This activation serves as a crucial rehearsal for testing major protocol changes in a mainnet-like environment, paving the way for the eventual mainnet launch of vProgs.
