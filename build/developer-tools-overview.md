@@ -87,6 +87,10 @@ The underlying native Kaspa Script is being continuously enhanced to support adv
 
 *   **API Clarity & DX:** To improve long-term clarity in the vProgs model, developers are discussing renaming the `tx.mass` field to `tx.storage_mass` across the API and tooling. A two-phase deprecation plan has been proposed to minimize disruption while prioritizing code maintainability and a better developer experience.
 
+
+
+*   **Post-Quantum Signature R&D:** Kaspa developers are researching post-quantum signature schemes like HAWK, which offers performance benefits without requiring float math. This exploration is vital for ensuring the long-term security of vProgs and the broader Kaspa ecosystem.
+
 ## Enhanced Debugger Capabilities & WebAssembly
 
 Building decentralized applications on a parallelized BlockDAG requires deep visibility into execution paths. The Kaspa developer tooling suite is expanding to include **enhanced vProg debugger capabilities**, allowing developers to step through complex multi-contract flows, inspect stack states, and simulate transactions locally before deploying to the TN12 testnet. Additionally, WebAssembly support continues to bridge the gap for browser-based toolchains and client-side proof generation.
