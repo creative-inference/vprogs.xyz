@@ -93,6 +93,11 @@ The hard fork was originally targeted for May 5, 2026. Once ZK circuits and runt
 
 As developers finalize parameters for the TN12 reset to mirror mainnet settings (including increasing the gas limit per lane to 1 billion), a strategic decision was made to separate the finalization of new network constants from the activation logic. This allows for stable testing of mainnet-ready parameters before introducing the consensus activation mechanism in a subsequent step.
 
+
+
+
+**Testnet-10 Activation:** Kaspa is actively executing the "Toccata" hard fork on testnet-10 (TN10). This activation serves as a crucial mainnet rehearsal, testing major protocol changes to ensure a seamless upgrade. Alongside this, developers are bumping the consensus database version in Rusty-Kaspa to guarantee database compatibility across nodes.
+
 ### DagKnight (Active Development)
 
 The evolution of the GHOSTDAG protocol into a parameterless adaptive consensus mechanism:
