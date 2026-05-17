@@ -485,7 +485,7 @@ Opcode numbers agreed January 17, 2026: `0xcf-0xd3` for covenant ID ops, `0xd4` 
 
 
 
-Developers have clarified that the `covpp-reset2` development branch is where the newest vProgs features are actively being built, keeping it distinct from the current `tn12` Toccata testnet branch. This directs integrators to the correct environment for experimenting with cutting-edge capabilities. As the vProgs feature set stabilizes, developers plan to officially rename this branch to "toccata", aligning the codebase directly with the next major hard fork.
+Kaspa developers have officially deprecated the old `tn12` testnet branch, directing all contributors to the unified `toccata` branch. This move consolidates all development and testing efforts for the upcoming vProgs (KIP-21) implementation onto a single platform aligned directly with the next major hard fork.
 
 
 
