@@ -198,6 +198,10 @@ Complementing the node-level IBD improvements in Rusty-Kaspa, the vProgs reposit
 
 
 
+
+
+To further ensure a smooth transition for nodes joining the new vProgs-enabled network, a core fix has also been merged into Rusty Kaspa to address IBD behavior during the specific 'pre-toccata' sync phase.
+
 ### 8. Transaction Versioning and Forward Compatibility
 
 KIP-21's sequencing commitment design explicitly builds in forward compatibility by standardizing on the modern Blake3 hashing algorithm and committing to the transaction version. This optimization allows vProgs to efficiently filter and ignore legacy transactions without wasting guest program resources parsing older formats. By committing to the version, vProgs can also securely and easily ignore transactions from future protocol upgrades they do not understand, ensuring long-term L2 stability.
@@ -339,7 +343,7 @@ Core developer Michael Sutton has announced that the technical review for the ma
 
 
 
-Kaspa is rapidly approaching the consensus feature freeze for the vProgs (KIP-21) upgrade. The core implementation has now been successfully merged into the `covpp-reset2` development branch, officially finalizing the sequence commitment hashing mechanism and locking in essential features like ZK opcodes and gas commitments.
+Kaspa is rapidly approaching the consensus feature freeze for the vProgs (KIP-21) upgrade. The core implementation has been successfully unified into the `toccata` development branch, officially finalizing the sequence commitment hashing mechanism and locking in essential features like ZK opcodes and gas commitments.
 
 Simultaneously, the node's communication layer has been hardened; a bug affecting the GRPC deserialization of transactions was identified and quickly resolved (PR #958), improving the reliability of core RPC services.
 
