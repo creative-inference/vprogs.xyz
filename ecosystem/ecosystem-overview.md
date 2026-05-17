@@ -22,3 +22,6 @@ A thriving network requires strong connectivity and practical merchant adoption 
 - **Stablecoin Bridging & L2 Growth**: Kasplex has enabled bridging for USDT and USDC from BNB Chain directly to Kaspa's L2, making it much easier to move stablecoins into the ecosystem and paving the way for future DeFi applications. The Kasplex EVM L2 is seeing rapid growth, recording over 87,000 new transactions with a daily average of 2,824 txs in March.
 
 - **Ecosystem Expansion**: The Kaspa builder community is actively expanding with diverse projects building on the L1, including AppKaskad, interoperability solutions like Hyperlane, and hardware wallet integrations like Tangem.
+
+
+As the network prepares for the Toccata hard fork, community developers are rapidly adapting key infrastructure—such as Stratum implementations for Rusty Kaspa—to ensure compatibility with the new Toccata testnet, demonstrating the ecosystem's readiness to build on the vProgs features.
