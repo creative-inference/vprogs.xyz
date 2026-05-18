@@ -24,4 +24,4 @@ A thriving network requires strong connectivity and practical merchant adoption 
 - **Ecosystem Expansion**: The Kaspa builder community is actively expanding with diverse projects building on the L1, including AppKaskad, interoperability solutions like Hyperlane, and hardware wallet integrations like Tangem.
 
 
-As the network prepares for the Toccata hard fork, community developers are rapidly adapting key infrastructure—such as Stratum implementations for Rusty Kaspa—to ensure compatibility with the new Toccata testnet, demonstrating the ecosystem's readiness to build on the vProgs features.
+As the network prepares for the Toccata hard fork, community developers have successfully tested the RKStratumTN12 branch, confirming that integrated mining and block processing are working correctly. This marks a key milestone in ensuring Kaspa's mining infrastructure is fully compatible and ready to build on the vProgs features.
