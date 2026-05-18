@@ -74,6 +74,10 @@ To contribute to protocol development:
 4. Fork the repository, make your changes, and submit a PR
 5. Engage in the review process -- core developers are active reviewers
 
+
+
+To enhance transparency and streamline the development process for major upgrades like vProgs, developers have also introduced new tooling to systematically document consensus changes associated with Kaspa Improvement Proposals (KIPs).
+
 ### Application Development
 
 Building applications on Kaspa currently means working with:
