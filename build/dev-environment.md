@@ -315,3 +315,6 @@ Rusty-Kaspa's build pipeline has been upgraded (PR #934) to use pre-built artifa
 
 
 Furthermore, overall CI/CD pipeline stability has been bolstered. Developers have addressed recurring timeout errors in integration tests (e.g., via PR #937 by increasing notification timeouts), ensuring a more reliable development and testing process for ongoing protocol updates.
+
+
+To further accelerate the local development loop, a significant refactoring (PR #1010) was recently merged into Rusty-Kaspa to optimize the build process. This change improves core developer productivity and accelerates the delivery of future updates and features.
