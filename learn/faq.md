@@ -204,7 +204,7 @@ The deployment is phased:
 - vProgs repository public -- January 2026
 
 **Upcoming:**
-- **Toccata hard fork (Covenants++)**: Feature freeze April 15, mainnet ~June 5–20, 2026 (KIP-16, 17, 20, 21)
+- **Toccata hard fork (Covenants++)**: Feature freeze April 15, mainnet targeted for late June 2026 following successful testnet activation (KIP-16, 17, 20, 21)
 - **Phase 1 (Standalone vProgs)**: following Toccata activation
 - **Phase 2 (Full Synchronous Composability)**: after Phase 1 is stable, timeline TBD
 
@@ -255,7 +255,7 @@ As a general architectural heuristic emerging within the developer community: **
 
 ### What is the Toccata hard fork?
 
-Toccata (officially "Covenants++") is the upcoming consensus upgrade targeting ~June 5–20, 2026 (feature freeze April 15). Named in Kaspa's harmonic tradition, it activates four KIPs:
+Toccata (officially "Covenants++") is the upcoming consensus upgrade targeting late June 2026 (feature freeze April 15). Named in Kaspa's harmonic tradition, it activates four KIPs:
 
 | KIP | What It Does |
 |-----|-------------|
