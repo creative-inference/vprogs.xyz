@@ -19,7 +19,7 @@ The first covenant-enabling hard fork, activating KIP-9, KIP-10, KIP-13, and KIP
 - **KIP-15:** Recursive canonical transaction ordering commitment (seqcommit)
 - **KIP-9/13:** Network-level performance upgrades
 
-### Toccata (Covenants++) — Feature Freeze April 15, Mainnet ~June 5–20, 2026
+### Toccata (Covenants++) — Feature Freeze April 15, Mainnet Late June 2026
 
 The second hard fork, officially named **"Toccata"** in keeping with Kaspa's harmonic tradition. Initiated by Ori Newman as an effort to introduce covenants, it has expanded into Kaspa's full dual programmability landscape. [Michael Sutton's Toccata outlook (April 3, 2026)](https://medium.com/@michaelsuttonil/kaspa-covenants-toccata-hard-fork-outlook-a4d81a40900c) details the scope and rollout plan.
 
@@ -96,7 +96,7 @@ As developers finalize parameters for the TN12 reset to mirror mainnet settings 
 
 
 
-**Testnet-10 Activation:** Kaspa is actively executing the "Toccata" hard fork on testnet-10 (TN10). This activation serves as a crucial mainnet rehearsal, testing major protocol changes to ensure a seamless upgrade. Alongside this, developers are bumping the consensus database version in Rusty-Kaspa to guarantee database compatibility across nodes.
+**Testnet-10 Activation & Mainnet Timeline:** The "Toccata" hard fork successfully activated on testnet-10 (TN10), serving as a crucial mainnet rehearsal. Core infrastructure, including nodes and integrated mining, remains stable while processing new "v1 + covenant id" transactions. Alongside this, developers are bumping the consensus database version in Rusty-Kaspa to guarantee compatibility. Following the successful testnet activation, core developer Michael Sutton suggested that a mainnet activation towards the end of June is a realistic target. A two-phase release strategy has been proposed: an initial release for the core node upgrade, followed 2-3 weeks later by a second release featuring the SMT RPC API, ZK SDK, and potentially the first version of Silverscript.
 
 ### DagKnight (Active Development)
 
