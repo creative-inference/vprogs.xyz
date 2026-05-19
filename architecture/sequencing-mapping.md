@@ -395,6 +395,10 @@ As the Toccata activation approaches, developers are polishing the mempool logic
 
 As the vProgs framework approaches maturity, developers are preparing to merge the dedicated `toccata` branch into `master`. This major integration consolidates a vast array of features and fixes, serving as a key prerequisite to unblock further core protocol advancement. The scale of this engineering effort was recently highlighted when the `rusty-kaspa` repository reached its 1,000th pull request—a critical, complex codebase change that necessitated a non-squash merge to preserve its detailed commit history. Simultaneously, developers maintain an intense focus on core protocol hardening, successfully rebasing and merging a rapid succession of pull requests (including PRs #995, #997, #998, and #1003) to secure core logic and bolster CI stability ahead of the upcoming hard fork.
 
+
+
+Recent development efforts (such as PR #1011) have also focused on hardening vProgs consensus rules by clarifying and rigorously testing `seqcommit` transaction validation contexts. This work ensures the network remains stable and can safely handle complex edge cases, such as chain reorgs, post-activation.
+
 ## External Verification and Data Availability
 
 When external systems or L2 rollups need to verify a complete view of all vProgs lanes to guarantee Data Availability (DA), developers have determined that it is computationally more efficient to rebuild the entire SMT directly from its leaves rather than processing individual inclusion proofs for each lane. This architectural decision optimizes how rollups will synchronize and verify global L1 state.
