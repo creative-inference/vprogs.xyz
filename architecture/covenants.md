@@ -574,3 +574,6 @@ Additionally, developers have decided to bump the block header version for the T
 In preparation for the Toccata hard fork, developers are bumping the consensus database version in Rusty-Kaspa. This essential maintenance ensures a seamless network upgrade and database compatibility for nodes.
 
 Simultaneously, Kaspa is activating the "Toccata" hard fork on testnet-10 (TN10). This activation serves as a crucial rehearsal for testing major protocol changes in a mainnet-like environment, paving the way for the eventual mainnet launch of vProgs.
+
+
+The "Toccata" testnet hard fork has successfully activated on Testnet-10 (TN10), confirming that core infrastructure, including nodes and integrated mining, remains stable under the new consensus rules. The network is successfully processing transactions with "v1 + covenant id", providing the first live validation of KIP-21's foundational components. Following this success, core developer Michael Sutton suggested that a mainnet activation towards the end of June is a realistic target. Furthermore, a two-phase mainnet release strategy has been proposed: an initial release focusing on the core node upgrade, followed a few weeks later by a second release delivering developer features like the SMT RPC API, ZK SDK, and potentially the first version of Silverscript.
