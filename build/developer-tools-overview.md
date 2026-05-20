@@ -230,3 +230,7 @@ When building or integrating with these indexers, developers must account for un
 ## Wallet Tooling and Ecosystem Compatibility
 
 To ease operator migration and support the broader Kaspa ecosystem, a new wallet port aiming for strict compatibility with the original Go-based wallet is currently under review. This initiative has sparked valuable developer discussions regarding optimal wallet architecture and storage formats. By proactively addressing these design patterns, the community aims to prevent future tooling fragmentation and ensure robust, standardized interfaces for dApp builders and node operators.
+
+
+
+Furthermore, developers are designing an advanced asynchronous multisig setup within the wallet framework to support user-friendly vProgs applications. This design utilizes a two-step flow to create and finalize multi-party accounts, effectively separating signer identity from the final address to enhance security and usability.
